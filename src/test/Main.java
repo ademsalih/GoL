@@ -4,10 +4,12 @@ package test;
  * Created by patrikkvarmehansen on 25/01/17.
  */
 public class Main {
-    hererenmetode(int c) {
-        System.out.print(c);
-    }
 
-    intelli ji
+    public static void main(String[] args) {
+
+        int a = 5;
+
+        System.out.println(a);
+    }
 
 }
