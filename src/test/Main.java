@@ -9,7 +9,7 @@ public class Main {
 
         int a = 5;
 
-        System.out.println(a+1);
+        System.out.println(a+2);
     }
 
 }
