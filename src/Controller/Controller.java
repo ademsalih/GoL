@@ -1,10 +1,20 @@
 package Controller;
 
+import javafx.fxml.Initializable;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 /**
  * Created by Narmatha on 09.02.2017.
  */
-public class Controller {
+public class Controller implements Initializable {
+
     private boolean isStarted;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
 
     protected void startStopBtnClicked(){
 
