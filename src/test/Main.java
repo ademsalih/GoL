@@ -16,7 +16,7 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("GOL.fxml"));
 
-        Scene scene = new Scene(root, 600, 600);
+        Scene scene = new Scene(root, 740, 660);
 
         stage.setTitle("Game of Life");
         stage.setScene(scene);
@@ -24,7 +24,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-
+        launch(args);
     }
 
 }
