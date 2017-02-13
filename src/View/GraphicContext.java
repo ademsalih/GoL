@@ -3,6 +3,7 @@ package View;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+
 /**
  * Created by patrikkvarmehansen on 09/02/17.
  *
@@ -15,11 +16,8 @@ public class GraphicContext {
     }
 
     //Takes cell position and draws a square in a given size.
-    public void drawCell (GraphicsContext gc, int x, int y, int size) {
+    public static void drawCell (GraphicsContext gc, int x, int y, int size) {
         gc.fillRect(x, y, size, size);
     }
-
-
-
 
 }
