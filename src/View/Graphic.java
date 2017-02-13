@@ -9,7 +9,7 @@ import javafx.scene.paint.Color;
  *
  * This class draws to the canvas.
  */
-public class GraphicContext {
+public class Graphic {
 
     //Method that sets the color for the cells.
     public void setColor () {

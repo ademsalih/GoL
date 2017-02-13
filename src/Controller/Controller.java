@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Slider;
@@ -18,9 +19,14 @@ public class Controller implements Initializable {
 
     // interne objekter relatert til GUI
     @FXML private MenuBar menuBar;
-    @FXML private Canvas graphics;
+    @FXML private Canvas canvas;
     @FXML private ColorPicker colorPicker;
     @FXML private Slider sizeSlider;
+    @FXML private Slider speedSlider;
+    @FXML private Button startButton;
+    @FXML private Button nextButton;
+    @FXML private Button previousButton;
+    @FXML private Button clearButton;
 
     private boolean isStarted;
 
@@ -31,7 +37,7 @@ public class Controller implements Initializable {
 
     // hjelpemetode som tegner grafikk til 'canvas' området i GUI
     private void draw() {
-        GraphicsContext gc = graphics.getGraphicsContext2D();
+        GraphicsContext gc = canvas.getGraphicsContext2D();
     }
 
     protected void startStopBtnClicked(){
