@@ -34,7 +34,7 @@ public class Controller implements Initializable {
 
     private boolean isStarted;
 
-    Board board = new Board(canvas);
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -42,8 +42,8 @@ public class Controller implements Initializable {
     }
 
     // hjelpemetode som tegner grafikk til 'canvas' området i GUI
-    private void draw() {
-
+    protected void draw() {
+        Board board = new Board(canvas);
         board.drawBoard();
     }
 
