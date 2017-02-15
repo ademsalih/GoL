@@ -16,7 +16,7 @@
     <RowConstraints maxHeight="-Infinity" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Canvas fx:id="canvas" height="580.0" style="-fx-background-color: blue;" width="580.0">
+      <Canvas fx:id="canvas" height="600.0" style="-fx-background-color: blue;" width="600.0">
          <GridPane.margin>
             <Insets left="20.0" top="20.0" />
          </GridPane.margin>

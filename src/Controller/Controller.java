@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Board;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -18,8 +19,10 @@ import java.util.ResourceBundle;
 public class Controller implements Initializable {
 
     // interne objekter relatert til GUI
+
+    @FXML public Canvas canvas;
+    /*
     @FXML private MenuBar menuBar;
-    @FXML private Canvas canvas;
     @FXML private ColorPicker colorPicker;
     @FXML private Slider sizeSlider;
     @FXML private Slider speedSlider;
@@ -27,17 +30,21 @@ public class Controller implements Initializable {
     @FXML private Button nextButton;
     @FXML private Button previousButton;
     @FXML private Button clearButton;
+    */
 
     private boolean isStarted;
 
+    Board board = new Board(canvas);
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        draw();
     }
 
     // hjelpemetode som tegner grafikk til 'canvas' området i GUI
     private void draw() {
-        GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        board.drawBoard();
     }
 
     protected void startStopBtnClicked(){
