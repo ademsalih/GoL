@@ -3,6 +3,7 @@ package Model;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 
 /**
@@ -15,16 +16,16 @@ public class Board {
     double canvasWidth;
 
     byte[][] board = {
-            {1,0,1,0,1,0,1,0,1,0},
-            {0,1,0,1,0,1,0,1,0,1},
-            {1,0,1,0,1,0,1,0,1,0},
-            {0,1,0,1,0,1,0,1,0,1},
-            {1,0,1,0,1,0,1,0,1,0},
-            {0,1,0,1,0,1,0,1,0,1},
-            {1,0,1,0,1,0,1,0,1,0},
-            {0,1,0,1,0,1,0,1,0,1},
-            {1,0,1,0,1,0,1,0,1,0},
-            {0,1,0,1,0,1,0,1,0,1},
+            {1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
+            {0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
+            {1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
+            {0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
+            {1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
+            {0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
+            {1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
+            {0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
+            {1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
+            {0, 1, 0, 1, 0, 1, 0, 1, 0, 1}
     };
 
     double xCounter;
@@ -35,7 +36,6 @@ public class Board {
 
     GraphicsContext gc;
 
-
     public Board (Canvas canvas) {
         this.canvasWidth = canvas.getWidth();
         this.xCounter = 0.0;
@@ -45,23 +45,20 @@ public class Board {
         this.gc = canvas.getGraphicsContext2D();
     }
 
-
-
     public void drawBoard() {
-
-        System.out.println(canvasWidth/board.length);
 
         for (int a = 0; a < board.length; a++) {
 
             for (int b = 0; b < board.length; b++) {
 
                 if (board[a][b] == 1) {
-
+                    gc.setFill(Color.BLACK);
                     gc.fillRect(xCounter, yCounter, cellWidth, cellHeight);
                     xCounter += cellWidth;
 
                 } else {
-
+                    gc.setFill(Color.WHITE);
+                    gc.fillRect(xCounter,yCounter,cellWidth,cellHeight);
                     xCounter += cellWidth;
 
                 }

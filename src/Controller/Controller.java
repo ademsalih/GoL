@@ -21,6 +21,7 @@ public class Controller implements Initializable {
     // interne objekter relatert til GUI
 
     @FXML public Canvas canvas;
+
     /*
     @FXML private MenuBar menuBar;
     @FXML private ColorPicker colorPicker;
@@ -33,8 +34,6 @@ public class Controller implements Initializable {
     */
 
     private boolean isStarted;
-
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
