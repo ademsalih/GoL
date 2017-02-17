@@ -21,17 +21,15 @@ public class Controller implements Initializable {
     // interne objekter relatert til GUI
 
     @FXML public Canvas canvas;
-
-    /*
     @FXML private MenuBar menuBar;
-    @FXML private ColorPicker colorPicker;
+    @FXML private ColorPicker colorPicker1;
+    @FXML private ColorPicker colorPicker2;
     @FXML private Slider sizeSlider;
     @FXML private Slider speedSlider;
     @FXML private Button startButton;
     @FXML private Button nextButton;
     @FXML private Button previousButton;
     @FXML private Button clearButton;
-    */
 
     private boolean isStarted;
 

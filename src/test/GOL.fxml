@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="677.0" prefWidth="826.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Controller">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="677.0" prefWidth="826.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Controller">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="662.0" minWidth="600.0" prefWidth="662.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="191.0" minWidth="40.0" prefWidth="164.0" />
@@ -89,9 +89,14 @@
                   </VBox>
                </children>
             </HBox>
-            <ColorPicker fx:id="colorPicker" prefHeight="27.0" prefWidth="114.0">
+            <ColorPicker fx:id="colorPicker1" prefHeight="27.0" prefWidth="114.0">
                <VBox.margin>
                   <Insets left="6.0" />
+               </VBox.margin>
+            </ColorPicker>
+            <ColorPicker fx:id="colorPicker2" prefWidth="114.0">
+               <VBox.margin>
+                  <Insets left="6.0" top="10.0" />
                </VBox.margin>
             </ColorPicker>
          </children>
