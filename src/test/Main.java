@@ -16,9 +16,12 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("tol.fxml"));
 
-        Scene scene = new Scene(root, 760, 680);
+        Scene scene = new Scene(root, 610, 728);
 
-        stage.setTitle("Game of Life");
+        scene.getStylesheets().add("stylesheet.css");
+
+
+        stage.setTitle("Conways Game of Life");
         stage.setScene(scene);
         stage.show();
     }

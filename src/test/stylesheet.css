@@ -1,0 +1,47 @@
+#nextGenerationButton {
+    -fx-base: #201e19;
+}
+
+#previousGenerationButton {
+    -fx-base: #201e19;
+}
+
+#startButton {
+    -fx-base: #05b82b;
+}
+
+#stopButton {
+    -fx-base: #d52002;
+}
+
+#gridPane {
+    -fx-background-color: linear-gradient(#393939, #393939);
+}
+
+#scaleSlider {
+    -fx-base: #161616;
+}
+
+#speedSlider {
+    -fx-base: #161616;
+}
+
+#resetButton {
+    -fx-base: #201e19;
+}
+
+#clearButton {
+    -fx-base: #201e19;
+}
+
+#cellColorPicker {
+    -fx-base: #2d2b27;
+}
+
+#backgroundColorPicker {
+    -fx-base: #2d2b27;
+}
+
+
+
+
