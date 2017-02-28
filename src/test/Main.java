@@ -19,7 +19,7 @@ public class Main extends Application {
 
         Scene scene = new Scene(root, 610, 728);
 
-        scene.getStylesheets().add("stylesheet.css");
+        scene.getStylesheets().add("test/stylesheet.css");
 
 
         stage.setTitle("Conways Game of Life");
