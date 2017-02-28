@@ -5,6 +5,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import java.util.Random;
+
 
 /**
  * Created by patrikkvarmehansen on 09/02/17.
@@ -14,6 +16,9 @@ import javafx.scene.paint.Color;
 public class Board {
 
     double canvasWidth;
+
+    //byte[][] board = new byte[10][10];
+
 
     byte[][] board = {
             {1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
@@ -27,6 +32,7 @@ public class Board {
             {1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
             {0, 1, 0, 1, 0, 1, 0, 1, 0, 1}
     };
+
 
     double xCounter;
     double yCounter;
@@ -43,6 +49,10 @@ public class Board {
         this.cellHeight = Math.floor(canvasWidth / board.length);
         this.cellWidth = Math.floor(canvasWidth / board.length);
         this.gc = canvas.getGraphicsContext2D();
+    }
+
+    public void fillArrayWithRandom() {
+
     }
 
     public void drawBoard() {
