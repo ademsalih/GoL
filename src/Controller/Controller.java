@@ -78,8 +78,8 @@ public class Controller implements Initializable {
 
         if ((timeline == null) || (timeline.getStatus() != Animation.Status.RUNNING)) {
 
-            int gen = 10;
-            double durationInMilliSeconds = 100;
+            int gen = 1000;
+            double durationInMilliSeconds = 70;
 
 
             timeline = new Timeline(new KeyFrame(Duration.millis(durationInMilliSeconds), ae -> nextGeneration() ));
