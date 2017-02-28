@@ -8,23 +8,15 @@ import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
-import javafx.scene.control.MenuBar;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
-/**
- * Created by Narmatha on 09.02.2017.
- */
 public class Controller implements Initializable {
-
-    // interne objekter relatert til GUI
 
     @FXML public Canvas canvas;
     @FXML private Button nextGenButton;

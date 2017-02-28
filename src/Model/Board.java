@@ -1,16 +1,9 @@
 package Model;
 
-import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-
-/**
- * Created by patrikkvarmehansen on 09/02/17.
- *
- * Board class that creates and keeps a 2D-array that's meant to represent the board before drawn.
- */
 public class Board {
 
     public byte[][] board = {
