@@ -14,6 +14,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+
         Parent root = FXMLLoader.load(getClass().getResource("tol.fxml"));
 
         Scene scene = new Scene(root, 610, 728);
@@ -24,6 +25,7 @@ public class Main extends Application {
         stage.setTitle("Conways Game of Life");
         stage.setScene(scene);
         stage.show();
+        stage.setResizable(false);
     }
 
     public static void main(String[] args) {
