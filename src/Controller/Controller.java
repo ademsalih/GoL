@@ -39,6 +39,15 @@ public class Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         draw();
         setID();
+        
+        speedSlider.valueProperty().addListener((o, oldValue, newValue) -> {
+            timeline.setRate(newValue.doubleValue());
+        });
+
+        scaleSlider.valueProperty().addListener((o, oldValue, newValue) -> {
+            canvas.setScaleX(newValue.doubleValue());
+            canvas.setScaleY(newValue.doubleValue());
+        });
     }
 
     public void setID() {
@@ -74,17 +83,17 @@ public class Controller implements Initializable {
         boardObj.drawBoardWithGrid();
     }
 
+
+
     public void start() {
 
         if ((timeline == null) || (timeline.getStatus() != Animation.Status.RUNNING)) {
 
-            int gen = 1000;
-            double durationInMilliSeconds = 70;
-
+            double durationInMilliSeconds = 1000;
 
             timeline = new Timeline(new KeyFrame(Duration.millis(durationInMilliSeconds), ae -> nextGeneration() ));
-
-            timeline.setCycleCount(gen);
+            timeline.setRate(10);
+            timeline.setCycleCount(Animation.INDEFINITE);
             timeline.play();
 
         }
