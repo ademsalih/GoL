@@ -30,6 +30,7 @@ public class Controller implements Initializable {
     @FXML private Slider speedSlider;
     @FXML private ColorPicker cellColorPicker;
     @FXML private ColorPicker backgroundColorPicker;
+    @FXML private Button loadButton;
 
     Board boardObj;
     Rule rule;
@@ -62,6 +63,7 @@ public class Controller implements Initializable {
         speedSlider.setId("speedSlider");
         cellColorPicker.setId("cellColorPicker");
         backgroundColorPicker.setId("backgroundColorPicker");
+        loadButton.setId("loadButton");
     }
 
     // hjelpemetode som tegner grafikk til 'canvas' området i GUI
@@ -107,6 +109,10 @@ public class Controller implements Initializable {
             timeline = null;
         }
 
+    }
+
+    public void loadFile() {
+        Model.FileLoader.readFile();
     }
 
 
