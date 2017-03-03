@@ -18,21 +18,17 @@ import test.Main;
 public class FileLoader {
 
     //Support method for reading files
-    public static void readFile() {
+    public static BufferedReader readFile() {
         try {
             FileReader fr = new FileReader(openFile());
             BufferedReader br = new BufferedReader(fr);
-            //This is meant as a visual test of the method.
-            String line;
-            while((line = br.readLine()) != null) {
-                System.out.println(line);
-            }
-
-        } catch (IOException e) {
+            return br;
+        }
+        catch (IOException e) {
             System.out.println("The file path is invalid");
             e.printStackTrace();
         }
-
+        return null;
     }
 
     public void readGameBoardFromDisk(File file) throws IOException {
