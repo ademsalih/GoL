@@ -56,6 +56,9 @@ public class Board {
 
     double cellSize;
 
+    private int x;
+    private int y;
+
     GraphicsContext gc;
 
     public Board (Canvas canvas) {
@@ -70,6 +73,14 @@ public class Board {
         this.board = board;
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
     public byte[][] getBoard() {
         return board;
     }
@@ -77,6 +88,7 @@ public class Board {
     public void setCellColor() {
 
     }
+
 
     public void drawGrid() {
 
