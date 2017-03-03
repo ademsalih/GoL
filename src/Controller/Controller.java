@@ -13,6 +13,8 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -112,7 +114,11 @@ public class Controller implements Initializable {
     }
 
     public void loadFile() {
-        Model.FileLoader.readFile();
+        try {
+            Model.RLEParser.settingX();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
