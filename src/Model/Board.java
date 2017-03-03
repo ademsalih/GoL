@@ -54,8 +54,7 @@ public class Board {
     double xCounter;
     double yCounter;
 
-    double cellWidth;
-    double cellHeight;
+    double cellSize;
 
     GraphicsContext gc;
 
@@ -63,8 +62,7 @@ public class Board {
         this.canvasWidth = canvas.getWidth();
         this.xCounter = 0.0;
         this.yCounter = 0.0;
-        this.cellHeight = Math.floor(canvasWidth / board.length);
-        this.cellWidth = Math.floor(canvasWidth / board.length);
+        this.cellSize = Math.floor(canvasWidth / board.length);
         this.gc = canvas.getGraphicsContext2D();
     }
 
@@ -86,12 +84,12 @@ public class Board {
 
             for (int b = 0; b < board.length; b++) {
                 gc.setStroke(Color.RED);
-                gc.strokeRect(xCounter,yCounter,cellWidth,cellHeight);
-                xCounter += cellWidth;
+                gc.strokeRect(xCounter,yCounter,cellSize,cellSize);
+                xCounter += cellSize;
 
-                if ((xCounter % (cellWidth*board.length) == 0.0) && (xCounter != 0.0)) {
+                if ((xCounter % (cellSize*board.length) == 0.0) && (xCounter != 0.0)) {
                     xCounter = 0.0;
-                    yCounter += cellHeight;
+                    yCounter += cellSize;
                 }
 
             }
@@ -107,19 +105,19 @@ public class Board {
 
                 if (board[a][b] == 1) {
                     gc.setFill(Color.BLACK);
-                    gc.fillRect(xCounter, yCounter, cellWidth, cellHeight);
-                    xCounter += cellWidth;
+                    gc.fillRect(xCounter,yCounter,cellSize,cellSize);
+                    xCounter += cellSize;
 
                 } else {
                     gc.setFill(Color.WHITE);
-                    gc.fillRect(xCounter,yCounter,cellWidth,cellHeight);
-                    xCounter += cellWidth;
+                    gc.fillRect(xCounter,yCounter,cellSize,cellSize);
+                    xCounter += cellSize;
 
                 }
-                if ((xCounter % (cellWidth*board.length) == 0.0) && (xCounter != 0.0)) {
+                if ((xCounter % (cellSize*board.length) == 0.0) && (xCounter != 0.0)) {
 
                     xCounter = 0.0;
-                    yCounter += cellHeight;
+                    yCounter += cellSize;
 
                 }
 
@@ -137,28 +135,28 @@ public class Board {
                 if (board[a][b] == 1) {
                     //gc.setFill(Color.rgb(110,110,110));
                     gc.setFill(Color.rgb(20,120,230));
-                    gc.fillRect(xCounter, yCounter, cellWidth, cellHeight);
+                    gc.fillRect(xCounter, yCounter, cellSize, cellSize);
 
                     gc.setLineWidth(3.0);
                     gc.setStroke(Color.rgb(5,5,5));
-                    gc.strokeRect(xCounter,yCounter,cellWidth,cellHeight);
+                    gc.strokeRect(xCounter,yCounter,cellSize,cellSize);
 
-                    xCounter += cellWidth;
+                    xCounter += cellSize;
 
                 } else {
                     gc.setFill(Color.rgb(25,25,25));
-                    gc.fillRect(xCounter,yCounter,cellWidth,cellHeight);
+                    gc.fillRect(xCounter,yCounter,cellSize,cellSize);
 
                     gc.setLineWidth(3.0);
                     gc.setStroke(Color.rgb(5,5,5));
-                    gc.strokeRect(xCounter,yCounter,cellWidth,cellHeight);
+                    gc.strokeRect(xCounter,yCounter,cellSize,cellSize);
 
-                    xCounter += cellWidth;
+                    xCounter += cellSize;
                 }
 
-                if ((xCounter % (cellWidth*board.length) == 0.0) && (xCounter != 0.0)) {
+                if ((xCounter % (cellSize*board.length) == 0.0) && (xCounter != 0.0)) {
                     xCounter = 0.0;
-                    yCounter += cellHeight;
+                    yCounter += cellSize;
                 }
 
             }
