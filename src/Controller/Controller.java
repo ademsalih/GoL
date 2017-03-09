@@ -47,10 +47,6 @@ public class Controller implements Initializable {
             timeline.setRate(newValue.doubleValue());
         });
 
-        scaleSlider.valueProperty().addListener((o, oldValue, newValue) -> {
-            canvas.setScaleX(newValue.doubleValue());
-            canvas.setScaleY(newValue.doubleValue());
-        });
     }
 
     public void setID() {
@@ -65,7 +61,6 @@ public class Controller implements Initializable {
         speedSlider.setId("speedSlider");
         cellColorPicker.setId("cellColorPicker");
         backgroundColorPicker.setId("backgroundColorPicker");
-        loadButton.setId("loadButton");
     }
 
     // hjelpemetode som tegner grafikk til 'canvas' området i GUI
