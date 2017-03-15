@@ -27,16 +27,11 @@ public class Controller implements Initializable {
 
     @FXML public Canvas canvas;
     @FXML private Button nextGenButton;
-    @FXML private Button previousGenButton;
-    @FXML private Button stopButton;
-    @FXML private Button startButton;
-    @FXML private Button clearButton;
-    @FXML private Button resetButton;
+    @FXML private Button startStopButton;
     @FXML private GridPane gridPane;
     @FXML private Slider scaleSlider;
     @FXML private Slider speedSlider;
-    @FXML private ColorPicker cellColorPicker;
-    @FXML private ColorPicker backgroundColorPicker;
+
 
     private List<Point> plist;
 
@@ -51,34 +46,36 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         plist = new ArrayList<Point>();
+
         draw();
         setID();
+        initializeSliders();
+    }
+
+    public void setID() {
+        nextGenButton.setId("nextGenerationButton");
+        gridPane.setId("gridPane");
+        scaleSlider.setId("scaleSlider");
+        speedSlider.setId("speedSlider");
+    }
+
+    public void initializeSliders() {
+        speedSlider.setMin(1);
+        speedSlider.setMax(50);
+
 
         speedSlider.valueProperty().addListener((o, oldValue, newValue) -> {
             timeline.setRate(newValue.doubleValue());
         });
 
-        scaleSlider.setValue(5.0);
+        scaleSlider.setValue(5);
+        scaleSlider.setMin(5);
+        scaleSlider.setMax(100);
 
-
-    }
-        /*scaleSlider.valueProperty().addListener((o, oldValue, newValue) -> {
-            canvas.setScaleX(newValue.doubleValue());
-            canvas.setScaleY(newValue.doubleValue());
-        });*/
-
-    public void setID() {
-        nextGenButton.setId("nextGenerationButton");
-        previousGenButton.setId("previousGenerationButton");
-        startButton.setId("startButton");
-        stopButton.setId("stopButton");
-        clearButton.setId("clearButton");
-        resetButton.setId("resetButton");
-        gridPane.setId("gridPane");
-        scaleSlider.setId("scaleSlider");
-        speedSlider.setId("speedSlider");
-        cellColorPicker.setId("cellColorPicker");
-        backgroundColorPicker.setId("backgroundColorPicker");
+        scaleSlider.valueProperty().addListener((o, oldValue, newValue) -> {
+            boardObj.setCellSize(newValue.intValue());
+            boardObj.drawBoardWithGrid();
+        });
     }
 
     // hjelpemetode som tegner grafikk til 'canvas' området i GUI
@@ -102,27 +99,21 @@ public class Controller implements Initializable {
 
 
 
-    public void start() {
+    public void startStopButtonAction() {
 
         if ((timeline == null) || (timeline.getStatus() != Animation.Status.RUNNING)) {
 
-            double durationInMilliSeconds = 1000;
-
-            timeline = new Timeline(new KeyFrame(Duration.millis(durationInMilliSeconds), ae -> nextGeneration() ));
-            timeline.setRate(10);
+            timeline = new Timeline(new KeyFrame(Duration.millis(1000), ae -> nextGeneration() ));
             timeline.setCycleCount(Animation.INDEFINITE);
+
+
             timeline.play();
+            startStopButton.setText("Stop");
 
-        }
+        } else if ( (timeline != null) && (timeline.getStatus() == Animation.Status.RUNNING) ) {
 
-    }
-
-
-    public void stop() {
-
-        if ( (timeline != null) && (timeline.getStatus() == Animation.Status.RUNNING) ) {
             timeline.stop();
-            timeline = null;
+            startStopButton.setText("Start");
         }
 
     }
@@ -158,6 +149,11 @@ public class Controller implements Initializable {
 
 
     }
+
+    public void exitEvent() {
+        System.exit(0);
+    }
+
 
 
 }

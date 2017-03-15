@@ -6,6 +6,9 @@ import javafx.scene.paint.Color;
 
 public class Board {
 
+    Color cellColor = Color.WHITE;
+    Color backgroundColor = Color.BLACK;
+
     public byte[][] board = {
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -50,22 +53,18 @@ public class Board {
     };
 
     double canvasWidth;
-
+    double canvasHeight;
     double xCounter;
     double yCounter;
-
-    public double cellSize;
-
-    private int x;
-    private int y;
-
+    int cellSize;
     GraphicsContext gc;
 
     public Board (Canvas canvas) {
         this.canvasWidth = canvas.getWidth();
+        this.canvasHeight = canvas.getHeight();
         this.xCounter = 0.0;
         this.yCounter = 0.0;
-        this.cellSize = Math.floor(canvasWidth / board.length);
+        this.cellSize = 5;
         this.gc = canvas.getGraphicsContext2D();
     }
 
@@ -78,13 +77,8 @@ public class Board {
     public byte getBoardValues(int x, int y){
         return board[x][y];
     }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
+    public void setCellSize(int a) {
+        this.cellSize = a;
     }
 
     public byte[][] getBoard() {
@@ -105,45 +99,33 @@ public class Board {
         }
         drawBoardWithGrid();
 
-
-
     }
 
 
     public void drawBoardWithGrid() {
 
-        for (int a = 0; a < board.length; a++) {
+        gc.setFill(backgroundColor);
+        gc.fillRect(0,0,canvasWidth,canvasHeight);
 
-            for (int b = 0; b < board.length; b++) {
+        for (int y = 0; y < board.length; y++ ) {
 
-                if (board[a][b] == 1) {
-                    //gc.setFill(Color.rgb(110,110,110));
-                    Point p = new Point();
-                    p.x = xCounter;
-                    p.y = yCounter;
-                    p.draw(gc, Color.rgb(20,120,230), cellSize);
+            for (int x = 0; x < board[0].length; x++) {
 
-                    gc.setLineWidth(3.0);
-                    gc.setStroke(Color.rgb(5,5,5));
-                    gc.strokeRect(xCounter,yCounter,cellSize,cellSize);
+                if (board[y][x] == 1) {
+                    gc.setFill(cellColor);
+                    gc.fillRect(xCounter,yCounter, cellSize,cellSize);
 
                     xCounter += cellSize;
 
                 } else {
-                    Point p = new Point();
-                    p.x = xCounter;
-                    p.y = yCounter;
-                    p.draw(gc, Color.rgb(25,25,25), cellSize);
-
-                    gc.setLineWidth(3.0);
-                    gc.setStroke(Color.rgb(5,5,5));
-                    gc.strokeRect(xCounter,yCounter,cellSize,cellSize);
+                    gc.setFill(backgroundColor);
+                    gc.fillRect(xCounter,yCounter,cellSize,cellSize);
 
                     xCounter += cellSize;
                 }
 
-                if ((xCounter % (cellSize*board.length) == 0.0) && (xCounter != 0.0)) {
-                    xCounter = 0.0;
+                if (x == (board[0].length - 1 )) {
+                    xCounter = 0;
                     yCounter += cellSize;
                 }
 
@@ -151,7 +133,7 @@ public class Board {
 
         }
 
-        yCounter = 0.0;
+        yCounter = 0;
     }
 
 

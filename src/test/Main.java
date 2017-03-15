@@ -8,16 +8,24 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+
+    private static Stage stage;
+
+    public static Stage getStage() {
+        return stage;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
 
-        Parent root = FXMLLoader.load(getClass().getResource("/test/tol.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("layout.fxml"));
 
-        Scene scene = new Scene(root, 610, 728);
+        Scene scene = new Scene(root, 700, 569);
 
         scene.getStylesheets().add("stylesheet.css");
         stage.setTitle("Conways Game of Life");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 

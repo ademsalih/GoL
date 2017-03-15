@@ -6,14 +6,8 @@ package Model;
 import java.io.FileReader;
 import java.io.File;
 import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-
-import javafx.application.Application;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import test.Main;
 
 public class FileLoader {
 
