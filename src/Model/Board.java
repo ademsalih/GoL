@@ -54,7 +54,7 @@ public class Board {
     double xCounter;
     double yCounter;
 
-    double cellSize;
+    public double cellSize;
 
     private int x;
     private int y;
@@ -69,8 +69,14 @@ public class Board {
         this.gc = canvas.getGraphicsContext2D();
     }
 
-    public void setBoard(byte[][] board) {
-        this.board = board;
+    public void setBoard(byte[][] board) {this.board = board;}
+
+    public void setBoardValues(int x, int y, byte value) {
+        board[x][y] = value;
+    }
+
+    public byte getBoardValues(int x, int y){
+        return board[x][y];
     }
 
     public void setX(int x) {
@@ -89,8 +95,16 @@ public class Board {
 
     }
 
+    public void mouseclickedonBoard(double x, double y){
+        int coly = (int)(x/cellSize);
+        int rowx = (int)(y/cellSize);
+        if (board[rowx][coly] == 1){
+            setBoardValues(rowx, coly, (byte)0);
+        }else{
+            setBoardValues(rowx, coly, (byte)1);
 
-    public void drawGrid() {
+
+    /*public void drawGrid(){
 
         for (int a = 0; a < board.length; a++) {
 
@@ -106,37 +120,13 @@ public class Board {
 
             }
 
-        }
-    }
+>>>>>>> origin/master
+        }*/
 
-    public void drawBoard() {
 
-        for (int a = 0; a < board.length; a++) {
 
-            for (int b = 0; b < board.length; b++) {
 
-                if (board[a][b] == 1) {
-                    gc.setFill(Color.BLACK);
-                    gc.fillRect(xCounter,yCounter,cellSize,cellSize);
-                    xCounter += cellSize;
 
-                } else {
-                    gc.setFill(Color.WHITE);
-                    gc.fillRect(xCounter,yCounter,cellSize,cellSize);
-                    xCounter += cellSize;
-
-                }
-                if ((xCounter % (cellSize*board.length) == 0.0) && (xCounter != 0.0)) {
-
-                    xCounter = 0.0;
-                    yCounter += cellSize;
-
-                }
-
-            }
-
-        }
-    }
 
     public void drawBoardWithGrid() {
 
@@ -146,8 +136,10 @@ public class Board {
 
                 if (board[a][b] == 1) {
                     //gc.setFill(Color.rgb(110,110,110));
-                    gc.setFill(Color.rgb(20,120,230));
-                    gc.fillRect(xCounter, yCounter, cellSize, cellSize);
+                    Point p = new Point();
+                    p.x = xCounter;
+                    p.y = yCounter;
+                    p.draw(gc, Color.rgb(20,120,230), cellSize);
 
                     gc.setLineWidth(3.0);
                     gc.setStroke(Color.rgb(5,5,5));
@@ -156,8 +148,10 @@ public class Board {
                     xCounter += cellSize;
 
                 } else {
-                    gc.setFill(Color.rgb(25,25,25));
-                    gc.fillRect(xCounter,yCounter,cellSize,cellSize);
+                    Point p = new Point();
+                    p.x = xCounter;
+                    p.y = yCounter;
+                    p.draw(gc, Color.rgb(25,25,25), cellSize);
 
                     gc.setLineWidth(3.0);
                     gc.setStroke(Color.rgb(5,5,5));
@@ -178,7 +172,9 @@ public class Board {
         yCounter = 0.0;
     }
 
-    public void clearBoard() {
+
+
+    public void clearBoard(){
         board = new byte[board.length][board.length];
         drawBoardWithGrid();
     }
