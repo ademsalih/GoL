@@ -37,11 +37,11 @@ public class Controller implements Initializable {
     @FXML private Slider speedSlider;
     @FXML private ColorPicker cellColorPicker;
     @FXML private ColorPicker backgroundColorPicker;
-<<<<<<< HEAD
+
     private List<Point> plist;
-=======
+
     @FXML private Button loadButton;
->>>>>>> origin/master
+
 
     Board boardObj;
     Rule rule;
@@ -53,21 +53,19 @@ public class Controller implements Initializable {
         plist = new ArrayList<Point>();
         draw();
         setID();
-        
+
         speedSlider.valueProperty().addListener((o, oldValue, newValue) -> {
             timeline.setRate(newValue.doubleValue());
         });
 
-<<<<<<< HEAD
         scaleSlider.setValue(5.0);
+
+
+    }
         /*scaleSlider.valueProperty().addListener((o, oldValue, newValue) -> {
             canvas.setScaleX(newValue.doubleValue());
             canvas.setScaleY(newValue.doubleValue());
         });*/
-
-=======
->>>>>>> origin/master
-    }
 
     public void setID() {
         nextGenButton.setId("nextGenerationButton");
@@ -129,8 +127,7 @@ public class Controller implements Initializable {
 
     }
 
-<<<<<<< HEAD
-=======
+
     public void loadFile() {
         try {
             Model.RLEParser.settingX();
@@ -140,7 +137,6 @@ public class Controller implements Initializable {
     }
 
 
->>>>>>> origin/master
     public void clear() {
         boardObj.clearBoard();
     }

@@ -102,30 +102,12 @@ public class Board {
             setBoardValues(rowx, coly, (byte)0);
         }else{
             setBoardValues(rowx, coly, (byte)1);
-
-
-    /*public void drawGrid(){
-
-        for (int a = 0; a < board.length; a++) {
-
-            for (int b = 0; b < board.length; b++) {
-                gc.setStroke(Color.RED);
-                gc.strokeRect(xCounter,yCounter,cellSize,cellSize);
-                xCounter += cellSize;
-
-                if ((xCounter % (cellSize*board.length) == 0.0) && (xCounter != 0.0)) {
-                    xCounter = 0.0;
-                    yCounter += cellSize;
-                }
-
-            }
-
->>>>>>> origin/master
-        }*/
+        }
+        drawBoardWithGrid();
 
 
 
-
+    }
 
 
     public void drawBoardWithGrid() {
