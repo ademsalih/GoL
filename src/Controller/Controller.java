@@ -33,7 +33,7 @@ public class Controller implements Initializable {
     @FXML private Slider speedSlider;
 
 
-    private List<Point> plist;
+
 
     @FXML private Button loadButton;
 
@@ -45,8 +45,6 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        plist = new ArrayList<Point>();
-
         draw();
         setID();
         initializeSliders();

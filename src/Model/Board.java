@@ -78,7 +78,7 @@ public class Board {
         return board[x][y];
     }
     public void setCellSize(int a) {
-        this.cellSize = a;
+       this.cellSize = a;
     }
 
     public byte[][] getBoard() {
@@ -112,15 +112,28 @@ public class Board {
             for (int x = 0; x < board[0].length; x++) {
 
                 if (board[y][x] == 1) {
-                    gc.setFill(cellColor);
+                   /* gc.setFill(cellColor);
                     gc.fillRect(xCounter,yCounter, cellSize,cellSize);
+
+                    xCounter += cellSize;*/
+
+                    Point p = new Point();
+                    p.x = xCounter;
+                    p.y = yCounter;
+                    p.draw(gc, cellColor, cellSize);
 
                     xCounter += cellSize;
 
                 } else {
-                    gc.setFill(backgroundColor);
+                    /*gc.setFill(backgroundColor);
                     gc.fillRect(xCounter,yCounter,cellSize,cellSize);
 
+                    xCounter += cellSize;*/
+
+                    Point p = new Point();
+                    p.x = xCounter;
+                    p.y = yCounter;
+                    p.draw(gc, backgroundColor, cellSize);
                     xCounter += cellSize;
                 }
 
