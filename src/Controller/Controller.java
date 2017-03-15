@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Board;
+import Model.Point;
 import Model.Rule;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -8,14 +9,18 @@ import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Slider;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -32,14 +37,20 @@ public class Controller implements Initializable {
     @FXML private Slider speedSlider;
     @FXML private ColorPicker cellColorPicker;
     @FXML private ColorPicker backgroundColorPicker;
+<<<<<<< HEAD
+    private List<Point> plist;
+=======
     @FXML private Button loadButton;
+>>>>>>> origin/master
 
     Board boardObj;
     Rule rule;
     Timeline timeline;
+    GraphicsContext gc;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        plist = new ArrayList<Point>();
         draw();
         setID();
         
@@ -47,6 +58,15 @@ public class Controller implements Initializable {
             timeline.setRate(newValue.doubleValue());
         });
 
+<<<<<<< HEAD
+        scaleSlider.setValue(5.0);
+        /*scaleSlider.valueProperty().addListener((o, oldValue, newValue) -> {
+            canvas.setScaleX(newValue.doubleValue());
+            canvas.setScaleY(newValue.doubleValue());
+        });*/
+
+=======
+>>>>>>> origin/master
     }
 
     public void setID() {
@@ -99,6 +119,7 @@ public class Controller implements Initializable {
 
     }
 
+
     public void stop() {
 
         if ( (timeline != null) && (timeline.getStatus() == Animation.Status.RUNNING) ) {
@@ -108,6 +129,8 @@ public class Controller implements Initializable {
 
     }
 
+<<<<<<< HEAD
+=======
     public void loadFile() {
         try {
             Model.RLEParser.settingX();
@@ -117,8 +140,27 @@ public class Controller implements Initializable {
     }
 
 
+>>>>>>> origin/master
     public void clear() {
         boardObj.clearBoard();
+    }
+
+    public void mouseClicked(MouseEvent event) {
+        Point p = new Point();
+        p.x = event.getX();
+        p.y = event.getY();
+        boardObj.mouseclickedonBoard(p.x, p.y);
+
+
+
+    }
+
+    public void mouseDragged(MouseEvent event) {
+        Point p = new Point();
+        p.x = event.getX();
+        p.y = event.getY();
+
+
     }
 
 
