@@ -3,6 +3,8 @@ package Model;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InterruptedIOException;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,44 +13,219 @@ import java.util.regex.Pattern;
  */
 public class RLEParser {
 
-    private int x = 0;
-    private int y = 0;
+    private int x = 5;
+    private int y = 1000;
+    private String boardInBitString = "";
+    char cellType;
+    int runCount;
 
-    //Uses regex to extract the x value from the rle file
-    static public void settingX () throws IOException {
-        BufferedReader br = FileLoader.readFile();
+    //Uses regex to extract the x & y value from the rle file
+    private void settingXY (BufferedReader br) throws IOException {
         Boolean xNotFound = true;
         while (xNotFound) {
             String line = br.readLine();
             if (line.startsWith("x")) {
-                Matcher matcher = Pattern.compile("\\d+").matcher(line);
+                Matcher matcher = Pattern.compile("(.*?)(\\d+)(.*)").matcher(line);
                 matcher.find();
-                int result = Integer.valueOf(matcher.group());
-                //this.x = result;
-                System.out.println(result);
+                String results = matcher.group();
+                String[] resultsArray = results.split("\\s+");
+                this.x = removeComma(resultsArray[2]);
+                this.y = removeComma(resultsArray[5]);
                 xNotFound = false;
             }
         }
-
     }
-    //Uses regex to extract the y value from the rle file
-    public void settingY () throws IOException {
+
+    //Help method for removing commas from x and y values returned in settingXY-method.
+    private int removeComma (String value) {
+        value = value.replace(",", "");
+        int intValue = Integer.parseInt(value);
+        return intValue;
+    }
+
+    //Updates the BitString with the number of 1s or 0s that is needed according to the latest reading from the RLE-string
+    private String updateBitString(int runCount, char cellType, String boardInBitString) {
+        String partOfBitString = "";
+        if (cellType == 'b') {
+            partOfBitString += addToBitString(runCount, '0');
+        }
+        else if (cellType == 'o') {
+            partOfBitString += addToBitString(runCount, '1');
+        }
+        else if (cellType == '$') {
+            for (int i = 0; i < runCount; i++) {
+                if (i == 0) {
+                    if (howFarAlongTheRow(boardInBitString) != 0) {
+                        partOfBitString += addToBitString((x - howFarAlongTheRow(boardInBitString)), '0');
+                    }
+                }
+                else {
+                    partOfBitString += addToBitString(x, '0');
+                }
+            }
+        }
+        return partOfBitString;
+    }
+
+    //Runs through the rlePattern and updates the local variable boardInBitString using the updateBitString method.
+    private void setBitStringFromRlePattern(String rlePattern) {
+        for (int i = 0; i < rlePattern.length(); i++) {
+
+            if (!checkForRleEnding(rlePattern, i)) {
+
+                if (getRunCount(rlePattern, i) != 0) {
+                    runCount = getRunCount(rlePattern, i);
+                    i += iUpdate(runCount);
+                }
+                else if (getCellType(rlePattern, i) != 'a') {
+                    cellType = getCellType(rlePattern, i);
+                    if (prevCharIsNotInt(rlePattern, i)) {
+                        runCount = 1;
+                    }
+                    this.boardInBitString += updateBitString(runCount, cellType, boardInBitString);
+                }
+
+            }
+
+        }
+    }
+
+    public byte[][] testRun () throws IOException {
         BufferedReader br = FileLoader.readFile();
-        Boolean xNotFound = true;
-        while (xNotFound) {
-            String line = br.readLine();
-            if (line.startsWith("x")) {
-                Matcher matcher = Pattern.compile("\\d+").matcher(line);
-                matcher.find(5);
-                int result = Integer.valueOf(matcher.group());
-                //this.x = result;
-                System.out.println(result);
-                xNotFound = false;
+
+        settingXY(br);
+
+        String rlePattern = getRlePattern(br);
+        System.out.println(rlePattern);
+        setBitStringFromRlePattern(rlePattern);
+        addingLastCharacters();
+        System.out.println(boardInBitString);
+
+        br.close();
+        return stringToByteArray(boardInBitString);
+
+    }
+
+    private String addingLastCharacters () {
+        return boardInBitString += addToBitString(x - howFarAlongTheRow(boardInBitString), '0');
+    }
+
+    private String getRlePattern (BufferedReader br) throws IOException {
+        String line;
+        String RlePattern = null;
+        Boolean intFound = false;
+        while ((line = br.readLine()) != null) {
+            if (!startNotFound(line)) {
+                intFound = true;
             }
+            if (intFound) {
+                RlePattern += line;
+            }
+        }
+        return RlePattern;
+    }
+
+    private boolean startNotFound(String line) {
+        if (line.substring(0, 1).matches("[0-9ob$]")) {
+            return false;
+        }
+        else {
+            return true;
         }
     }
 
-    
 
+    private int getRunCount (String line, int i) {
+        String runCount = "";
+        if (line.substring(i, i+1).matches("\\d")) {
+            runCount += (char)line.charAt(i);
+            if (line.substring(i+1, i+2).matches("\\d")) {
+                runCount += (char)line.charAt(i+1);
+                if (line.substring(i+2, i+3).matches("\\d")) {
+                    runCount += (char)line.charAt(i+2);
+                }
+            }
+        }
+        else {
+            return 0;
+        }
+        int runCountInt = Integer.parseInt(runCount);
+        return runCountInt;
+    }
 
+    private char getCellType (String line, int i) {
+        char cellType = 'a';
+        if (line.substring(i, i+1).matches("[bo$]")) {
+            cellType = line.charAt(i);
+        }
+        return cellType;
+    }
+
+    private Boolean checkForRleEnding (String line, int i) {
+        if (line.substring(i, i+1) == "!") {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    private Boolean isThereTwoDigits (int runCount) {
+        int numberOfDigits = String.valueOf(runCount).length();
+        if (numberOfDigits == 1) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    private int iUpdate (int runCount) {
+        int numberOfDigits = String.valueOf(runCount).length();
+        if (numberOfDigits == 2) {
+            return 1;
+        }
+        else if (numberOfDigits == 3) {
+            return 2;
+        }
+        else {
+            return 0;
+        }
+    }
+
+    private String addToBitString (int runCount, char cellType) {
+        String updateBitString = "";
+        for (int i = 0; i < runCount; i++) {
+            updateBitString += cellType;
+        }
+        return updateBitString;
+    }
+
+    private int howFarAlongTheRow (String boardInBitString) {
+        int howFarAlong = boardInBitString.length()%x;
+        return howFarAlong;
+    }
+
+    private boolean prevCharIsNotInt (String rlePattern, int i) {
+        char cha = rlePattern.charAt(i-1);
+        if (Character.isLetter(cha)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public byte[][] stringToByteArray (String bitString) {
+        byte[][] byteArray = new byte[y][x];
+        int count = 0;
+        for (int i = 0; i < y; i++) {
+            for (int j = 0; j < x; j++) {
+                char charBit = bitString.charAt(count);
+                byteArray[i][j] = (byte)Character.getNumericValue(charBit);
+                count++;
+            }
+        }
+        return byteArray;
+    }
 }

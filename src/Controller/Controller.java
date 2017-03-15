@@ -2,6 +2,7 @@ package Controller;
 
 import Model.Board;
 import Model.Point;
+import Model.RLEParser;
 import Model.Rule;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -42,6 +43,7 @@ public class Controller implements Initializable {
     Rule rule;
     Timeline timeline;
     GraphicsContext gc;
+    Model.RLEParser rleParser;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -119,12 +121,11 @@ public class Controller implements Initializable {
     }
 
 
-    public void loadFile() {
-        try {
-            Model.RLEParser.settingX();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void loadFile() throws IOException {
+        rleParser = new RLEParser();
+        boardObj.setBoard(rleParser.testRun());
+        nextGeneration();
+
     }
 
 
