@@ -96,6 +96,13 @@ public class Board {
         this.backgroundColor = backgroundColor;
     }
 
+    public Color getcellColor() {
+        return this.cellColor;
+    }
+
+    public Color getBackgroundColor() {
+        return this.backgroundColor;
+    }
     public void mouseclickedonBoard(double x, double y){
         int coly = (int)(x/cellSize);
         int rowx = (int)(y/cellSize);

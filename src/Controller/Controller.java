@@ -91,6 +91,8 @@ public class Controller implements Initializable {
 
     public void colorStage() {
 
+
+
         try {
             Pane root = FXMLLoader.load(getClass().getResource("colorStage.fxml"));
             stage = new Stage();
@@ -103,6 +105,10 @@ public class Controller implements Initializable {
             System.out.println("feil");
             e.printStackTrace();
         }
+
+        ColorStageController.instance.setCellColorPicker(boardObj.getcellColor());
+        ColorStageController.instance.setBackgroundColorPicker(boardObj.getBackgroundColor());
+
 
     }
 
