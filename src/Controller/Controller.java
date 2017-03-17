@@ -22,6 +22,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import test.Main;
 
 import java.io.IOException;
 import java.net.URL;
@@ -49,6 +50,7 @@ public class Controller implements Initializable {
     Model.RLEParser rleParser;
     public static Controller instance;
     Stage stage;
+    public int counter;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -80,7 +82,7 @@ public class Controller implements Initializable {
 
         scaleSlider.setValue(5);
         scaleSlider.setMin(5);
-        scaleSlider.setMax(100);
+        scaleSlider.setMax(40);
 
         scaleSlider.valueProperty().addListener((o, oldValue, newValue) -> {
             boardObj.setCellSize(newValue.intValue());
@@ -90,8 +92,6 @@ public class Controller implements Initializable {
 
 
     public void colorStage() {
-
-
 
         try {
             Pane root = FXMLLoader.load(getClass().getResource("colorStage.fxml"));
@@ -112,9 +112,6 @@ public class Controller implements Initializable {
 
     }
 
-
-
-    // hjelpemetode som tegner grafikk til 'canvas' området i GUI
     public void draw() {
         boardObj = new Board(canvas);
         boardObj.drawBoardWithGrid();
@@ -125,7 +122,13 @@ public class Controller implements Initializable {
         rule = new Rule(boardObj.board);
         boardObj.setBoard(rule.conwaysBoardRules());
         boardObj.drawBoardWithGrid();
+        counter += 1;
+        genCounter();
+    }
 
+    public void genCounter() {
+        int gen = counter;
+        Main.getStage().setTitle("Conways Game of Life (" + gen + ")");
     }
 
     public void reset() {

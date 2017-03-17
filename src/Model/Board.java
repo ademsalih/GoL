@@ -61,6 +61,8 @@ public class Board {
     int cellSize;
     GraphicsContext gc;
 
+    int generationCounter;
+
     public Board (Canvas canvas) {
         this.canvasWidth = canvas.getWidth();
         this.canvasHeight = canvas.getHeight();
@@ -68,6 +70,10 @@ public class Board {
         this.yCounter = 0.0;
         this.cellSize = 5;
         this.gc = canvas.getGraphicsContext2D();
+    }
+
+    public void setGenerationCounter(int a) {
+
     }
 
     public void setBoard(byte[][] board) {this.board = board;}
