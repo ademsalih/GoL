@@ -8,7 +8,9 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -16,6 +18,9 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -32,21 +37,24 @@ public class Controller implements Initializable {
     @FXML private GridPane gridPane;
     @FXML private Slider scaleSlider;
     @FXML private Slider speedSlider;
+    @FXML private Button loadButton;
 
 
     private List<Point> plist;
-
-    @FXML private Button loadButton;
-
 
     Board boardObj;
     Rule rule;
     Timeline timeline;
     GraphicsContext gc;
     Model.RLEParser rleParser;
+    public static Controller instance;
+    Stage stage;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        instance = this;
+
         plist = new ArrayList<Point>();
 
         draw();
@@ -80,6 +88,26 @@ public class Controller implements Initializable {
         });
     }
 
+
+    public void colorStage() {
+
+        try {
+            Pane root = FXMLLoader.load(getClass().getResource("colorStage.fxml"));
+            stage = new Stage();
+            Scene scene = new Scene(root, 270, 112);
+            stage.setScene(scene);
+            stage.setTitle("Change color");
+            stage.setResizable(false);
+            stage.show();
+        } catch (Exception e) {
+            System.out.println("feil");
+            e.printStackTrace();
+        }
+
+    }
+
+
+
     // hjelpemetode som tegner grafikk til 'canvas' området i GUI
     public void draw() {
         boardObj = new Board(canvas);
@@ -98,8 +126,6 @@ public class Controller implements Initializable {
         boardObj = new Board(canvas);
         boardObj.drawBoardWithGrid();
     }
-
-
 
     public void startStopButtonAction() {
 
@@ -120,14 +146,12 @@ public class Controller implements Initializable {
 
     }
 
-
     public void loadFile() throws IOException {
         rleParser = new RLEParser();
         boardObj.setBoard(rleParser.testRun());
         nextGeneration();
 
     }
-
 
     public void clear() {
         boardObj.clearBoard();
@@ -138,8 +162,6 @@ public class Controller implements Initializable {
         p.x = event.getX();
         p.y = event.getY();
         boardObj.mouseclickedonBoard(p.x, p.y);
-
-
 
     }
 
@@ -153,6 +175,14 @@ public class Controller implements Initializable {
 
     public void exitEvent() {
         System.exit(0);
+    }
+
+    public void changeCellColor(Color c) {
+        boardObj.setCellColor(c);
+    }
+
+    public void changeBackgroundColor(Color c) {
+        boardObj.setBackgroundColor(c);
     }
 
 
