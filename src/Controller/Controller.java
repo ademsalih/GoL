@@ -159,7 +159,7 @@ public class Controller implements Initializable {
         rleParser = new RLEParser();
         boardObj.setBoard(rleParser.testRun());
         nextGeneration();
-
+        counter = 0;
     }
 
     public void clear() {
