@@ -48,6 +48,7 @@ public class Controller implements Initializable {
         draw();
         setID();
         initializeSliders();
+
     }
 
     public void setID() {
@@ -87,6 +88,8 @@ public class Controller implements Initializable {
         rule = new Rule(boardObj.board);
         boardObj.setBoard(rule.conwaysBoardRules());
         boardObj.drawBoardWithGrid();
+        //System.out.println(rule.toString());
+
 
     }
 
