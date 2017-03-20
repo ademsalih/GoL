@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
  * Created by Narmatha on 20.03.2017.
  */
 public class Testing {
-    Board boardObj;
     @Test
     public void testnextGeneration(){
         byte[][] board = {
@@ -19,7 +18,7 @@ public class Testing {
         };
 
         Rule rule = new Rule(board);
-        boardObj.setBoard(rule.conwaysBoardRules());
+        rule.conwaysBoardRules();
         org.junit.Assert.assertEquals(rule.toString(),"0000011001100000");
 
 
