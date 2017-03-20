@@ -9,14 +9,16 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
 
-    private static Stage stage;
+    private static Stage mainStage;
 
     public static Stage getStage() {
-        return stage;
+        return mainStage;
     }
 
     @Override
     public void start(Stage stage) throws Exception {
+
+        mainStage = stage;
 
         Parent root = FXMLLoader.load(getClass().getResource("layout.fxml"));
 

@@ -39,9 +39,9 @@ public class Board {
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -52,12 +52,16 @@ public class Board {
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
     };
 
+    //public byte[][] board223 = new byte[100][140];
+
     double canvasWidth;
     double canvasHeight;
     double xCounter;
     double yCounter;
     int cellSize;
     GraphicsContext gc;
+
+    int generationCounter;
 
     public Board (Canvas canvas) {
         this.canvasWidth = canvas.getWidth();
@@ -66,6 +70,10 @@ public class Board {
         this.yCounter = 0.0;
         this.cellSize = 5;
         this.gc = canvas.getGraphicsContext2D();
+    }
+
+    public void setGenerationCounter(int a) {
+
     }
 
     public void setBoard(byte[][] board) {this.board = board;}
@@ -77,6 +85,7 @@ public class Board {
     public byte getBoardValues(int x, int y){
         return board[x][y];
     }
+
     public void setCellSize(int a) {
        this.cellSize = a;
     }
@@ -85,10 +94,21 @@ public class Board {
         return board;
     }
 
-    public void setCellColor() {
-
+    public void setCellColor(Color cellColor) {
+        this.cellColor = cellColor;
     }
 
+    public void setBackgroundColor(Color backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
+
+    public Color getcellColor() {
+        return this.cellColor;
+    }
+
+    public Color getBackgroundColor() {
+        return this.backgroundColor;
+    }
     public void mouseclickedonBoard(double x, double y){
         int coly = (int)(x/cellSize);
         int rowx = (int)(y/cellSize);
