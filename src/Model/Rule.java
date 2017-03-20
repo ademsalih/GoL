@@ -23,6 +23,25 @@ public class Rule {
         this.currentBoard = board;
     }
 
+    @Override
+    public String toString(){
+        /*byte[][] array2D = {
+                {0, 0, 0, 0},
+                {0, 1, 1, 0},
+                {0, 1, 1, 0},
+                {0, 0, 0, 0}
+        };*/
+
+        String output = new String();
+
+        for (int row = 0; row < currentBoard.length; row++) {
+            for (int col = 0; col < currentBoard[0].length; col++){
+                output = output + currentBoard[row][col];
+            }
+        }
+        return output;
+    }
+
     ////SIMPLE RULES, INVERSION
     public byte[][] invertBoard() {
 
@@ -76,8 +95,8 @@ public class Rule {
 
             }
         }
-
         return conwaysBoard;
+
     }
 
     public int countNeighbor(byte[][] board, int y, int x){
@@ -112,7 +131,9 @@ public class Rule {
         }
 
         return neighborsCounter;
+
     }
+
 
     ////COUNT NEIGHBOR METHODS
 

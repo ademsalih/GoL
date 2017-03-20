@@ -2,15 +2,12 @@ package Controller;
 
 import Model.Board;
 import Model.Point;
-import Model.RLEParser;
 import Model.Rule;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -18,11 +15,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import javafx.util.Duration;
-import test.Main;
 
 import java.io.IOException;
 import java.net.URL;
@@ -38,27 +31,20 @@ public class Controller implements Initializable {
     @FXML private GridPane gridPane;
     @FXML private Slider scaleSlider;
     @FXML private Slider speedSlider;
+
+
+
+
     @FXML private Button loadButton;
 
-
-    private List<Point> plist;
 
     Board boardObj;
     Rule rule;
     Timeline timeline;
     GraphicsContext gc;
-    Model.RLEParser rleParser;
-    public static Controller instance;
-    Stage stage;
-    public int counter;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        instance = this;
-
-        plist = new ArrayList<Point>();
-
         draw();
         setID();
         initializeSliders();
@@ -82,7 +68,7 @@ public class Controller implements Initializable {
 
         scaleSlider.setValue(5);
         scaleSlider.setMin(5);
-        scaleSlider.setMax(40);
+        scaleSlider.setMax(100);
 
         scaleSlider.valueProperty().addListener((o, oldValue, newValue) -> {
             boardObj.setCellSize(newValue.intValue());
@@ -90,28 +76,7 @@ public class Controller implements Initializable {
         });
     }
 
-
-    public void colorStage() {
-
-        try {
-            Pane root = FXMLLoader.load(getClass().getResource("colorStage.fxml"));
-            stage = new Stage();
-            Scene scene = new Scene(root, 270, 112);
-            stage.setScene(scene);
-            stage.setTitle("Change color");
-            stage.setResizable(false);
-            stage.show();
-        } catch (Exception e) {
-            System.out.println("feil");
-            e.printStackTrace();
-        }
-
-        ColorStageController.instance.setCellColorPicker(boardObj.getcellColor());
-        ColorStageController.instance.setBackgroundColorPicker(boardObj.getBackgroundColor());
-
-
-    }
-
+    // hjelpemetode som tegner grafikk til 'canvas' området i GUI
     public void draw() {
         boardObj = new Board(canvas);
         boardObj.drawBoardWithGrid();
@@ -122,19 +87,15 @@ public class Controller implements Initializable {
         rule = new Rule(boardObj.board);
         boardObj.setBoard(rule.conwaysBoardRules());
         boardObj.drawBoardWithGrid();
-        counter += 1;
-        genCounter();
-    }
 
-    public void genCounter() {
-        int gen = counter;
-        Main.getStage().setTitle("Conways Game of Life (" + gen + ")");
     }
 
     public void reset() {
         boardObj = new Board(canvas);
         boardObj.drawBoardWithGrid();
     }
+
+
 
     public void startStopButtonAction() {
 
@@ -155,12 +116,15 @@ public class Controller implements Initializable {
 
     }
 
-    public void loadFile() throws IOException {
-        rleParser = new RLEParser();
-        boardObj.setBoard(rleParser.testRun());
-        nextGeneration();
-        counter = 0;
-    }
+
+    /*public void loadFile() {
+        try {
+            Model.RLEParser.settingX();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }*/
+
 
     public void clear() {
         boardObj.clearBoard();
@@ -171,6 +135,8 @@ public class Controller implements Initializable {
         p.x = event.getX();
         p.y = event.getY();
         boardObj.mouseclickedonBoard(p.x, p.y);
+
+
 
     }
 
@@ -184,14 +150,6 @@ public class Controller implements Initializable {
 
     public void exitEvent() {
         System.exit(0);
-    }
-
-    public void changeCellColor(Color c) {
-        boardObj.setCellColor(c);
-    }
-
-    public void changeBackgroundColor(Color c) {
-        boardObj.setBackgroundColor(c);
     }
 
 
