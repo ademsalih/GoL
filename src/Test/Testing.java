@@ -11,10 +11,10 @@ public class Testing {
     @Test
     public void testnextGeneration(){
         byte[][] board = {
-                {0,0,0,0},
-                {0,1,1,0},
-                {0,1,1,0},
-                {0,0,0,0}
+                { 0, 0, 0, 0 },
+                { 0, 0, 1, 0 },
+                { 0, 1, 1, 0 },
+                { 0, 0, 0, 0 }
         };
 
         Rule rule = new Rule(board);

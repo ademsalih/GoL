@@ -23,6 +23,7 @@ public class Rule {
         this.currentBoard = board;
     }
 
+    //Retunerer next generation verdier
     @Override
     public String toString(){
         /*byte[][] array2D = {
@@ -34,9 +35,9 @@ public class Rule {
 
         String output = new String();
 
-        for (int row = 0; row < currentBoard.length; row++) {
-            for (int col = 0; col < currentBoard[0].length; col++){
-                output = output + currentBoard[row][col];
+        for (int row = 0; row < conwaysBoard.length; row++) {
+            for (int col = 0; col < conwaysBoard[0].length; col++){
+                output = output + conwaysBoard[row][col];
             }
         }
         return output;
