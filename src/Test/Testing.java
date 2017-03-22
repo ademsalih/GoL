@@ -1,4 +1,4 @@
-package Test;
+package test;
 
 import Model.Board;
 import Model.Rule;
@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
  * Created by Narmatha on 20.03.2017.
  */
 public class Testing {
+
     @Test
     public void testnextGeneration(){
         byte[][] board = {
