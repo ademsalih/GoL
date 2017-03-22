@@ -67,17 +67,16 @@ public class Controller implements Initializable {
     }
 
     public void setID() {
-        nextGenButton.setId("nextGenerationButton");
+        nextGenButton.setId("nextGenButton");
         gridPane.setId("gridPane");
         scaleSlider.setId("scaleSlider");
         speedSlider.setId("speedSlider");
+        startStopButton.setId("startButton");
     }
 
     public void initializeSliders() {
         speedSlider.setMin(1);
         speedSlider.setMax(50);
-
-
 
         speedSlider.valueProperty().addListener((o, oldValue, newValue) -> {
             timeline.setRate(newValue.doubleValue());
@@ -195,7 +194,6 @@ public class Controller implements Initializable {
     public void changeBackgroundColor(Color c) {
         boardObj.setBackgroundColor(c);
     }
-
 
 
 }

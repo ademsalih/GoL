@@ -1,4 +1,4 @@
-#nextGenerationButton {
+#nextGenButton {
     -fx-base: #201e19;
 }
 
@@ -15,7 +15,7 @@
 }
 
 #gridPane {
-    -fx-background-color: linear-gradient(#393939, #393939);
+    -fx-base: #393939;
 }
 
 #scaleSlider {
