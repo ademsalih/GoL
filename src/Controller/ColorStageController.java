@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
 /**
  * Created by ademsalih on 17.03.2017.
  */
-/*public class ColorStageController implements Initializable {
+public class ColorStageController implements Initializable {
 
     @FXML private ColorPicker cellColorPicker;
     @FXML private ColorPicker backgroundColorPicker;
@@ -42,4 +42,4 @@ import java.util.ResourceBundle;
     public void setBackgroundColorPicker(Color c) {
         backgroundColorPicker.valueProperty().setValue(c);
     }
-}*/
+}

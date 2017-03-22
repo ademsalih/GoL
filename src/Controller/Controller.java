@@ -4,6 +4,7 @@ import Model.Board;
 import Model.Point;
 import Model.RLEParser;
 import Model.Rule;
+import View.Main;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -22,7 +23,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import test.Main;
 
 import java.io.IOException;
 import java.net.URL;
