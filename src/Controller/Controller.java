@@ -14,9 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -38,11 +36,12 @@ public class Controller implements Initializable {
     @FXML private GridPane gridPane;
     @FXML private Slider scaleSlider;
     @FXML private Slider speedSlider;
-    @FXML private Button loadButton;
-
+    @FXML private MenuBar menuBar;
+    @FXML private Button resetButton;
+    @FXML private Label speedLabel;
+    @FXML private Label scaleLabel;
 
     private List<Point> plist;
-
     Board boardObj;
     Rule rule;
     Timeline timeline;
@@ -72,6 +71,8 @@ public class Controller implements Initializable {
         scaleSlider.setId("scaleSlider");
         speedSlider.setId("speedSlider");
         startStopButton.setId("startButton");
+        menuBar.setId("menuBar");
+        resetButton.setId("resetButton");
     }
 
     public void initializeSliders() {
@@ -144,14 +145,15 @@ public class Controller implements Initializable {
             timeline = new Timeline(new KeyFrame(Duration.millis(70), ae -> nextGeneration() ));
             timeline.setCycleCount(Animation.INDEFINITE);
 
-
             timeline.play();
             startStopButton.setText("Stop");
+            startStopButton.setId("stopButton");
 
         } else if ( (timeline != null) && (timeline.getStatus() == Animation.Status.RUNNING) ) {
 
             timeline.stop();
             startStopButton.setText("Start");
+            startStopButton.setId("startButton");
         }
 
     }
