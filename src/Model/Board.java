@@ -9,7 +9,7 @@ public class Board {
     Color cellColor = Color.WHITE;
     Color backgroundColor = Color.BLACK;
 
-    public byte[][] board = {
+    public byte[][] boardasda = {
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -52,7 +52,7 @@ public class Board {
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
     };
 
-    //public byte[][] board223 = new byte[100][140];
+    public byte[][] board = new byte[100][140];
 
     double canvasWidth;
     double canvasHeight;

@@ -57,6 +57,8 @@ public class Controller implements Initializable {
 
         instance = this;
 
+        //noe
+
         plist = new ArrayList<Point>();
 
         draw();
@@ -76,6 +78,7 @@ public class Controller implements Initializable {
         speedSlider.setMax(50);
 
 
+
         speedSlider.valueProperty().addListener((o, oldValue, newValue) -> {
             timeline.setRate(newValue.doubleValue());
         });
@@ -89,7 +92,6 @@ public class Controller implements Initializable {
             boardObj.drawBoardWithGrid();
         });
     }
-
 
     public void colorStage() {
 
@@ -140,7 +142,7 @@ public class Controller implements Initializable {
 
         if ((timeline == null) || (timeline.getStatus() != Animation.Status.RUNNING)) {
 
-            timeline = new Timeline(new KeyFrame(Duration.millis(1000), ae -> nextGeneration() ));
+            timeline = new Timeline(new KeyFrame(Duration.millis(70), ae -> nextGeneration() ));
             timeline.setCycleCount(Animation.INDEFINITE);
 
 
