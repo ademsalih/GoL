@@ -25,22 +25,14 @@ public class RLEParser {
         while (xNotFound) {
             String line = br.readLine();
             if (line.startsWith("x")) {
-                Matcher matcher = Pattern.compile("(.*?)(\\d+)(.*)").matcher(line);
+                String test = "x ?= ?(\\d+),? y ?= ?(\\d+)";
+                Matcher matcher = Pattern.compile(test).matcher(line);
                 matcher.find();
-                String results = matcher.group();
-                String[] resultsArray = results.split("\\s+");
-                this.x = removeComma(resultsArray[2]);
-                this.y = removeComma(resultsArray[5]);
+                this.x = Integer.parseInt(matcher.group(1));
+                this.y = Integer.parseInt(matcher.group(2));
                 xNotFound = false;
             }
         }
-    }
-
-    //Help method for removing commas from x and y values returned in settingXY-method.
-    private int removeComma (String value) {
-        value = value.replace(",", "");
-        int intValue = Integer.parseInt(value);
-        return intValue;
     }
 
     //Updates the BitString with the number of 1s or 0s that is needed according to the latest reading from the RLE-string
@@ -90,7 +82,15 @@ public class RLEParser {
         }
     }
 
-    public byte[][] testRun () throws IOException {
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public byte[][] importFile () throws IOException {
         BufferedReader br = FileLoader.readFile();
 
         settingXY(br);
@@ -99,10 +99,12 @@ public class RLEParser {
         System.out.println(rlePattern);
         setBitStringFromRlePattern(rlePattern);
         addingLastCharacters();
+        //Prints the board as a single string.
         System.out.println(boardInBitString);
-
         br.close();
+        printArray(stringToByteArray(boardInBitString));
         return stringToByteArray(boardInBitString);
+
 
     }
 
@@ -133,7 +135,6 @@ public class RLEParser {
             return true;
         }
     }
-
 
     private int getRunCount (String line, int i) {
         String runCount = "";
@@ -167,16 +168,6 @@ public class RLEParser {
         }
         else {
             return false;
-        }
-    }
-
-    private Boolean isThereTwoDigits (int runCount) {
-        int numberOfDigits = String.valueOf(runCount).length();
-        if (numberOfDigits == 1) {
-            return false;
-        }
-        else {
-            return true;
         }
     }
 
@@ -228,4 +219,19 @@ public class RLEParser {
         }
         return byteArray;
     }
+
+    public void printArray(byte[][] array) {
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                System.out.print(array[i][j]);
+            }
+            System.out.println("");
+        }
+    }
+
+    public String exportFile (byte[][] array) {
+        return null;
+    }
 }
+
+

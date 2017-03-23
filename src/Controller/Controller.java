@@ -1,9 +1,6 @@
 package Controller;
 
-import Model.Board;
-import Model.Point;
-import Model.RLEParser;
-import Model.Rule;
+import Model.*;
 import View.Main;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -15,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -159,9 +155,15 @@ public class Controller implements Initializable {
 
     public void loadFile() throws IOException {
         rleParser = new RLEParser();
-        boardObj.setBoard(rleParser.testRun());
+        boardObj.setBoard(rleParser.importFile());
         nextGeneration();
         counter = 0;
+    }
+
+    public void exportFile() {
+        SaveFile er = new SaveFile();
+        er.testRun();
+        printArray(boardObj.getBoard());
     }
 
     public void clear() {
@@ -197,5 +199,12 @@ public class Controller implements Initializable {
     }
 
 
-
+    public void printArray(byte[][] array) {
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                System.out.print(array[i][j]);
+            }
+            System.out.println("");
+        }
+    }
 }

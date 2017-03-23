@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
@@ -16,7 +21,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane fx:controller="Controller.Controller" fx:id="gridPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="569.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/">
+<GridPane fx:id="gridPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="569.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Controller">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="700.0" minWidth="700.0" prefWidth="700.0" />
       <ColumnConstraints />
@@ -32,16 +37,16 @@
           <Menu mnemonicParsing="false" text="File">
             <items>
               <MenuItem mnemonicParsing="false" text="New blank" />
-                  <MenuItem onAction="#loadFile" mnemonicParsing="false" text="Open..." />
-                  <MenuItem mnemonicParsing="false" text="Save..." />
+                  <MenuItem mnemonicParsing="false" onAction="#loadFile" text="Open..." />
+                  <MenuItem mnemonicParsing="false" onAction="#exportFile" text="Save..." />
                   <MenuItem mnemonicParsing="false" text="Export as GIF..." />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem onAction="#exitEvent" mnemonicParsing="false" text="Exit" />
+                  <MenuItem mnemonicParsing="false" onAction="#exitEvent" text="Exit" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Options">
             <items>
-              <MenuItem onAction="#colorStage" mnemonicParsing="false" text="Change colors..." />
+              <MenuItem mnemonicParsing="false" onAction="#colorStage" text="Change colors..." />
                   <CheckMenuItem mnemonicParsing="false" text="Show grid" />
             </items>
           </Menu>
@@ -52,13 +57,13 @@
           </Menu>
         </menus>
       </MenuBar>
-      <Canvas fx:id="canvas" onMouseClicked="#mouseClicked" height="500.0" width="700.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+      <Canvas fx:id="canvas" height="500.0" onMouseClicked="#mouseClicked" width="700.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
       <ToolBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
          <items>
             <HBox maxHeight="40.0" maxWidth="179.0" minHeight="26.0" minWidth="179.0" prefHeight="26.0" prefWidth="179.0">
                <children>
-                  <Button fx:id="startStopButton" onAction="#startStopButtonAction" maxWidth="53.0" minWidth="53.0" mnemonicParsing="false" prefWidth="53.0" text="Start" />
-                  <Button fx:id="nextGenButton" onAction="#nextGeneration" maxWidth="53.0" minWidth="53.0" mnemonicParsing="false" prefWidth="53.0" text="Next">
+                  <Button fx:id="startStopButton" maxWidth="53.0" minWidth="53.0" mnemonicParsing="false" onAction="#startStopButtonAction" prefWidth="53.0" text="Start" />
+                  <Button fx:id="nextGenButton" maxWidth="53.0" minWidth="53.0" mnemonicParsing="false" onAction="#nextGeneration" prefWidth="53.0" text="Next">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin></Button>
