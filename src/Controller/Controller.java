@@ -159,9 +159,14 @@ public class Controller implements Initializable {
 
     public void loadFile() throws IOException {
         rleParser = new RLEParser();
-        boardObj.setBoard(rleParser.testRun());
+        boardObj.setBoard(rleParser.importFile());
         nextGeneration();
         counter = 0;
+    }
+
+    public void saveFile() {
+        SaveFile sf = new SaveFile();
+        sf.saveFile(boardObj.getBoard());
     }
 
     public void clear() {

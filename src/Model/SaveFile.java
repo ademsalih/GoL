@@ -49,7 +49,7 @@ public class SaveFile {
         }
     }
 
-    public void testRun(byte[][] board) {
+    public void saveFile(byte[][] board) {
         createFile(createFilePath(), board);
     }
 

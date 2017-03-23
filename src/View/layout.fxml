@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
@@ -15,7 +20,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane fx:id="gridPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="569.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Controller">
+<GridPane fx:id="gridPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="569.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Controller">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="700.0" minWidth="700.0" prefWidth="700.0" />
       <ColumnConstraints />
@@ -30,9 +35,9 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem onAction="#clear" mnemonicParsing="false" text="New blank" />
+              <MenuItem mnemonicParsing="false" onAction="#clear" text="New blank" />
                   <MenuItem mnemonicParsing="false" onAction="#loadFile" text="Open..." />
-                  <MenuItem mnemonicParsing="false" text="Save..." />
+                  <MenuItem mnemonicParsing="false" onAction="#saveFile" text="Save..." />
                   <MenuItem mnemonicParsing="false" text="Export as GIF..." />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#exitEvent" text="Exit" />
@@ -66,7 +71,7 @@
                         <Insets left="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="resetButton" onAction="#reset" maxWidth="53.0" minWidth="53.0" mnemonicParsing="false" prefWidth="53.0" text="Reset">
+                  <Button fx:id="resetButton" maxWidth="53.0" minWidth="53.0" mnemonicParsing="false" onAction="#reset" prefWidth="53.0" text="Reset">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
