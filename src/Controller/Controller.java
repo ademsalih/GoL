@@ -1,9 +1,6 @@
 package Controller;
 
-import Model.Board;
-import Model.Point;
-import Model.RLEParser;
-import Model.Rule;
+import Model.*;
 import View.Main;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -50,19 +47,19 @@ public class Controller implements Initializable {
     public static Controller instance;
     Stage stage;
     public int counter;
+    Animate animate;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         instance = this;
 
-        //noe
-
         plist = new ArrayList<Point>();
 
         draw();
         setID();
         initializeSliders();
+        animate = new Animate(100);
     }
 
     public void setID() {
@@ -195,6 +192,20 @@ public class Controller implements Initializable {
 
     public void changeBackgroundColor(Color c) {
         boardObj.setBackgroundColor(c);
+    }
+
+    public Button getStartStopButton() {
+        return this.startStopButton;
+    }
+
+    public Timeline getTimeline() {
+        return this.timeline;
+    }
+
+
+    public void helpButtonAction() {
+
+        animate.startStopButtonAction();
     }
 
 

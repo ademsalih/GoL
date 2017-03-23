@@ -27,9 +27,31 @@
     -fx-base: #171717;
 }
 
-#menuBar {
-    -fx-base: #2e2e2e;
+#menuBar  {
+    -fx-base: #2f2f2f;
     -fx-text-fill: #a2a2a2;
+}
+
+.menu .label {
+    -fx-text-fill: #c0c0c0;
+}
+
+
+.menu {
+	-fx-background: #303030;
+}
+
+
+.menu-item .label{
+    -fx-text-fill: #aaaaaa;
+}
+
+.menu-item:hover {
+    -fx-background-color: #555555;
+}
+
+.context-menu {
+    -fx-background-color: #303030;
 }
 
 #scaleLabel {

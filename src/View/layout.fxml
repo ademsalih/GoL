@@ -30,7 +30,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="New blank" />
+              <MenuItem onAction="#clear" mnemonicParsing="false" text="New blank" />
                   <MenuItem mnemonicParsing="false" onAction="#loadFile" text="Open..." />
                   <MenuItem mnemonicParsing="false" text="Save..." />
                   <MenuItem mnemonicParsing="false" text="Export as GIF..." />
@@ -46,7 +46,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem onAction="#helpButtonAction" mnemonicParsing="false" text="About" />
             </items>
           </Menu>
         </menus>
@@ -66,7 +66,7 @@
                         <Insets left="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="resetButton" maxWidth="53.0" minWidth="53.0" mnemonicParsing="false" prefWidth="53.0" text="Reset">
+                  <Button fx:id="resetButton" onAction="#reset" maxWidth="53.0" minWidth="53.0" mnemonicParsing="false" prefWidth="53.0" text="Reset">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>

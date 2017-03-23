@@ -27,7 +27,7 @@ public class Main extends Application {
         scene.getStylesheets().add("View/stylesheet.css");
         stage.setTitle("Conways Game of Life");
         stage.setScene(scene);
-        stage.setResizable(true);
+        stage.setResizable(false);
         stage.show();
     }
 
