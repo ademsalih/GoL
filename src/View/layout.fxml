@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.canvas.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
@@ -15,13 +10,12 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.Slider?>
-<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane fx:id="gridPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="569.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Controller">
+<GridPane fx:id="gridPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="569.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Controller">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="700.0" minWidth="700.0" prefWidth="700.0" />
       <ColumnConstraints />
@@ -32,13 +26,13 @@
       <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <MenuBar GridPane.columnSpan="2">
+      <MenuBar fx:id="menuBar" GridPane.columnSpan="2">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="New blank" />
+              <MenuItem onAction="#clear" mnemonicParsing="false" text="New blank" />
                   <MenuItem mnemonicParsing="false" onAction="#loadFile" text="Open..." />
-                  <MenuItem mnemonicParsing="false" onAction="#exportFile" text="Save..." />
+                  <MenuItem mnemonicParsing="false" text="Save..." />
                   <MenuItem mnemonicParsing="false" text="Export as GIF..." />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#exitEvent" text="Exit" />
@@ -58,24 +52,30 @@
         </menus>
       </MenuBar>
       <Canvas fx:id="canvas" height="500.0" onMouseClicked="#mouseClicked" width="700.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-      <ToolBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
-         <items>
-            <HBox maxHeight="40.0" maxWidth="179.0" minHeight="26.0" minWidth="179.0" prefHeight="26.0" prefWidth="179.0">
+      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+         <children>
+            <HBox alignment="CENTER_LEFT" maxHeight="40.0" maxWidth="264.0" minHeight="26.0" minWidth="179.0" prefHeight="40.0" prefWidth="196.0">
                <children>
-                  <Button fx:id="startStopButton" maxWidth="53.0" minWidth="53.0" mnemonicParsing="false" onAction="#startStopButtonAction" prefWidth="53.0" text="Start" />
+                  <Button fx:id="startStopButton" maxWidth="53.0" minWidth="53.0" mnemonicParsing="false" onAction="#startStopButton" prefWidth="53.0" text="Start">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
                   <Button fx:id="nextGenButton" maxWidth="53.0" minWidth="53.0" mnemonicParsing="false" onAction="#nextGeneration" prefWidth="53.0" text="Next">
                      <HBox.margin>
                         <Insets left="10.0" />
-                     </HBox.margin></Button>
-                  <Button maxWidth="53.0" minWidth="53.0" mnemonicParsing="false" prefWidth="53.0" text="Reset">
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="resetButton" onAction="#reset" maxWidth="53.0" minWidth="53.0" mnemonicParsing="false" prefWidth="53.0" text="Reset">
                      <HBox.margin>
                         <Insets left="10.0" />
-                     </HBox.margin></Button>
+                     </HBox.margin>
+                  </Button>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" maxHeight="40.0" minHeight="18.0" prefHeight="28.0" prefWidth="244.0">
+            <HBox alignment="CENTER_LEFT" maxHeight="40.0" minHeight="18.0" prefHeight="40.0" prefWidth="246.0" HBox.hgrow="NEVER">
                <children>
-                  <Label text="Speed">
+                  <Label fx:id="speedLabel" text="Speed">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -87,12 +87,12 @@
                   </Slider>
                </children>
                <padding>
-                  <Insets left="20.0" />
+                  <Insets left="15.0" />
                </padding>
             </HBox>
-            <HBox alignment="CENTER_LEFT" maxHeight="40.0" minHeight="18.0" prefHeight="28.0" prefWidth="251.0">
+            <HBox alignment="CENTER" maxHeight="40.0" minHeight="18.0" prefHeight="40.0" prefWidth="246.0">
                <children>
-                  <Label text="Cell size" />
+                  <Label fx:id="scaleLabel" text="Cell size" />
                   <Slider fx:id="scaleSlider" prefHeight="16.0" prefWidth="175.0">
                      <HBox.margin>
                         <Insets left="8.0" />
@@ -103,7 +103,7 @@
                   <Insets left="10.0" />
                </padding>
             </HBox>
-         </items>
-      </ToolBar>
+         </children>
+      </HBox>
    </children>
 </GridPane>

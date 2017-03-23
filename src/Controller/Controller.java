@@ -11,8 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -34,11 +33,12 @@ public class Controller implements Initializable {
     @FXML private GridPane gridPane;
     @FXML private Slider scaleSlider;
     @FXML private Slider speedSlider;
-    @FXML private Button loadButton;
-
+    @FXML private MenuBar menuBar;
+    @FXML private Button resetButton;
+    @FXML private Label speedLabel;
+    @FXML private Label scaleLabel;
 
     private List<Point> plist;
-
     Board boardObj;
     Rule rule;
     Timeline timeline;
@@ -47,33 +47,34 @@ public class Controller implements Initializable {
     public static Controller instance;
     Stage stage;
     public int counter;
+    Animate animate;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         instance = this;
 
-        //noe
-
         plist = new ArrayList<Point>();
 
         draw();
         setID();
         initializeSliders();
+        animate = new Animate(100);
     }
 
     public void setID() {
-        nextGenButton.setId("nextGenerationButton");
+        nextGenButton.setId("nextGenButton");
         gridPane.setId("gridPane");
         scaleSlider.setId("scaleSlider");
         speedSlider.setId("speedSlider");
+        startStopButton.setId("startButton");
+        menuBar.setId("menuBar");
+        resetButton.setId("resetButton");
     }
 
     public void initializeSliders() {
         speedSlider.setMin(1);
         speedSlider.setMax(50);
-
-
 
         speedSlider.valueProperty().addListener((o, oldValue, newValue) -> {
             timeline.setRate(newValue.doubleValue());
@@ -134,36 +135,33 @@ public class Controller implements Initializable {
         boardObj.drawBoardWithGrid();
     }
 
-    public void startStopButtonAction() {
+    /*public void startStopButtonAction() {
 
         if ((timeline == null) || (timeline.getStatus() != Animation.Status.RUNNING)) {
 
             timeline = new Timeline(new KeyFrame(Duration.millis(70), ae -> nextGeneration() ));
             timeline.setCycleCount(Animation.INDEFINITE);
 
-
             timeline.play();
             startStopButton.setText("Stop");
+            startStopButton.setId("stopButton");
 
         } else if ( (timeline != null) && (timeline.getStatus() == Animation.Status.RUNNING) ) {
 
             timeline.stop();
             startStopButton.setText("Start");
+            startStopButton.setId("startButton");
         }
 
     }
 
+    */
+
     public void loadFile() throws IOException {
         rleParser = new RLEParser();
-        boardObj.setBoard(rleParser.importFile());
+        boardObj.setBoard(rleParser.testRun());
         nextGeneration();
         counter = 0;
-    }
-
-    public void exportFile() {
-        SaveFile er = new SaveFile();
-        er.testRun();
-        printArray(boardObj.getBoard());
     }
 
     public void clear() {
@@ -198,13 +196,19 @@ public class Controller implements Initializable {
         boardObj.setBackgroundColor(c);
     }
 
-
-    public void printArray(byte[][] array) {
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                System.out.print(array[i][j]);
-            }
-            System.out.println("");
-        }
+    public Button getStartStopButton() {
+        return this.startStopButton;
     }
+
+    public Timeline getTimeline() {
+        return this.timeline;
+    }
+
+
+    public void startStopButton() {
+
+        animate.startStopButtonAction();
+    }
+
+
 }

@@ -8,9 +8,6 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by patrikkvarmehansen on 03/03/17.
- */
 public class RLEParser {
 
     private int x = 5;
