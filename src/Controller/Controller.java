@@ -135,7 +135,7 @@ public class Controller implements Initializable {
         boardObj.drawBoardWithGrid();
     }
 
-    public void startStopButtonAction() {
+    /*public void startStopButtonAction() {
 
         if ((timeline == null) || (timeline.getStatus() != Animation.Status.RUNNING)) {
 
@@ -154,6 +154,8 @@ public class Controller implements Initializable {
         }
 
     }
+
+    */
 
     public void loadFile() throws IOException {
         rleParser = new RLEParser();
@@ -203,7 +205,7 @@ public class Controller implements Initializable {
     }
 
 
-    public void helpButtonAction() {
+    public void startStopButton() {
 
         animate.startStopButtonAction();
     }

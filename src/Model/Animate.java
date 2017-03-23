@@ -33,23 +33,15 @@ public class Animate {
 
         if ( timeline.getStatus() == Animation.Status.STOPPED ) {
 
-            timeline.play();
-
-            System.out.println("RUNNING");
-
-            switchToStop();
+            startAnimation();
 
         } else if ( timeline.getStatus() == Animation.Status.RUNNING) {
 
-            System.out.println("STOPPED");
-
-            timeline.stop();
-            switchToStart();
+            stopAnimation();
 
         }
 
     }
-
 
     public void startAnimation() {
         timeline.play();

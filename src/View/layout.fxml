@@ -46,7 +46,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem onAction="#helpButtonAction" mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" text="About" />
             </items>
           </Menu>
         </menus>
@@ -56,7 +56,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" maxHeight="40.0" maxWidth="264.0" minHeight="26.0" minWidth="179.0" prefHeight="40.0" prefWidth="196.0">
                <children>
-                  <Button fx:id="startStopButton" maxWidth="53.0" minWidth="53.0" mnemonicParsing="false" onAction="#startStopButtonAction" prefWidth="53.0" text="Start">
+                  <Button fx:id="startStopButton" maxWidth="53.0" minWidth="53.0" mnemonicParsing="false" onAction="#startStopButton" prefWidth="53.0" text="Start">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
