@@ -12,11 +12,15 @@ public class Animate {
     public int generations;
     public Timeline timeline;
     public boolean status;
+    public KeyFrame keyFrame;
+    public int animationRate;
 
     public Animate() {
-        this.speed = 100;
+        this.speed = 1000;
+        this.animationRate = 1;
         this.generations = Animation.INDEFINITE;
         this.timeline = new Timeline(new KeyFrame(Duration.millis(speed), ae -> Controller.instance.nextGeneration() ));
+
         this.status = false;
         timeline.setCycleCount(generations);
     }
@@ -27,6 +31,15 @@ public class Animate {
 
     public int getSpeed() {
         return this.speed;
+    }
+
+    public void setAnimationRate(int newRate) {
+        this.animationRate = newRate;
+        timeline.setRate(newRate);
+    }
+
+    public int getAnimationRate() {
+        return this.animationRate;
     }
 
     public void setAnimationStatus(boolean status) {
@@ -42,6 +55,8 @@ public class Animate {
         if ( timeline.getStatus() == Animation.Status.STOPPED ) {
 
             startAnimation();
+
+
 
         } else if ( timeline.getStatus() == Animation.Status.RUNNING) {
 

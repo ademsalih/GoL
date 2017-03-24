@@ -75,11 +75,12 @@ public class Controller implements Initializable {
     }
 
     public void initializeSliders() {
-        speedSlider.setMin(100);
-        speedSlider.setMax(1000);
+        speedSlider.setMin(1);
+        speedSlider.setMax(15);
 
         speedSlider.valueProperty().addListener((o, oldValue, newValue) -> {
-            animate.setSpeed(newValue.intValue());
+            animate.setAnimationRate(newValue.intValue());
+            System.out.println("Speed changed...");
         });
 
         scaleSlider.setValue(5);
