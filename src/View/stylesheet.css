@@ -41,13 +41,12 @@
 	-fx-background: #303030;
 }
 
+.menu-item:focused {
+    -fx-background: #555555;
+}
 
 .menu-item .label{
     -fx-text-fill: #aaaaaa;
-}
-
-.menu-item:hover {
-    -fx-background-color: #555555;
 }
 
 .context-menu {

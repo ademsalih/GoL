@@ -13,12 +13,20 @@ public class Animate {
     public Timeline timeline;
     public boolean status;
 
-    public Animate(int speed) {
-        this.speed = speed;
+    public Animate() {
+        this.speed = 100;
         this.generations = Animation.INDEFINITE;
         this.timeline = new Timeline(new KeyFrame(Duration.millis(speed), ae -> Controller.instance.nextGeneration() ));
         this.status = false;
         timeline.setCycleCount(generations);
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public int getSpeed() {
+        return this.speed;
     }
 
     public void setAnimationStatus(boolean status) {
@@ -52,7 +60,6 @@ public class Animate {
         timeline.stop();
         switchToStart();
     }
-
 
     public void switchToStop() {
         Controller.instance.getStartStopButton().setText("Stop");

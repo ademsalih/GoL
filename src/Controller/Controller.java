@@ -59,7 +59,9 @@ public class Controller implements Initializable {
         draw();
         setID();
         initializeSliders();
-        animate = new Animate(100);
+        animate = new Animate();
+
+        animate.setSpeed(10);
     }
 
     public void setID() {
@@ -73,11 +75,11 @@ public class Controller implements Initializable {
     }
 
     public void initializeSliders() {
-        speedSlider.setMin(1);
-        speedSlider.setMax(50);
+        speedSlider.setMin(100);
+        speedSlider.setMax(1000);
 
         speedSlider.valueProperty().addListener((o, oldValue, newValue) -> {
-            timeline.setRate(newValue.doubleValue());
+            animate.setSpeed(newValue.intValue());
         });
 
         scaleSlider.setValue(5);
