@@ -137,28 +137,6 @@ public class Controller implements Initializable {
         boardObj.drawBoardWithGrid();
     }
 
-    /*public void startStopButtonAction() {
-
-        if ((timeline == null) || (timeline.getStatus() != Animation.Status.RUNNING)) {
-
-            timeline = new Timeline(new KeyFrame(Duration.millis(70), ae -> nextGeneration() ));
-            timeline.setCycleCount(Animation.INDEFINITE);
-
-            timeline.play();
-            startStopButton.setText("Stop");
-            startStopButton.setId("stopButton");
-
-        } else if ( (timeline != null) && (timeline.getStatus() == Animation.Status.RUNNING) ) {
-
-            timeline.stop();
-            startStopButton.setText("Start");
-            startStopButton.setId("startButton");
-        }
-
-    }
-
-    */
-
     public void loadFile() throws IOException {
         rleParser = new RLEParser();
         Board.board = rleParser.importFile();
@@ -174,6 +152,8 @@ public class Controller implements Initializable {
 
     public void clear() {
         boardObj.clearBoard();
+        counter = 0;
+        genCounter();
     }
 
     public void mouseClicked(MouseEvent event) {
