@@ -9,7 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import javafx.stage.FileChooser;
 
-public class FileLoader {
+public class ReadFile {
 
     //Support method for reading files
     public static BufferedReader readFile() {

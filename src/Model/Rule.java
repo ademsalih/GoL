@@ -138,6 +138,7 @@ public class Rule {
 
     ////COUNT NEIGHBOR METHODS
 
+
     public boolean neighborOver(int y, int x) {
 
         if (y - 1 != - 1) {

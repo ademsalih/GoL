@@ -3,8 +3,6 @@ package Model;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InterruptedIOException;
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -88,7 +86,7 @@ public class RLEParser {
     }
 
     public byte[][] importFile () throws IOException {
-        BufferedReader br = FileLoader.readFile();
+        BufferedReader br = ReadFile.readFile();
 
         settingXY(br);
 
