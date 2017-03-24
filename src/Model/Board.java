@@ -110,7 +110,7 @@ public class Board {
     }
 
     public void clearBoard(){
-        board = new byte[board.length][board.length];
+        board = new byte[100][140];
         drawBoardWithGrid();
     }
 

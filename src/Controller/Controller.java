@@ -80,7 +80,6 @@ public class Controller implements Initializable {
 
         speedSlider.valueProperty().addListener((o, oldValue, newValue) -> {
             animate.setAnimationRate(newValue.intValue());
-            System.out.println("Speed changed...");
         });
 
         scaleSlider.setValue(5);
