@@ -76,7 +76,7 @@ public class Controller implements Initializable {
 
     public void initializeSliders() {
         speedSlider.setMin(1);
-        speedSlider.setMax(15);
+        speedSlider.setMax(30);
 
         speedSlider.valueProperty().addListener((o, oldValue, newValue) -> {
             animate.setAnimationRate(newValue.intValue());
@@ -153,7 +153,7 @@ public class Controller implements Initializable {
     public void clear() {
         boardObj.clearBoard();
         counter = 0;
-        genCounter();
+        Main.getStage().setTitle("Conways Game of Life");
     }
 
     public void mouseClicked(MouseEvent event) {
