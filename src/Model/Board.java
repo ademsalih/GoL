@@ -29,6 +29,8 @@ public class Board {
         this.gc = canvas.getGraphicsContext2D();
     }
 
+
+
     public void setBoard(byte[][] board) {this.board = board;}
 
     public void setBoardValues(int x, int y, byte value) {

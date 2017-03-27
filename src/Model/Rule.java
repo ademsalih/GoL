@@ -23,25 +23,19 @@ public class Rule {
         this.currentBoard = board;
     }
 
-    //Retunerer next generation verdier
+
     @Override
     public String toString(){
-        /*byte[][] array2D = {
-                {0, 0, 0, 0},
-                {0, 1, 1, 0},
-                {0, 1, 1, 0},
-                {0, 0, 0, 0}
-        };*/
-
         String output = new String();
 
-        for (int row = 0; row < conwaysBoard.length; row++) {
-            for (int col = 0; col < conwaysBoard[0].length; col++){
-                output = output + conwaysBoard[row][col];
+        for (int row = 0; row < currentBoard.length; row++) {
+            for (int col = 0; col < currentBoard[0].length; col++){
+                output = output + currentBoard[row][col];
             }
         }
         return output;
     }
+
 
     ////SIMPLE RULES, INVERSION
     public byte[][] invertBoard() {
