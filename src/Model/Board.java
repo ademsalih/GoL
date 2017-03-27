@@ -4,6 +4,11 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+
+/**
+ * This class draws the board (ikke ferdig kommentert)
+ */
+
 public class Board {
 
     Color cellColor = Color.WHITE;
@@ -75,11 +80,11 @@ public class Board {
         }else{
             setBoardValues(rowx, coly, (byte)1);
         }
-        drawBoardWithGrid();
+        drawBoard();
 
     }
 
-    public void drawBoardWithGrid() {
+    public void drawBoard() {
 
         gc.setFill(backgroundColor);
         gc.fillRect(0,0,canvasWidth,canvasHeight);
@@ -119,7 +124,7 @@ public class Board {
 
     public void clearBoard(){
         board = new byte[100][140];
-        drawBoardWithGrid();
+        drawBoard();
     }
 
 

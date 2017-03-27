@@ -6,6 +6,10 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
+/**
+ * This class handles everything with Animation and buttons that control the animation. (ikke ferdig kommentert)
+ */
+
 public class Animate {
 
     public int speed;

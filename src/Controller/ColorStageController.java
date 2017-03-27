@@ -46,13 +46,13 @@ public class ColorStageController implements Initializable {
         cellColorPicker.valueProperty().addListener((o, oldValue, newValue) -> {
 
             Controller.instance.changeCellColor( newValue );
-            Controller.instance.boardObj.drawBoardWithGrid();
+            Controller.instance.boardObj.drawBoard();
         });
 
         backgroundColorPicker.valueProperty().addListener((o, oldValue, newValue) -> {
 
             Controller.instance.changeBackgroundColor( newValue );
-            Controller.instance.boardObj.drawBoardWithGrid();
+            Controller.instance.boardObj.drawBoard();
         });
     }
 

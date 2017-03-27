@@ -1,5 +1,10 @@
 package Model;
 
+
+/**
+ * This class handles the rules of Conways' Game of Life
+ */
+
 public class Rule {
 
     ////INSTANCE VARIABLES

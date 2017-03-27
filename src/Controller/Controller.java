@@ -2,8 +2,6 @@ package Controller;
 
 import Model.*;
 import View.Main;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +15,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -88,7 +85,7 @@ public class Controller implements Initializable {
 
         scaleSlider.valueProperty().addListener((o, oldValue, newValue) -> {
             boardObj.setCellSize(newValue.intValue());
-            boardObj.drawBoardWithGrid();
+            boardObj.drawBoard();
         });
     }
 
@@ -117,14 +114,14 @@ public class Controller implements Initializable {
 
     public void draw() {
         boardObj = new Board(canvas);
-        boardObj.drawBoardWithGrid();
+        boardObj.drawBoard();
     }
 
     public void nextGeneration() {
 
         rule = new Rule(boardObj.board);
         boardObj.setBoard(rule.conwaysBoardRules());
-        boardObj.drawBoardWithGrid();
+        boardObj.drawBoard();
         counter += 1;
         genCounter();
     }
@@ -136,14 +133,14 @@ public class Controller implements Initializable {
 
     public void reset() {
         boardObj = new Board(canvas);
-        boardObj.drawBoardWithGrid();
+        boardObj.drawBoard();
     }
 
     public void loadFile() throws IOException {
         rleParser = new RLEParser();
         Board.board = rleParser.importFile();
         //boardObj.setBoard();
-        boardObj.drawBoardWithGrid();
+        boardObj.drawBoard();
         counter = 0;
     }
 
