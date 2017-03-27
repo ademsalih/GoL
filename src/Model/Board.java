@@ -65,6 +65,8 @@ public class Board {
         return this.backgroundColor;
     }
 
+
+    // Tegner/avtegner en celle avhengig av tilstanden dens når det blir utført et museklikk på spillbrettet.
     public void mouseclickedonBoard(double x, double y){
         int coly = (int)(x/cellSize);
         int rowx = (int)(y/cellSize);

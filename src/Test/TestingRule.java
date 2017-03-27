@@ -4,8 +4,10 @@ import Model.Rule;
 import org.junit.jupiter.api.Test;
 
 /**
- * Created by Narmatha on 20.03.2017.
+ * This class tests most of the Rule class methods and
+ * the nextGeneration method from the Controller class.
  */
+
 public class TestingRule {
 
     @Test
@@ -16,8 +18,28 @@ public class TestingRule {
                 {0, 0, 1}
         };
 
+        byte[][] board1 = {
+                {0,1,0},
+                {1,1,1},
+                {0,1,0}
+        };
+
+        byte[][] board2 = {
+                {0,0,1,0,0},
+                {0,1,1,1,0},
+                {1,1,0,1,1},
+                {0,1,1,1,0},
+                {0,0,1,0,0}
+        };
+
         Rule rule = new Rule(board);
         org.junit.Assert.assertEquals(rule.toString(),"100010001");
+
+        Rule rule1 = new Rule(board1);
+        org.junit.Assert.assertEquals(rule1.toString(),"010111010");
+
+        Rule rule2 = new Rule(board2);
+        org.junit.Assert.assertEquals(rule2.toString(),"0010001110110110111000100");
     }
 
     @Test
@@ -69,6 +91,42 @@ public class TestingRule {
         Rule rule = new Rule(board);
         rule.setCurrentBoard(rule.invertBoard());
         org.junit.Assert.assertEquals(rule.toString(),"011101110");
+
+    }
+
+    @Test
+    public void testCountNeighbor(){
+        byte[][] board = {
+                {1, 0, 0},
+                {0, 1, 0},
+                {0, 0, 1}
+        };
+
+        byte[][] board1 = {
+                {0,1,0},
+                {1,1,1},
+                {0,1,0}
+        };
+
+        byte[][] board2 = {
+                {0,0,1,0,0},
+                {0,1,1,1,0},
+                {1,1,0,1,1},
+                {0,1,1,1,0},
+                {0,0,1,0,0}
+        };
+
+        Rule rule = new Rule(board);
+        int c = rule.countNeighbor(board, 1, 1);
+        org.junit.Assert.assertEquals(c,2);
+
+        Rule rule1 = new Rule(board1);
+        int c1 = rule1.countNeighbor(board1, 0, 0);
+        org.junit.Assert.assertEquals(c1,3);
+
+        Rule rule2 = new Rule(board2);
+        int c2 = rule2.countNeighbor(board2, 2, 2);
+        org.junit.Assert.assertEquals(c2,8);
 
     }
 
