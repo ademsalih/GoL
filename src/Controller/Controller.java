@@ -98,6 +98,8 @@ public class Controller implements Initializable {
             Pane root = FXMLLoader.load(getClass().getResource("colorStage.fxml"));
             stage = new Stage();
             Scene scene = new Scene(root, 270, 112);
+
+            scene.getStylesheets().add("View/colorStageSS.css");
             stage.setScene(scene);
             stage.setTitle("Change color");
             stage.setResizable(false);

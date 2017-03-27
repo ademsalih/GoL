@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane fx:controller="Controller.ColorStageController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="113.0" prefWidth="270.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111">
+<GridPane fx:id="gridPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="113.0" prefWidth="270.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ColorStageController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="125.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="445.0" minWidth="10.0" prefWidth="145.0" />
@@ -20,27 +20,22 @@
     <RowConstraints maxHeight="287.0" minHeight="10.0" prefHeight="283.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label text="Cell color">
+      <Label fx:id="cellColorLabel" text="Cell color">
          <GridPane.margin>
             <Insets left="6.0" />
          </GridPane.margin>
       </Label>
       <ColorPicker fx:id="cellColorPicker" GridPane.columnIndex="1" />
-      <HBox maxHeight="27.0" maxWidth="100.0" prefHeight="35.0" prefWidth="184.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+      <HBox alignment="TOP_RIGHT" maxHeight="27.0" maxWidth="100.0" prefHeight="35.0" prefWidth="184.0" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
          <children>
-            <Button onAction="#applyButtonAction" mnemonicParsing="false" text="Apply">
+            <Button fx:id="closeButton" mnemonicParsing="false" onAction="#closeButtonAction" text="Close">
                <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </Button>
-            <Button onAction="#okButtonAction" mnemonicParsing="false" text="OK">
-               <HBox.margin>
-                  <Insets left="8.0" />
+                  <Insets right="8.0" />
                </HBox.margin>
             </Button>
          </children>
       </HBox>
-      <Label text="Background color" GridPane.rowIndex="1">
+      <Label fx:id="backgroundColorLabel" text="Background color" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets left="6.0" />
          </GridPane.margin>

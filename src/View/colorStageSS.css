@@ -1,0 +1,29 @@
+.root {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+#closeButton {
+    -fx-base: #201e19;
+    -fx-text-fill: #a2a2a2;
+}
+
+#gridPane {
+    -fx-base: #171717;
+}
+
+#cellColorLabel {
+    -fx-text-fill: #bdbdbd;
+}
+
+#backgroundColorLabel {
+    -fx-text-fill: #bdbdbd;
+}
+
+#cellColorPicker {
+    -fx-base: #292929;
+}
+
+#backgroundColorPicker {
+    -fx-base: #292929;
+}
