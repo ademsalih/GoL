@@ -89,14 +89,18 @@ public class Board {
             for (int x = 0; x < board[0].length; x++) {
 
                 if (board[y][x] == 1) {
-                    gc.setFill(cellColor);
-                    gc.fillRect(xCounter,yCounter, cellSize,cellSize);
+                    Point p = new Point();
+                    p.x = xCounter;
+                    p.y = yCounter;
+                    p.draw(gc, cellColor, (double)cellSize);
 
                     xCounter += cellSize;
 
                 } else {
-                    gc.setFill(backgroundColor);
-                    gc.fillRect(xCounter,yCounter,cellSize,cellSize);
+                    Point p = new Point();
+                    p.x = xCounter;
+                    p.y = yCounter;
+                    p.draw(gc, backgroundColor, (double)cellSize);
 
                     xCounter += cellSize;
                 }
