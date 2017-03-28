@@ -19,7 +19,6 @@ public class Rule {
 
 
     ////CLASS METHODS
-
     public byte[][] getCurrentBoard() {
         return currentBoard;
     }
@@ -28,7 +27,7 @@ public class Rule {
         this.currentBoard = board;
     }
 
-
+    // Returns the state of every cell in a 1D array
     @Override
     public String toString(){
         String output = new String();

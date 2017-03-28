@@ -7,7 +7,7 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 
 /**
- * This class handles everything with Animation and buttons that control the animation. (ikke ferdig kommentert)
+ * This class handles everything with Animation and buttons that control the animation.
  */
 
 public class Animate {

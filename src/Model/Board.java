@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 
 
 /**
- * This class draws the board (ikke ferdig kommentert)
+ * This class draws the board and fills the cells depending on the cells' state
  */
 
 public class Board {
