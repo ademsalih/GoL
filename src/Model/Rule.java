@@ -8,9 +8,9 @@ package Model;
 public class Rule {
 
     ////INSTANCE VARIABLES
-    public byte[][] currentBoard;
-    public byte[][] ruledBoard;
-    public byte[][] conwaysBoard;
+    private byte[][] currentBoard;
+    private byte[][] ruledBoard;
+    private byte[][] conwaysBoard;
 
     ////CONSTRUCTOR
     public Rule (byte[][] currentBoard) {
@@ -39,7 +39,6 @@ public class Rule {
         }
         return output;
     }
-
 
     ////SIMPLE RULES, INVERSION
     public byte[][] invertBoard() {
@@ -137,7 +136,7 @@ public class Rule {
     ////COUNT NEIGHBOR METHODS
 
 
-    public boolean neighborOver(int y, int x) {
+    private boolean neighborOver(int y, int x) {
 
         if (y - 1 != - 1) {
 
@@ -150,7 +149,7 @@ public class Rule {
 
     }
 
-    public boolean neighborUnder(int y, int x) {
+    private boolean neighborUnder(int y, int x) {
 
         int boardLength = currentBoard.length;
 
@@ -164,7 +163,7 @@ public class Rule {
         return false;
     }
 
-    public boolean neighborLeft(int y, int x) {
+    private boolean neighborLeft(int y, int x) {
 
         if (x - 1 != - 1) {
 
@@ -176,7 +175,7 @@ public class Rule {
         return false;
     }
 
-    public boolean neighborRight(int y, int x) {
+    private boolean neighborRight(int y, int x) {
 
         int boardLength = currentBoard.length;
 
@@ -190,7 +189,7 @@ public class Rule {
         return false;
     }
 
-    public boolean neighborTopLeft(int y, int x) {
+    private boolean neighborTopLeft(int y, int x) {
 
         if ((y - 1 != - 1) && (x - 1 != - 1)) {
 
@@ -202,7 +201,7 @@ public class Rule {
         return false;
     }
 
-    public boolean neighborTopRight(int y, int x) {
+    private boolean neighborTopRight(int y, int x) {
 
         int boardLength = currentBoard.length;
 
@@ -216,7 +215,7 @@ public class Rule {
         return false;
     }
 
-    public boolean neighborBottomLeft(int y, int x) {
+    private boolean neighborBottomLeft(int y, int x) {
 
         int boardLength = currentBoard.length;
 
@@ -230,7 +229,7 @@ public class Rule {
         return false;
     }
 
-    public boolean neighborBottomRight(int y, int x) {
+    private boolean neighborBottomRight(int y, int x) {
 
         int boardLength = currentBoard.length;
 
