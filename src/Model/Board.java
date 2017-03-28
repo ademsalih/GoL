@@ -71,7 +71,7 @@ public class Board {
     }
 
 
-    // Tegner/avtegner en celle avhengig av tilstanden dens når det blir utført et museklikk på spillbrettet.
+    // Draw/undraw a cell depending on its state when we click on the board
     public void mouseclickedonBoard(double x, double y){
         int coly = (int)(x/cellSize);
         int rowx = (int)(y/cellSize);
