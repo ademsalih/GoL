@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 /**
- * Created by Narmatha on 03.03.2017.
+ * This class draws rectangles and fills them with color on a point.
  */
 public class Point {
     public double x,y;

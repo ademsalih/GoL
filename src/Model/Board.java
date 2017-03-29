@@ -4,6 +4,11 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+
+/**
+ * This class draws the board and fills the cells depending on the cells' state
+ */
+
 public class Board {
 
     Color cellColor = Color.WHITE;
@@ -28,6 +33,8 @@ public class Board {
         this.cellSize = 5;
         this.gc = canvas.getGraphicsContext2D();
     }
+
+
 
     public void setBoard(byte[][] board) {this.board = board;}
 
@@ -63,6 +70,8 @@ public class Board {
         return this.backgroundColor;
     }
 
+
+    // Draw/undraw a cell depending on its state when we click on the board
     public void mouseclickedonBoard(double x, double y){
         int coly = (int)(x/cellSize);
         int rowx = (int)(y/cellSize);
@@ -71,11 +80,11 @@ public class Board {
         }else{
             setBoardValues(rowx, coly, (byte)1);
         }
-        drawBoardWithGrid();
+        drawBoard();
 
     }
 
-    public void drawBoardWithGrid() {
+    public void drawBoard() {
 
         gc.setFill(backgroundColor);
         gc.fillRect(0,0,canvasWidth,canvasHeight);
@@ -85,14 +94,18 @@ public class Board {
             for (int x = 0; x < board[0].length; x++) {
 
                 if (board[y][x] == 1) {
-                    gc.setFill(cellColor);
-                    gc.fillRect(xCounter,yCounter, cellSize,cellSize);
+                    Point p = new Point();
+                    p.x = xCounter;
+                    p.y = yCounter;
+                    p.draw(gc, cellColor, (double)cellSize);
 
                     xCounter += cellSize;
 
                 } else {
-                    gc.setFill(backgroundColor);
-                    gc.fillRect(xCounter,yCounter,cellSize,cellSize);
+                    Point p = new Point();
+                    p.x = xCounter;
+                    p.y = yCounter;
+                    p.draw(gc, backgroundColor, (double)cellSize);
 
                     xCounter += cellSize;
                 }
@@ -111,7 +124,7 @@ public class Board {
 
     public void clearBoard(){
         board = new byte[100][140];
-        drawBoardWithGrid();
+        drawBoard();
     }
 
 
