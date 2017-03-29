@@ -2,7 +2,9 @@ package Model;
 
 
 /**
- * This class handles the rules of Conways' Game of Life
+ * This class handles the rules of Conways' Game of Life and returns
+ * a 2D array with the state of every cell in the board after applying
+ * the rules
  */
 
 public class Rule {
