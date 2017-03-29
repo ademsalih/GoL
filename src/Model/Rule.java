@@ -1,18 +1,14 @@
 package Model;
 
-
-/**
- * This class handles the rules of Conways' Game of Life and returns
- * a 2D array with the state of every cell in the board after applying
- * the rules
- */
-
 public class Rule {
 
     ////INSTANCE VARIABLES
-    private byte[][] currentBoard;
-    private byte[][] ruledBoard;
-    private byte[][] conwaysBoard;
+    public byte[][] currentBoard;
+    public byte[][] ruledBoard;
+    public byte[][] conwaysBoard;
+    private int[] survivor = {2, 3};
+    private int[] born = {3};
+
 
     ////CONSTRUCTOR
     public Rule (byte[][] currentBoard) {
@@ -20,7 +16,10 @@ public class Rule {
     }
 
 
+
+
     ////CLASS METHODS
+
     public byte[][] getCurrentBoard() {
         return currentBoard;
     }
@@ -29,14 +28,21 @@ public class Rule {
         this.currentBoard = board;
     }
 
-    // Returns the state of every cell in a 1D array
+    //Retunerer next generation verdier
     @Override
     public String toString(){
-        String output = "";
+        /*byte[][] array2D = {
+                {0, 0, 0, 0},
+                {0, 1, 1, 0},
+                {0, 1, 1, 0},
+                {0, 0, 0, 0}
+        };*/
 
-        for (int row = 0; row < currentBoard.length; row++) {
-            for (int col = 0; col < currentBoard[0].length; col++){
-                output = output + currentBoard[row][col];
+        String output = new String();
+
+        for (int row = 0; row < conwaysBoard.length; row++) {
+            for (int col = 0; col < conwaysBoard[0].length; col++){
+                output = output + conwaysBoard[row][col];
             }
         }
         return output;
@@ -63,41 +69,42 @@ public class Rule {
     }
 
 
+
+    public byte checkIfOnOrOff(int neighbors, int cellState) {
+        if (cellState == 1) {
+            for (int s : survivor) {
+                if (s == neighbors) {
+                    return 1;
+                }
+            }
+        }
+        else if (cellState == 0) {
+            for (int b : born) {
+                if (b == neighbors) {
+                    return 1;
+                }
+            }
+        }
+        return 0;
+    }
+
     ////CONWAYS GAME OF LIFE RULES
 
     public byte[][] conwaysBoardRules() {
 
-        conwaysBoard = new byte[currentBoard.length][currentBoard.length];
-
+        conwaysBoard = new byte[currentBoard.length][currentBoard[0].length];
         for (int y = 0; y < conwaysBoard.length; y++) {
-
             for (int x = 0; x < conwaysBoard.length; x++) {
-
-                if (countNeighbor(currentBoard,y,x) < 2) {
-
-                    conwaysBoard[y][x] = 0;
-
-                } else if ((countNeighbor(currentBoard,y,x) == 2) && ((currentBoard[y][x]) == 1)) {
-
-                    conwaysBoard[y][x] = 1;
-
-                } else if ((countNeighbor(currentBoard,y,x) == 3) && (currentBoard[y][x] == 1 )) {
-
-                    conwaysBoard[y][x] = 1;
-
-                } else if ((countNeighbor(currentBoard,y,x) == 3) && (currentBoard[y][x] == 0)) {
-
-                    conwaysBoard[y][x] = 1;
-
-                } else if (countNeighbor(currentBoard,y,x) > 3) {
-                    conwaysBoard[y][x] = 0;
-                }
-
+                int cellState = currentBoard[y][x];
+                System.out.println(checkIfOnOrOff(countNeighbor(currentBoard, y, x), cellState));
+                conwaysBoard[y][x] = checkIfOnOrOff(countNeighbor(currentBoard, y, x), cellState);
             }
         }
         return conwaysBoard;
 
     }
+
+
 
     public int countNeighbor(byte[][] board, int y, int x){
 
@@ -138,7 +145,7 @@ public class Rule {
     ////COUNT NEIGHBOR METHODS
 
 
-    private boolean neighborOver(int y, int x) {
+    public boolean neighborOver(int y, int x) {
 
         if (y - 1 != - 1) {
 
@@ -151,7 +158,7 @@ public class Rule {
 
     }
 
-    private boolean neighborUnder(int y, int x) {
+    public boolean neighborUnder(int y, int x) {
 
         int boardLength = currentBoard.length;
 
@@ -165,7 +172,7 @@ public class Rule {
         return false;
     }
 
-    private boolean neighborLeft(int y, int x) {
+    public boolean neighborLeft(int y, int x) {
 
         if (x - 1 != - 1) {
 
@@ -177,7 +184,7 @@ public class Rule {
         return false;
     }
 
-    private boolean neighborRight(int y, int x) {
+    public boolean neighborRight(int y, int x) {
 
         int boardLength = currentBoard.length;
 
@@ -191,7 +198,7 @@ public class Rule {
         return false;
     }
 
-    private boolean neighborTopLeft(int y, int x) {
+    public boolean neighborTopLeft(int y, int x) {
 
         if ((y - 1 != - 1) && (x - 1 != - 1)) {
 
@@ -203,7 +210,7 @@ public class Rule {
         return false;
     }
 
-    private boolean neighborTopRight(int y, int x) {
+    public boolean neighborTopRight(int y, int x) {
 
         int boardLength = currentBoard.length;
 
@@ -217,7 +224,7 @@ public class Rule {
         return false;
     }
 
-    private boolean neighborBottomLeft(int y, int x) {
+    public boolean neighborBottomLeft(int y, int x) {
 
         int boardLength = currentBoard.length;
 
@@ -231,7 +238,7 @@ public class Rule {
         return false;
     }
 
-    private boolean neighborBottomRight(int y, int x) {
+    public boolean neighborBottomRight(int y, int x) {
 
         int boardLength = currentBoard.length;
 

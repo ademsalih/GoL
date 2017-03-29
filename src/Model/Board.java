@@ -36,8 +36,8 @@ public class Board {
 
 
     public void addBoard(byte[][] newBoard) {
-        for (int y = 0; y < newBoard[0].length; y++) {
-            for (int x = 0; x < newBoard.length; x++) {
+        for (int y = 0; y < newBoard.length; y++) {
+            for (int x = 0; x < newBoard[0].length; x++) {
                 this.board[y][x] = newBoard[y][x];
             }
         }
