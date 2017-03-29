@@ -98,7 +98,7 @@ public class Rule {
     }
 
 
-
+    // Counts the neighbor of a cell and returns antall
     public int countNeighbor(byte[][] board, int y, int x){
 
         board = currentBoard;
