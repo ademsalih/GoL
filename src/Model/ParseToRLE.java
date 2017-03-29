@@ -2,10 +2,17 @@ package Model;
 
 /**
  *
- * A class that parses the current board into a string that is used
+ * A class that parses the current board into a string that is passed to the SaveFile class for writing to file.
  */
+
 public class ParseToRLE {
 
+    /**
+     * Extracts the String that is to be written inside the the .rle file.
+     *
+     * @param board - the current board at the time of the function call as a 2D array.
+     * @return a String containing a RLE pattern, x and y values, and ruleset.
+     */
     public String extractingRLE (byte[][] board) {
         String extractedString =
                 extractingXYValue(board) + "\n" +
@@ -26,6 +33,12 @@ public class ParseToRLE {
 
     }
 
+    /**
+     * Converts the 2D byte array to
+     *
+     * @param board
+     * @return
+     */
     private String convertBoardToRlePattern(byte[][] board) {
         String rlePatternRow = "";
         String rlePattern = "";

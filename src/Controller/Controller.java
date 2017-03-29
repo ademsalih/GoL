@@ -138,10 +138,13 @@ public class Controller implements Initializable {
 
     public void loadFile() throws IOException {
         rleParser = new RLEParser();
-        Board.board = rleParser.importFile();
-        //boardObj.setBoard();
-        boardObj.drawBoard();
-        counter = 0;
+        byte[][] temp = rleParser.importFile();
+        if (temp != null) {
+            Board.board = rleParser.importFile();
+            //boardObj.setBoard();
+            boardObj.drawBoard();
+            counter = 0;
+        }
     }
 
     public void saveFile() {

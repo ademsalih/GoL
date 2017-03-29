@@ -123,15 +123,17 @@ public class RLEParser {
      */
     public byte[][] importFile() throws IOException {
         BufferedReader br = ReadFile.readFileFromDisk();
-        String xYRulesLine = findXYandRulesLine(br);
-        findXY(xYRulesLine);
-        //findRules(xYRulesLine);
-        String rlePattern = getRlePattern(br);
-        setBitStringFromRlePattern(rlePattern);
-        addingLastCharacters();
-        br.close();
-        return stringToByteArray(boardInBitString);
-
+        if (br != null) {
+            String xYRulesLine = findXYandRulesLine(br);
+            findXY(xYRulesLine);
+            //findRules(xYRulesLine);
+            String rlePattern = getRlePattern(br);
+            setBitStringFromRlePattern(rlePattern);
+            addingLastCharacters();
+            br.close();
+            return stringToByteArray(boardInBitString);
+        }
+        return null;
     }
 
     private String addingLastCharacters() {
