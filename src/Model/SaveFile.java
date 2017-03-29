@@ -1,5 +1,6 @@
 package Model;
 
+import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 
 import java.io.BufferedWriter;
@@ -10,15 +11,8 @@ import java.io.IOException;
 /**
  * Created by patrikkvarmehansen on 22/03/17.
  */
-public class SaveFile {
+public class SaveFile extends FileHandling {
 
-    /*private String fileName = "Testfil.Rle";
-    private String name = "#N ";
-    private String author = "#O ";
-    private String comment = "#C ";
-    private String xYRules = "x = 7, y = 6, rule = B3/S23";
-    private String rleString;
-    private String completeFileString = fileName + "\n" + name + "\n" + author + "\n" + comment + "\n" + xYRules + "\n";*/
     BufferedWriter toFile = null;
 
     public File createFilePath() {
@@ -38,13 +32,14 @@ public class SaveFile {
             toFile.write(ptr.extractingRLE(board));
         } catch (IOException e) {
             e.printStackTrace();
+            alert("Error writing to disk", "There was an error while trying to write to the disk");
         } finally {
             try {
                 if (toFile != null) {
                     toFile.close();
                 }
             } catch (IOException e2) {
-                e2.printStackTrace();
+                alert("Error writing to disk", "There was an error while trying to write to the disk");
             }
         }
     }

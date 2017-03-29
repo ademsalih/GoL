@@ -9,17 +9,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import javafx.stage.FileChooser;
 
-public class ReadFile {
+public class ReadFile extends FileHandling{
 
     //Support method for reading files
-    public static BufferedReader readFile() {
+    public static BufferedReader readFileFromDisk() {
         try {
             FileReader fr = new FileReader(openFile());
             BufferedReader br = new BufferedReader(fr);
             return br;
         }
         catch (IOException e) {
-            System.out.println("The file path is invalid");
             e.printStackTrace();
         }
         return null;
@@ -31,14 +30,20 @@ public class ReadFile {
     }
 
     public static File openFile () {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open .rle file");
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("RLE file", "*.rle")
-        );
-        File selectedFile = fileChooser.showOpenDialog(null);
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open .rle file");
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("RLE file", "*.rle")
+            );
+            File selectedFile = fileChooser.showOpenDialog(null);
 
-        return selectedFile;
+            return selectedFile;
+        } catch (Exception e) {
+            e.printStackTrace();
+            alert("Error opening file", "There was an error while trying to open the file.");
+            return null;
+        }
     }
 
 
