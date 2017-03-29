@@ -32,16 +32,18 @@ public class RLEParser {
             }
         }
     }*/
-    private void findRules(String line) {
-        String test = "rule = b?(\\d+), s?(\\d+)";
-        Matcher matcher = Pattern.compile(test).matcher(line);
+    private void findRules(String line) /*throws Exception*/ {
+        String test = "rule ?= ?b?(\\d+)/s?(\\d+)";
+        Matcher matcher = Pattern.compile(test, Pattern.CASE_INSENSITIVE).matcher(line);
         matcher.find();
-        System.out.println(matcher.group(0));
+        //throw new Exception();
+        System.out.println(matcher.group(1));
+        System.out.println(matcher.group(2));
     }
 
     private void findXY(String line) throws IOException {
         String test = "x ?= ?(\\d+),? y ?= ?(\\d+)";
-        Matcher matcher = Pattern.compile(test).matcher(line);
+        Matcher matcher = Pattern.compile(test, Pattern.CASE_INSENSITIVE).matcher(line);
         matcher.find();
         this.x = Integer.parseInt(matcher.group(1));
         this.y = Integer.parseInt(matcher.group(2));
@@ -126,7 +128,7 @@ public class RLEParser {
         if (br != null) {
             String xYRulesLine = findXYandRulesLine(br);
             findXY(xYRulesLine);
-            //findRules(xYRulesLine);
+            findRules(xYRulesLine);
             String rlePattern = getRlePattern(br);
             setBitStringFromRlePattern(rlePattern);
             addingLastCharacters();

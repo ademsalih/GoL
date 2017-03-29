@@ -140,8 +140,7 @@ public class Controller implements Initializable {
         rleParser = new RLEParser();
         byte[][] temp = rleParser.importFile();
         if (temp != null) {
-            Board.board = rleParser.importFile();
-            //boardObj.setBoard();
+            boardObj.addBoard(temp);
             boardObj.drawBoard();
             counter = 0;
         }

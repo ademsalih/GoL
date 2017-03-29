@@ -16,7 +16,7 @@ public class ReadFile extends FileHandling{
         try {
             File file = openFile();
             if (file != null) {
-                FileReader fr = new FileReader(openFile());
+                FileReader fr = new FileReader(file);
                 BufferedReader br = new BufferedReader(fr);
                 return br;
             }
