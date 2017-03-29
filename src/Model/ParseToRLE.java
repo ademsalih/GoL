@@ -1,7 +1,8 @@
 package Model;
 
 /**
- * Created by patrikkvarmehansen on 23/03/17.
+ *
+ * A class that parses the current board into a string that is used
  */
 public class ParseToRLE {
 
