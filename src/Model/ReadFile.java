@@ -14,9 +14,15 @@ public class ReadFile extends FileHandling{
     //Support method for reading files
     public static BufferedReader readFileFromDisk() {
         try {
-            FileReader fr = new FileReader(openFile());
-            BufferedReader br = new BufferedReader(fr);
-            return br;
+            File file = openFile();
+            if (file != null) {
+                FileReader fr = new FileReader(openFile());
+                BufferedReader br = new BufferedReader(fr);
+                return br;
+            }
+            else {
+                return null;
+            }
         }
         catch (IOException e) {
             e.printStackTrace();
