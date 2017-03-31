@@ -4,9 +4,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-
 /**
  * This class draws the board and fills the cells depending on the cells' state
+ *
  */
 
 public class Board {
@@ -14,6 +14,7 @@ public class Board {
     Color cellColor = Color.WHITE;
     Color backgroundColor = Color.BLACK;
 
+    public static byte[][] initialBoard = new byte[100][140];
     public static byte[][] board = new byte[100][140];
 
     double canvasWidth;
@@ -39,8 +40,10 @@ public class Board {
         for (int y = 0; y < newBoard.length; y++) {
             for (int x = 0; x < newBoard[0].length; x++) {
                 this.board[y][x] = newBoard[y][x];
+                this.initialBoard[y][x] = newBoard[y][x];
             }
         }
+
 
     }
 

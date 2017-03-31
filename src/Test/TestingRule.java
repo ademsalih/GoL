@@ -1,4 +1,4 @@
-package Test;
+package test;
 
 import Model.Rule;
 import org.junit.jupiter.api.Test;

@@ -2,6 +2,7 @@ package Controller;
 
 import Model.*;
 import View.Main;
+import javafx.animation.Animation;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -109,7 +110,6 @@ public class Controller implements Initializable {
         ColorStageController.instance.setCellColorPicker(boardObj.getcellColor());
         ColorStageController.instance.setBackgroundColorPicker(boardObj.getBackgroundColor());
 
-
     }
 
     public void draw() {
@@ -132,7 +132,7 @@ public class Controller implements Initializable {
     }
 
     public void reset() {
-        boardObj = new Board(canvas);
+        boardObj.setBoard(boardObj.initialBoard);
         boardObj.drawBoard();
     }
 

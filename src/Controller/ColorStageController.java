@@ -23,7 +23,6 @@ public class ColorStageController implements Initializable {
     @FXML private Label backgroundColorLabel;
     @FXML private Button closeButton;
 
-
     public static ColorStageController instance;
 
     @Override
