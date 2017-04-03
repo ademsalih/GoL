@@ -31,7 +31,7 @@ public class Board {
         this.canvasHeight = canvas.getHeight();
         this.xCounter = 0.0;
         this.yCounter = 0.0;
-        this.cellSize = 5;
+        this.cellSize = 3;
         this.gc = canvas.getGraphicsContext2D();
     }
 
@@ -134,7 +134,7 @@ public class Board {
     }
 
     public void clearBoard(){
-        board = new byte[100][140];
+        board = new byte[350][350];
         drawBoard();
     }
 

@@ -11,6 +11,10 @@ import javafx.stage.FileChooser;
 
 public class ReadFile extends FileHandling{
 
+    public void readFileFromUrl() throws IOException {
+
+    }
+
     //Support method for reading files
     public static BufferedReader readFileFromDisk() {
         try {

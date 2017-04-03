@@ -13,40 +13,48 @@ import java.util.regex.Pattern;
 
 public class RLEParser {
 
-    private int x = 5;
-    private int y = 1000;
+    //TODO Add function that checks all new lines for zeroes and has a runcount for empty lines.
+    //TODO Enable loading of bigger patterns
+    //TODO Skip step that writes whole pattern to string
+    //TODO Check what happens at the end of Star Synth
+
+    private int x;
+    private int y;
+    private int xPlacement;
+    private int yPlacement;
     private String boardInBitString = "";
+    private int[] born;
+    private int[] survive;
+    byte[][] arr;
+
     char cellType;
     int runCount;
 
 
-    /*private void findRules(BufferedReader br) throws IOException {
-        Boolean xNotFound = true;
-        while (xNotFound) {
-            String line = br.readLine();
-            if (line.startsWith("x")) {
-                String test = " ? (\\d+)/, / ? (\\d+)";
-                Matcher matcher = Pattern.compile(test).matcher(line);
-                matcher.find();
-                System.out.println(matcher.group(1));
-            }
-        }
-    }*/
-    private void findRules(String line) /*throws Exception*/ {
-        String test = "rule ?= ?b?(\\d+)/s?(\\d+)";
-        Matcher matcher = Pattern.compile(test, Pattern.CASE_INSENSITIVE).matcher(line);
-        matcher.find();
-        //throw new Exception();
-        System.out.println(matcher.group(1));
-        System.out.println(matcher.group(2));
-    }
 
-    private void findXY(String line) throws IOException {
-        String test = "x ?= ?(\\d+),? y ?= ?(\\d+)";
-        Matcher matcher = Pattern.compile(test, Pattern.CASE_INSENSITIVE).matcher(line);
-        matcher.find();
-        this.x = Integer.parseInt(matcher.group(1));
-        this.y = Integer.parseInt(matcher.group(2));
+
+    /**
+     * Main function of RLEParser. Returns a 2D byte array after loading in and parsing through a .rle file.
+     * @return a byte array that is a representation of the rle pattern from the .rle file.
+     * @throws IOException
+     */
+    public byte[][] importFile() throws IOException {
+        BufferedReader br = ReadFile.readFileFromDisk();
+        if (br != null) {
+            String xYRulesLine = findXYandRulesLine(br);
+            findXY(xYRulesLine);
+            findRules(xYRulesLine);
+            arr = new byte[y][x];
+            xPlacement = 0;
+            yPlacement = 0;
+            String line;
+            while ((line = getLine(br)) != null) {
+                setBitStringFromRlePattern(line);
+            }
+            br.close();
+            return arr;
+        }
+        return null;
     }
 
     private String findXYandRulesLine(BufferedReader br) throws IOException {
@@ -60,48 +68,114 @@ public class RLEParser {
         return null;
     }
 
-    //Updates the BitString with the number of 1s or 0s that is needed according to the latest reading from the RLE-string
-    private String updateBitString(int runCount, char cellType, String boardInBitString) {
-        String partOfBitString = "";
-        if (cellType == 'b') {
-            partOfBitString += addToBitString(runCount, '0');
-        } else if (cellType == 'o') {
-            partOfBitString += addToBitString(runCount, '1');
-        } else if (cellType == '$') {
-            for (int i = 0; i < runCount; i++) {
-                if (i == 0) {
-                    if (howFarAlongTheRow(boardInBitString) != 0) {
-                        partOfBitString += addToBitString((x - howFarAlongTheRow(boardInBitString)), '0');
-                    }
-                } else {
-                    partOfBitString += addToBitString(x, '0');
-                }
-            }
+    private void findXY(String line) throws IOException {
+        String test = "x ?= ?(\\d+),? ?y ?= ?(\\d+)";
+        Matcher matcher = Pattern.compile(test, Pattern.CASE_INSENSITIVE).matcher(line);
+        matcher.find();
+        this.x = Integer.parseInt(matcher.group(1));
+        this.y = Integer.parseInt(matcher.group(2));
+    }
+
+    private void findRules(String line) /*throws Exception*/ {
+        String test = "rule ?= ?b?(\\d+)/s?(\\d+)";
+        Matcher matcher = Pattern.compile(test, Pattern.CASE_INSENSITIVE).matcher(line);
+        matcher.find();
+        //throw new Exception();
+        born = convertRuleToArray(Integer.parseInt(matcher.group(1)));
+        survive = convertRuleToArray(Integer.parseInt(matcher.group(2)));
+    }
+
+    private String getLine(BufferedReader br) throws IOException {
+        String line;
+        if ((line = br.readLine()) != null) {
+            return line;
         }
-        return partOfBitString;
+        return null;
+    }
+
+    private boolean startNotFound(String line) {
+        if (line.substring(0, 1).matches("[0-9ob$]")) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     //Runs through the rlePattern and updates the local variable boardInBitString using the updateBitString method.
     private void setBitStringFromRlePattern(String rlePattern) {
         for (int i = 0; i < rlePattern.length(); i++) {
 
-            if (!checkForRleEnding(rlePattern, i)) {
+            int tempRunCount;
+            char tempCellType;
 
-                if (getRunCount(rlePattern, i) != 0) {
-                    runCount = getRunCount(rlePattern, i);
-                    i += iUpdate(runCount);
-                } else if (getCellType(rlePattern, i) != 'a') {
-                    cellType = getCellType(rlePattern, i);
-                    if (prevCharIsNotInt(rlePattern, i)) {
-                        runCount = 1;
-                    }
-                    this.boardInBitString += updateBitString(runCount, cellType, boardInBitString);
+            if ((tempRunCount = getRunCount(rlePattern, i)) != 0) {
+                runCount = tempRunCount;
+                i += iUpdate(runCount);
+            }
+            else if ((tempCellType = getCellType(rlePattern, i)) != 'a') {
+                cellType = tempCellType;
+                if (i == 0 || prevCharIsNotInt(rlePattern, i)) {
+                    runCount = 1;
                 }
+                updateArray(runCount, cellType);
+            }
+        }
+    }
 
+
+    private Boolean checkForRleEnding(String line, int i) {
+        if (line.substring(i, i + 1) == "!") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private int[] convertRuleToArray(int r) {
+        String a = Integer.toString(r);
+        int[] rule = new int[a.length()];
+        for (int i = 0; i < a.length(); i++) {
+            rule[i] = Character.digit(a.charAt(i), 10);
+        }
+        return rule;
+    }
+
+
+    //Updates the BitString with the number of 1s or 0s that is needed according to the latest reading from the RLE-string
+    private void updateArray(int runCount, char cellType) {
+        if (cellType == 'b') {
+            updateArray2(runCount, (byte)0);
+        } else if (cellType == 'o') {
+            updateArray2(runCount, (byte)1);
+        } else if (cellType == '$') {
+            for (int i = 0; i < runCount; i++) {
+                if (i == 0) {
+                    if (xPlacement != 0) {
+                         updateArray2((x - xPlacement), (byte)0);
+                         yPlacement++;
+                         xPlacement = 0;
+                    }
+                } else {
+                    updateArray2(x, (byte)0);
+                }
+            }
+        }
+        else if (cellType == '!') {
+            updateArray2(x - xPlacement, (byte)0);
+        }
+    }
+
+    private void updateArray2 (int r, byte b){
+        for (int i = 0; i < r; i++) {
+            if(xPlacement != x) {
+                arr[yPlacement][xPlacement] = b;
+                xPlacement++;
             }
 
         }
     }
+
+
 
     /**
      * Returns the X value of the Board from the RLE-file loaded into the given RLEParser-object
@@ -118,52 +192,7 @@ public class RLEParser {
         return y;
     }
 
-    /**
-     * Main function of RLEParser. Returns a 2D byte array after loading in and parsing through a .rle file.
-     * @return a byte array that is a representation of the rle pattern from the .rle file.
-     * @throws IOException
-     */
-    public byte[][] importFile() throws IOException {
-        BufferedReader br = ReadFile.readFileFromDisk();
-        if (br != null) {
-            String xYRulesLine = findXYandRulesLine(br);
-            findXY(xYRulesLine);
-            findRules(xYRulesLine);
-            String rlePattern = getRlePattern(br);
-            setBitStringFromRlePattern(rlePattern);
-            addingLastCharacters();
-            br.close();
-            return stringToByteArray(boardInBitString);
-        }
-        return null;
-    }
 
-    private String addingLastCharacters() {
-        return boardInBitString += addToBitString(x - howFarAlongTheRow(boardInBitString), '0');
-    }
-
-    private String getRlePattern(BufferedReader br) throws IOException {
-        String line;
-        String RlePattern = null;
-        Boolean intFound = false;
-        while ((line = br.readLine()) != null) {
-            if (!startNotFound(line)) {
-                intFound = true;
-            }
-            if (intFound) {
-                RlePattern += line;
-            }
-        }
-        return RlePattern;
-    }
-
-    private boolean startNotFound(String line) {
-        if (line.substring(0, 1).matches("[0-9ob$]")) {
-            return false;
-        } else {
-            return true;
-        }
-    }
 
     private int getRunCount(String line, int i) {
         String runCount = "";
@@ -173,6 +202,9 @@ public class RLEParser {
                 runCount += (char) line.charAt(i + 1);
                 if (line.substring(i + 2, i + 3).matches("\\d")) {
                     runCount += (char) line.charAt(i + 2);
+                    if (line.substring(i + 3, i + 4).matches("\\d")) {
+                        runCount += (char) line.charAt(i + 3);
+                    }
                 }
             }
         } else {
@@ -183,19 +215,10 @@ public class RLEParser {
     }
 
     private char getCellType(String line, int i) {
-        char cellType = 'a';
         if (line.substring(i, i + 1).matches("[bo$]")) {
-            cellType = line.charAt(i);
+            return line.charAt(i);
         }
-        return cellType;
-    }
-
-    private Boolean checkForRleEnding(String line, int i) {
-        if (line.substring(i, i + 1) == "!") {
-            return true;
-        } else {
-            return false;
-        }
+        return 'a';
     }
 
     private int iUpdate(int runCount) {
@@ -215,11 +238,6 @@ public class RLEParser {
             updateBitString += cellType;
         }
         return updateBitString;
-    }
-
-    private int howFarAlongTheRow(String boardInBitString) {
-        int howFarAlong = boardInBitString.length() % x;
-        return howFarAlong;
     }
 
     private boolean prevCharIsNotInt(String rlePattern, int i) {
@@ -256,6 +274,13 @@ public class RLEParser {
             }
             System.out.println("");
         }
+    }
+    public int[] getBorn() {
+        return born;
+    }
+
+    public int[] getSurvive() {
+        return survive;
     }
 }
 

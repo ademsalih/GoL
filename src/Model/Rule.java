@@ -1,14 +1,24 @@
 package Model;
 
+import java.util.Arrays;
+
 public class Rule {
 
     ////INSTANCE VARIABLES
     public byte[][] currentBoard;
     public byte[][] ruledBoard;
     public byte[][] conwaysBoard;
-    private int[] survivor = {2, 3};
-    private int[] born = {3};
+    private static int[] survivor = {2, 3};
+    private static int[] born = {3};
 
+
+    public static int[] getSurvivor() {
+        return survivor;
+    }
+
+    public static int[] getBorn() {
+        return born;
+    }
 
     ////CONSTRUCTOR
     public Rule (byte[][] currentBoard) {
@@ -63,6 +73,21 @@ public class Rule {
 
 
 
+    public static void setRules(int[] s, int[] b) {
+        survivor = s;
+        born = b;
+    }
+
+    public void checkRule (int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+        }
+    }
+
+    public void checkRules () {
+        checkRule(survivor);
+        checkRule(born);
+    }
+
     public byte checkIfOnOrOff(int neighbors, int cellState) {
         if (cellState == 1) {
             for (int s : survivor) {
@@ -89,7 +114,6 @@ public class Rule {
         for (int y = 0; y < conwaysBoard.length; y++) {
             for (int x = 0; x < conwaysBoard.length; x++) {
                 int cellState = currentBoard[y][x];
-                System.out.println(checkIfOnOrOff(countNeighbor(currentBoard, y, x), cellState));
                 conwaysBoard[y][x] = checkIfOnOrOff(countNeighbor(currentBoard, y, x), cellState);
             }
         }

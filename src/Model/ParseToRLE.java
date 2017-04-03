@@ -7,6 +7,9 @@ package Model;
 
 public class ParseToRLE {
 
+
+    //TODO Add help function that slims down the extracted board to the lowest possible X and Y value.
+
     /**
      * Extracts the String that is to be written inside the the .rle file.
      *
@@ -14,10 +17,7 @@ public class ParseToRLE {
      * @return a String containing a RLE pattern, x and y values, and ruleset.
      */
     public String extractingRLE (byte[][] board) {
-        String extractedString =
-                extractingXYValue(board) + "\n" +
-                convertBoardToRlePattern(board);
-
+        String extractedString = extractingXYValue(board) + addingRules() + convertBoardToRlePattern(board);
         return extractedString;
     }
 
@@ -28,8 +28,17 @@ public class ParseToRLE {
     }
 
     private String addingRules () {
-
-        return null;
+        int[] bornAr = Rule.getBorn();
+        int[] surviveAr = Rule.getSurvivor();
+        String born = "";
+        String survive = "";
+        for (int i = 0; i < bornAr.length; i++) {
+            born += bornAr[i];
+        }
+        for (int i = 0; i < surviveAr.length; i++) {
+            survive += surviveAr[i];
+        }
+        return "rule = b" + born + "/s" + survive + "\n";
 
     }
 
