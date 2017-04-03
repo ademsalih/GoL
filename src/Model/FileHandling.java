@@ -14,4 +14,12 @@ public class FileHandling {
         alert.setContentText(text);
         alert.showAndWait();
     }
+
+    protected static void alert (String text) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("An error occured");
+        alert.setHeaderText(null);
+        alert.setContentText(text);
+        alert.showAndWait();
+    }
 }

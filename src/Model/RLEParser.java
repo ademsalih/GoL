@@ -38,42 +38,57 @@ public class RLEParser {
      * @return a byte array that is a representation of the rle pattern from the .rle file.
      * @throws IOException
      */
-    public byte[][] importFile() throws IOException {
-        BufferedReader br = ReadFile.readFileFromDisk();
-        if (br != null) {
-            String xYRulesLine = findXYandRulesLine(br);
-            findXY(xYRulesLine);
-            findRules(xYRulesLine);
-            arr = new byte[y][x];
-            xPlacement = 0;
-            yPlacement = 0;
-            String line;
-            while ((line = getLine(br)) != null) {
-                setBitStringFromRlePattern(line);
+    public byte[][] importFile() {
+        try {
+            BufferedReader br = ReadFile.readFileFromDisk();
+            if (br != null) {
+                try {
+                    String xYRulesLine = findXYandRulesLine(br);
+                    findXY(xYRulesLine);
+                    findRules(xYRulesLine);
+                    arr = new byte[y][x];
+                    xPlacement = 0;
+                    yPlacement = 0;
+                    String line;
+                    while ((line = getLine(br)) != null) {
+                        setBitStringFromRlePattern(line);
+                    }
+                } catch (PatternFormatException e) {
+                    FileHandling.alert("An error occured");
+                }
+                br.close();
+                return arr;
             }
-            br.close();
-            return arr;
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return null;
     }
 
-    private String findXYandRulesLine(BufferedReader br) throws IOException {
+    private String findXYandRulesLine(BufferedReader br) throws IOException, PatternFormatException {
         Boolean xNotFound = true;
         while (xNotFound) {
             String line = br.readLine();
             if (line.startsWith("x")) {
                 return line;
             }
+            if (line == null) {
+                throw new IOException("Unable to read new line from file.");
+            }
         }
-        return null;
+        throw new PatternFormatException("X, Y or Rules not found in file.");
     }
 
-    private void findXY(String line) throws IOException {
+    private void findXY(String line) throws IOException, PatternFormatException {
         String test = "x ?= ?(\\d+),? ?y ?= ?(\\d+)";
         Matcher matcher = Pattern.compile(test, Pattern.CASE_INSENSITIVE).matcher(line);
         matcher.find();
         this.x = Integer.parseInt(matcher.group(1));
         this.y = Integer.parseInt(matcher.group(2));
+        if (this.x == 0 || this.y == 0) {
+            throw new PatternFormatException("Couldn't find X or/and Y-value.");
+        }
     }
 
     private void findRules(String line) /*throws Exception*/ {
