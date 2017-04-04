@@ -60,12 +60,9 @@ public class Animate {
 
             startAnimation();
 
-
-
         } else if ( timeline.getStatus() == Animation.Status.RUNNING) {
 
             stopAnimation();
-
         }
 
     }

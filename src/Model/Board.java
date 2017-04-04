@@ -14,9 +14,9 @@ public class Board {
     Color cellColor = Color.WHITE;
     Color backgroundColor = Color.BLACK;
 
-    public static byte[][] initialBoard = new byte[167][234];
+    public static byte[][] initialBoard = new byte[250][350];
 
-    public static byte[][] board = new byte[167][234];
+    public static byte[][] board = new byte[250][350];
 
     double canvasWidth;
     double canvasHeight;
@@ -32,19 +32,18 @@ public class Board {
         this.canvasHeight = canvas.getHeight();
         this.xCounter = 0.0;
         this.yCounter = 0.0;
-        this.cellSize = 3;
+        this.cellSize = 2;
         this.gc = canvas.getGraphicsContext2D();
     }
 
-
     public void addBoard(byte[][] newBoard) {
+
         for (int y = 0; y < newBoard.length; y++) {
             for (int x = 0; x < newBoard[0].length; x++) {
                 this.board[y][x] = newBoard[y][x];
                 this.initialBoard[y][x] = newBoard[y][x];
             }
         }
-
 
     }
 

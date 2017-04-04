@@ -26,8 +26,6 @@ public class Rule {
     }
 
 
-
-
     ////CLASS METHODS
 
     public byte[][] getCurrentBoard() {

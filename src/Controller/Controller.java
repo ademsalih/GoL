@@ -80,8 +80,8 @@ public class Controller implements Initializable {
             animate.setAnimationRate(newValue.intValue());
         });
 
-        scaleSlider.setValue(3);
-        scaleSlider.setMin(3);
+        scaleSlider.setValue(2);
+        scaleSlider.setMin(2);
         scaleSlider.setMax(30);
 
         scaleSlider.valueProperty().addListener((o, oldValue, newValue) -> {
