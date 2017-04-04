@@ -80,9 +80,9 @@ public class Controller implements Initializable {
             animate.setAnimationRate(newValue.intValue());
         });
 
-        scaleSlider.setValue(5);
-        scaleSlider.setMin(5);
-        scaleSlider.setMax(40);
+        scaleSlider.setValue(3);
+        scaleSlider.setMin(3);
+        scaleSlider.setMax(30);
 
         scaleSlider.valueProperty().addListener((o, oldValue, newValue) -> {
             boardObj.setCellSize(newValue.intValue());
