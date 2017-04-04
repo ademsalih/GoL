@@ -82,7 +82,7 @@ public class Controller implements Initializable {
 
         scaleSlider.setValue(2);
         scaleSlider.setMin(2);
-        scaleSlider.setMax(30);
+        scaleSlider.setMax(10);
 
         scaleSlider.valueProperty().addListener((o, oldValue, newValue) -> {
             boardObj.setCellSize(newValue.intValue());
