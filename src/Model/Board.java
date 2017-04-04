@@ -14,8 +14,9 @@ public class Board {
     Color cellColor = Color.WHITE;
     Color backgroundColor = Color.BLACK;
 
-    public static byte[][] initialBoard = new byte[100][140];
-    public static byte[][] board = new byte[100][140];
+    public static byte[][] initialBoard = new byte[167][234];
+
+    public static byte[][] board = new byte[167][234];
 
     double canvasWidth;
     double canvasHeight;

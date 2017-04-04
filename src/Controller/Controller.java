@@ -164,15 +164,12 @@ public class Controller implements Initializable {
         p.x = event.getX();
         p.y = event.getY();
         boardObj.mouseclickedonBoard(p.x, p.y);
-
     }
 
     public void mouseDragged(MouseEvent event) {
         Point p = new Point();
         p.x = event.getX();
         p.y = event.getY();
-
-
     }
 
     public void exitEvent() {
@@ -197,7 +194,6 @@ public class Controller implements Initializable {
 
 
     public void startStopButton() {
-
         animate.startStopButtonAction();
     }
 
