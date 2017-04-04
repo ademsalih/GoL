@@ -135,6 +135,7 @@ public class Board {
 
     public void clearBoard(){
         board = new byte[350][350];
+        initialBoard = new byte[250][350];
         drawBoard();
     }
 

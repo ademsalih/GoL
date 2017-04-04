@@ -155,6 +155,7 @@ public class Controller implements Initializable {
 
     public void clear() {
         boardObj.clearBoard();
+
         counter = 0;
         Main.getStage().setTitle("Conways Game of Life");
     }
@@ -191,7 +192,6 @@ public class Controller implements Initializable {
     public Timeline getTimeline() {
         return this.timeline;
     }
-
 
     public void startStopButton() {
         animate.startStopButtonAction();
