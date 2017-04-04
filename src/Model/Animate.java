@@ -57,11 +57,9 @@ public class Animate {
     public void startStopButtonAction() {
 
         if ( timeline.getStatus() == Animation.Status.STOPPED ) {
-
             startAnimation();
 
         } else if ( timeline.getStatus() == Animation.Status.RUNNING) {
-
             stopAnimation();
         }
 

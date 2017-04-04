@@ -2,6 +2,11 @@ package Model;
 
 import java.util.Arrays;
 
+/* This class handles the rules for the application. A board object is
+ * imported, manipulated and returned to the calling method.
+ *
+ */
+
 public class Rule {
 
     ////INSTANCE VARIABLES
@@ -20,13 +25,11 @@ public class Rule {
         return born;
     }
 
-    ////CONSTRUCTOR
+    // Class constructor
     public Rule (byte[][] currentBoard) {
         this.currentBoard = currentBoard;
     }
 
-
-    ////CLASS METHODS
 
     public byte[][] getCurrentBoard() {
         return currentBoard;
@@ -36,7 +39,7 @@ public class Rule {
         this.currentBoard = board;
     }
 
-    //Retunerer next generation verdier
+    // Returns next generation values
     @Override
     public String toString(){
         String output = "";
@@ -49,7 +52,7 @@ public class Rule {
         return output;
     }
 
-    ////SIMPLE RULES, INVERSION
+    // Rules to invert the board (dead becomes alive vice versa)
     public byte[][] invertBoard() {
 
         ruledBoard = new byte[currentBoard.length][currentBoard.length];
@@ -68,7 +71,6 @@ public class Rule {
 
         return ruledBoard;
     }
-
 
 
     public static void setRules(int[] s, int[] b) {
@@ -101,17 +103,21 @@ public class Rule {
                 }
             }
         }
+
         return 0;
     }
 
-    ////CONWAYS GAME OF LIFE RULES
-
+    // Conways Game of life Rules (B3S23)
     public byte[][] conwaysBoardRules() {
 
         conwaysBoard = new byte[currentBoard.length][currentBoard[0].length];
+
         for (int y = 0; y < conwaysBoard.length; y++) {
+
             for (int x = 0; x < conwaysBoard.length; x++) {
+
                 int cellState = currentBoard[y][x];
+
                 conwaysBoard[y][x] = checkIfOnOrOff(countNeighbor(currentBoard, y, x), cellState);
             }
         }
@@ -120,7 +126,7 @@ public class Rule {
     }
 
 
-    // Counts the neighbor of a cell and returns antall
+    // Counts the neighbor of a cell and returns value
     public int countNeighbor(byte[][] board, int y, int x){
 
         board = currentBoard;
@@ -157,9 +163,7 @@ public class Rule {
     }
 
 
-    ////COUNT NEIGHBOR METHODS
-
-
+    // Methods that checks whether a cell has a neighbor or not
     private boolean neighborOver(int y, int x) {
 
         if (y - 1 != - 1) {
