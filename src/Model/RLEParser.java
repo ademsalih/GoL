@@ -70,7 +70,7 @@ public class RLEParser {
      * @return a byte array that is a representation of the rle pattern from the .rle file.
      * @throws IOException
      */
-    public byte[][] importFile() {
+    public byte[][] importFile()  {
         try {
             BufferedReader br = ReadFile.readFileFromDisk();
             if (br != null) {
@@ -87,6 +87,7 @@ public class RLEParser {
                     }
                 } catch (PatternFormatException e) {
                     FileHandling.alert("An error occured while reading the .rle file");
+
                 }
 
                 br.close();
@@ -103,7 +104,6 @@ public class RLEParser {
         String line;
         while ((line = br.readLine()) != null) {
             if (line.startsWith("x")) {
-                System.out.println("...");
                 return line;
             }
         }
@@ -113,8 +113,7 @@ public class RLEParser {
     private void findXY(String line) throws IOException, PatternFormatException {
         String test = "x ?= ?(\\d+),? ?y ?= ?(\\d+)";
         Matcher matcher = Pattern.compile(test, Pattern.CASE_INSENSITIVE).matcher(line);
-        matcher.find();
-        if (matcher.groupCount() > 1) {
+        if (matcher.find()) {
             this.x = Integer.parseInt(matcher.group(1));
             this.y = Integer.parseInt(matcher.group(2));
         }
@@ -123,11 +122,11 @@ public class RLEParser {
         }
     }
 
+
     private void findRules(String line) throws PatternFormatException {
         String test = "rule ?= ?b?(\\d+)/s?(\\d+)";
         Matcher matcher = Pattern.compile(test, Pattern.CASE_INSENSITIVE).matcher(line);
-        matcher.find();
-        if (matcher.groupCount() > 1) {
+        if (matcher.find()) {
             born = convertRuleToArray(Integer.parseInt(matcher.group(1)));
             survive = convertRuleToArray(Integer.parseInt(matcher.group(2)));
         }
@@ -195,11 +194,6 @@ public class RLEParser {
 
     //Updates the BitString with the number of 1s or 0s that is needed according to the latest reading from the RLE-string
     private void updateArray(int runCount, char cellType) {
-        System.out.print(runCount);
-        System.out.print(" " +  cellType + "\n");
-        if (cellType == 'b' && runCount == 83) {
-            System.out.println("");
-        }
         if (cellType == 'b') {
             updateArray2(runCount, (byte)0);
         } else if (cellType == 'o') {
@@ -222,9 +216,6 @@ public class RLEParser {
 
     private void updateArray2 (int r, byte b){
         for (int i = 0; i < r; i++) {
-            if (xPlacement == 80 && yPlacement == 58) {
-                System.out.println("");
-            }
             if  (xPlacement != x) {
                 arr[yPlacement][xPlacement] = b;
             }
@@ -232,7 +223,6 @@ public class RLEParser {
                 xPlacement = -1;
                 if ((yPlacement + 1) != y) {
                     yPlacement++;
-                    System.out.println(yPlacement);
                 }
             }
             xPlacement++;

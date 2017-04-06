@@ -37,6 +37,10 @@ public class Board {
 
 
     public void addBoard(byte[][] newBoard) {
+        if ((newBoard[0].length > board[0].length) || (newBoard.length > board.length)) {
+            this.board = new byte[(newBoard.length + 20)][(newBoard[0].length + 20)];
+            this.initialBoard = new byte[(newBoard.length + 20)][(newBoard[0].length + 20)];
+        }
         int xOffSet = (board[0].length - newBoard[0].length) / 2;
         int yOffSet = (board.length - newBoard.length) / 2;
         for (int y = 0; y < newBoard.length; y++) {
@@ -45,9 +49,9 @@ public class Board {
                 this.initialBoard[y + yOffSet][x + xOffSet] = newBoard[y][x];
             }
         }
-
-
     }
+
+
 
     public void setBoard(byte[][] board) {this.board = board;}
 
