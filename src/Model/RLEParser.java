@@ -13,6 +13,8 @@ import java.util.regex.Pattern;
 
 public class RLEParser {
 
+    //TODO lesing av regler skal gi et annet resultat dersom b/s mangler.
+
     //TODO Add function that checks all new lines for zeroes and has a runcount for empty lines.
     //TODO Enable loading of bigger patterns
     //TODO Skip step that writes whole pattern to string
@@ -25,13 +27,43 @@ public class RLEParser {
     private String boardInBitString = "";
     private int[] born;
     private int[] survive;
-    byte[][] arr;
+    public byte[][] arr;
 
     char cellType;
     int runCount;
 
 
+    public void setX(int x) {
+        this.x = x;
+    }
 
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void setxPlacement(int xPlacement) {
+        this.xPlacement = xPlacement;
+    }
+
+    public void setyPlacement(int yPlacement) {
+        this.yPlacement = yPlacement;
+    }
+
+    //FOR TESTING ONLY
+    public void tester(String xYRulesLine, String line) throws Exception {
+        try {
+            findXY(xYRulesLine);
+            findRules(xYRulesLine);
+            arr = new byte[y][x];
+            xPlacement = 0;
+            yPlacement = 0;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (PatternFormatException e) {
+            e.printStackTrace();
+        }
+        setByteArrayFromRlePattern(line);
+    }
 
     /**
      * Main function of RLEParser. Returns a 2D byte array after loading in and parsing through a .rle file.
@@ -51,11 +83,12 @@ public class RLEParser {
                     yPlacement = 0;
                     String line;
                     while ((line = getLine(br)) != null) {
-                        setBitStringFromRlePattern(line);
+                        setByteArrayFromRlePattern(line);
                     }
                 } catch (PatternFormatException e) {
-                    FileHandling.alert("An error occured");
+                    FileHandling.alert("An error occured while reading the .rle file");
                 }
+
                 br.close();
                 return arr;
             }
@@ -67,14 +100,11 @@ public class RLEParser {
     }
 
     private String findXYandRulesLine(BufferedReader br) throws IOException, PatternFormatException {
-        Boolean xNotFound = true;
-        while (xNotFound) {
-            String line = br.readLine();
+        String line;
+        while ((line = br.readLine()) != null) {
             if (line.startsWith("x")) {
+                System.out.println("...");
                 return line;
-            }
-            if (line == null) {
-                throw new IOException("Unable to read new line from file.");
             }
         }
         throw new PatternFormatException("X, Y or Rules not found in file.");
@@ -84,20 +114,27 @@ public class RLEParser {
         String test = "x ?= ?(\\d+),? ?y ?= ?(\\d+)";
         Matcher matcher = Pattern.compile(test, Pattern.CASE_INSENSITIVE).matcher(line);
         matcher.find();
-        this.x = Integer.parseInt(matcher.group(1));
-        this.y = Integer.parseInt(matcher.group(2));
-        if (this.x == 0 || this.y == 0) {
+        if (matcher.groupCount() > 1) {
+            this.x = Integer.parseInt(matcher.group(1));
+            this.y = Integer.parseInt(matcher.group(2));
+        }
+        else {
             throw new PatternFormatException("Couldn't find X or/and Y-value.");
         }
     }
 
-    private void findRules(String line) /*throws Exception*/ {
+    private void findRules(String line) throws PatternFormatException {
         String test = "rule ?= ?b?(\\d+)/s?(\\d+)";
         Matcher matcher = Pattern.compile(test, Pattern.CASE_INSENSITIVE).matcher(line);
         matcher.find();
-        //throw new Exception();
-        born = convertRuleToArray(Integer.parseInt(matcher.group(1)));
-        survive = convertRuleToArray(Integer.parseInt(matcher.group(2)));
+        if (matcher.groupCount() > 1) {
+            born = convertRuleToArray(Integer.parseInt(matcher.group(1)));
+            survive = convertRuleToArray(Integer.parseInt(matcher.group(2)));
+        }
+        else {
+            throw new PatternFormatException("Couldn't find rules");
+        }
+
     }
 
     private String getLine(BufferedReader br) throws IOException {
@@ -117,7 +154,7 @@ public class RLEParser {
     }
 
     //Runs through the rlePattern and updates the local variable boardInBitString using the updateBitString method.
-    private void setBitStringFromRlePattern(String rlePattern) {
+    public void setByteArrayFromRlePattern(String rlePattern) {
         for (int i = 0; i < rlePattern.length(); i++) {
 
             int tempRunCount;
@@ -158,6 +195,11 @@ public class RLEParser {
 
     //Updates the BitString with the number of 1s or 0s that is needed according to the latest reading from the RLE-string
     private void updateArray(int runCount, char cellType) {
+        System.out.print(runCount);
+        System.out.print(" " +  cellType + "\n");
+        if (cellType == 'b' && runCount == 83) {
+            System.out.println("");
+        }
         if (cellType == 'b') {
             updateArray2(runCount, (byte)0);
         } else if (cellType == 'o') {
@@ -167,8 +209,6 @@ public class RLEParser {
                 if (i == 0) {
                     if (xPlacement != 0) {
                          updateArray2((x - xPlacement), (byte)0);
-                         yPlacement++;
-                         xPlacement = 0;
                     }
                 } else {
                     updateArray2(x, (byte)0);
@@ -182,10 +222,20 @@ public class RLEParser {
 
     private void updateArray2 (int r, byte b){
         for (int i = 0; i < r; i++) {
-            if(xPlacement != x) {
-                arr[yPlacement][xPlacement] = b;
-                xPlacement++;
+            if (xPlacement == 80 && yPlacement == 58) {
+                System.out.println("");
             }
+            if  (xPlacement != x) {
+                arr[yPlacement][xPlacement] = b;
+            }
+            if ((xPlacement+1) == x){
+                xPlacement = -1;
+                if ((yPlacement + 1) != y) {
+                    yPlacement++;
+                    System.out.println(yPlacement);
+                }
+            }
+            xPlacement++;
 
         }
     }
@@ -240,9 +290,14 @@ public class RLEParser {
         int numberOfDigits = String.valueOf(runCount).length();
         if (numberOfDigits == 2) {
             return 1;
-        } else if (numberOfDigits == 3) {
+        }
+        else if (numberOfDigits == 3) {
             return 2;
-        } else {
+        }
+        else if (numberOfDigits == 4) {
+            return 3;
+        }
+        else {
             return 0;
         }
     }
@@ -257,10 +312,10 @@ public class RLEParser {
 
     private boolean prevCharIsNotInt(String rlePattern, int i) {
         char cha = rlePattern.charAt(i - 1);
-        if (Character.isLetter(cha)) {
-            return true;
-        } else {
+        if (Character.isDigit(cha)) {
             return false;
+        } else {
+            return true;
         }
     }
 

@@ -31,16 +31,18 @@ public class Board {
         this.canvasHeight = canvas.getHeight();
         this.xCounter = 0.0;
         this.yCounter = 0.0;
-        this.cellSize = 3;
+        this.cellSize = 5;
         this.gc = canvas.getGraphicsContext2D();
     }
 
 
     public void addBoard(byte[][] newBoard) {
+        int xOffSet = (board[0].length - newBoard[0].length) / 2;
+        int yOffSet = (board.length - newBoard.length) / 2;
         for (int y = 0; y < newBoard.length; y++) {
             for (int x = 0; x < newBoard[0].length; x++) {
-                this.board[y][x] = newBoard[y][x];
-                this.initialBoard[y][x] = newBoard[y][x];
+                this.board[y + yOffSet][x + xOffSet] = newBoard[y][x];
+                this.initialBoard[y + yOffSet][x + xOffSet] = newBoard[y][x];
             }
         }
 
@@ -134,7 +136,7 @@ public class Board {
     }
 
     public void clearBoard(){
-        board = new byte[350][350];
+        this.board = new byte[100][140];
         drawBoard();
     }
 

@@ -118,8 +118,8 @@ public class Controller implements Initializable {
     }
 
     public void nextGeneration() {
-
         rule = new Rule(boardObj.board);
+        rule.checkRules();
         boardObj.setBoard(rule.conwaysBoardRules());
         boardObj.drawBoard();
         counter += 1;

@@ -8,6 +8,7 @@ public class PatternFormatException extends Exception {
 
     PatternFormatException(String error) {
         this.error = "Error reading board from .rle-file" + error;
+        System.err.println(error);
     }
 
     @Override
