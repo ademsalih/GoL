@@ -80,9 +80,9 @@ public class Controller implements Initializable {
             animate.setAnimationRate(newValue.intValue());
         });
 
-        scaleSlider.setValue(5);
-        scaleSlider.setMin(5);
-        scaleSlider.setMax(40);
+        scaleSlider.setValue(2);
+        scaleSlider.setMin(2);
+        scaleSlider.setMax(10);
 
         scaleSlider.valueProperty().addListener((o, oldValue, newValue) -> {
             boardObj.setCellSize(newValue.intValue());
@@ -155,6 +155,7 @@ public class Controller implements Initializable {
 
     public void clear() {
         boardObj.clearBoard();
+
         counter = 0;
         Main.getStage().setTitle("Conways Game of Life");
     }
@@ -164,15 +165,12 @@ public class Controller implements Initializable {
         p.x = event.getX();
         p.y = event.getY();
         boardObj.mouseclickedonBoard(p.x, p.y);
-
     }
 
     public void mouseDragged(MouseEvent event) {
         Point p = new Point();
         p.x = event.getX();
         p.y = event.getY();
-
-
     }
 
     public void exitEvent() {
@@ -195,9 +193,7 @@ public class Controller implements Initializable {
         return this.timeline;
     }
 
-
     public void startStopButton() {
-
         animate.startStopButtonAction();
     }
 
