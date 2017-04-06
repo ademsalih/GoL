@@ -152,9 +152,8 @@ public class Controller implements Initializable {
         sf.saveFile(boardObj.getBoard());
     }
 
-    public void clear() {
+    public void newBlankAction() {
         boardObj.clearBoard();
-
         counter = 0;
         Main.getStage().setTitle("Conways Game of Life");
     }
