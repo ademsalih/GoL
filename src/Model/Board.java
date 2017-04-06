@@ -31,15 +31,15 @@ public class Board {
         this.canvasHeight = canvas.getHeight();
         this.xCounter = 0.0;
         this.yCounter = 0.0;
-        this.cellSize = 5;
+        this.cellSize = 1;
         this.gc = canvas.getGraphicsContext2D();
     }
 
 
     public void addBoard(byte[][] newBoard) {
         if ((newBoard[0].length > board[0].length) || (newBoard.length > board.length)) {
-            this.board = new byte[(newBoard.length + 20)][(newBoard[0].length + 20)];
-            this.initialBoard = new byte[(newBoard.length + 20)][(newBoard[0].length + 20)];
+            this.board = new byte[(newBoard.length + 50)][(newBoard[0].length + 50)];
+            this.initialBoard = new byte[(newBoard.length + 50)][(newBoard[0].length + 50)];
         }
         int xOffSet = (board[0].length - newBoard[0].length) / 2;
         int yOffSet = (board.length - newBoard.length) / 2;

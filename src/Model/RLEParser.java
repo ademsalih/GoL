@@ -13,8 +13,6 @@ import java.util.regex.Pattern;
 
 public class RLEParser {
 
-    //TODO lesing av regler skal gi et annet resultat dersom b/s mangler.
-
     //TODO Add function that checks all new lines for zeroes and has a runcount for empty lines.
     //TODO Enable loading of bigger patterns
     //TODO Skip step that writes whole pattern to string
@@ -123,12 +121,20 @@ public class RLEParser {
     }
 
 
+
     private void findRules(String line) throws PatternFormatException {
         String test = "rule ?= ?b?(\\d+)/s?(\\d+)";
+        line = line.toLowerCase();
         Matcher matcher = Pattern.compile(test, Pattern.CASE_INSENSITIVE).matcher(line);
         if (matcher.find()) {
-            born = convertRuleToArray(Integer.parseInt(matcher.group(1)));
-            survive = convertRuleToArray(Integer.parseInt(matcher.group(2)));
+            if (line.indexOf('b') != -1 || line.indexOf('s') != -1) {
+                born = convertRuleToArray(Integer.parseInt(matcher.group(1)));
+                survive = convertRuleToArray(Integer.parseInt(matcher.group(2)));
+            }
+            else {
+                survive = convertRuleToArray(Integer.parseInt(matcher.group(1)));
+                born = convertRuleToArray(Integer.parseInt(matcher.group(2)));
+            }
         }
         else {
             throw new PatternFormatException("Couldn't find rules");
