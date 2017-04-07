@@ -11,6 +11,8 @@ import javafx.stage.FileChooser;
 
 public class ReadFile extends FileHandling{
 
+    //TODO URL-file-opener
+
     public void readFileFromUrl() throws IOException {
 
     }

@@ -16,6 +16,12 @@ public class ParseToRLE {
      * @param board - the current board at the time of the function call as a 2D array.
      * @return a String containing a RLE pattern, x and y values, and ruleset.
      */
+
+    private int lowestX;
+    private int biggestX;
+    private int lowestY;
+    private int biggestY;
+
     public String extractingRLE (byte[][] board) {
         String extractedString = extractingXYValue(board) + addingRules() + convertBoardToRlePattern(board);
         return extractedString;
@@ -41,6 +47,8 @@ public class ParseToRLE {
         return "rule = b" + born + "/s" + survive + "\n";
 
     }
+
+
 
     /**
      * Converts the 2D byte array to
