@@ -106,13 +106,13 @@ public class Board {
 
         gc.setFill(backgroundColor);
         gc.fillRect(0,0,canvasWidth,canvasHeight);
+        Point p = new Point();
 
         for (int y = 0; y < board.length; y++ ) {
 
             for (int x = 0; x < board[0].length; x++) {
 
                 if (board[y][x] == 1) {
-                    Point p = new Point();
                     p.x = xCounter;
                     p.y = yCounter;
                     p.draw(gc, cellColor, (double)cellSize);
@@ -120,11 +120,6 @@ public class Board {
                     xCounter += cellSize;
 
                 } else {
-                    Point p = new Point();
-                    p.x = xCounter;
-                    p.y = yCounter;
-                    p.draw(gc, backgroundColor, (double)cellSize);
-
                     xCounter += cellSize;
                 }
 
@@ -135,6 +130,20 @@ public class Board {
 
             }
 
+        }
+        double gridSize = cellSize * 0.05;
+        gc.setStroke(Color.RED);
+        gc.setLineWidth(gridSize);
+
+        int i = 0;
+        while (i < canvasHeight) {
+            gc.strokeLine(0, i, canvasWidth, i);
+            i += cellSize;
+        }
+        i = 0;
+        while (i < canvasWidth) {
+            gc.strokeLine(i, 0, i, canvasHeight);
+            i += cellSize;
         }
 
         yCounter = 0;

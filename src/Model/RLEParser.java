@@ -15,8 +15,6 @@ public class RLEParser {
 
     //TODO Add function that checks all new lines for zeroes and has a runcount for empty lines.
     //TODO Enable loading of bigger patterns
-    //TODO Skip step that writes whole pattern to string
-    //TODO Check what happens at the end of Star Synth
 
     private int x;
     private int y;
