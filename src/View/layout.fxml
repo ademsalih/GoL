@@ -41,7 +41,7 @@
           <Menu mnemonicParsing="false" text="Options">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#colorStage" text="Change colors..." />
-                  <CheckMenuItem mnemonicParsing="false" text="Show grid" />
+                  <CheckMenuItem mnemonicParsing="false" onAction="#toggleGrid" selected="true" text="Show grid" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Rules">

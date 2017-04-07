@@ -142,6 +142,7 @@ public class Controller implements Initializable {
             Rule.setRules(rleParser.getSurvive(), rleParser.getBorn());
             boardObj.clearBoard();
             boardObj.addBoard(temp);
+            //boardObj.drawBoard();
             boardObj.drawBoard();
             counter = 0;
         }
@@ -193,6 +194,19 @@ public class Controller implements Initializable {
 
     public void startStopButton() {
         animate.startStopButtonAction();
+    }
+
+    public void toggleGrid() {
+
+        if (boardObj.getGrid()) {
+            boardObj.setGrid(false);
+
+        } else {
+            boardObj.setGrid(true);
+
+        }
+
+        boardObj.drawBoard();
     }
 
 

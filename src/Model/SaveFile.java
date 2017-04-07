@@ -11,6 +11,7 @@ import java.io.IOException;
 /**
  * Created by patrikkvarmehansen on 22/03/17.
  */
+
 public class SaveFile extends FileHandling {
 
     BufferedWriter toFile = null;

@@ -13,6 +13,7 @@ public class Board {
 
     Color cellColor = Color.WHITE;
     Color backgroundColor = Color.BLACK;
+    Color gridColor = Color.WHITE;
 
     public static byte[][] initialBoard = new byte[100][140];
     public static byte[][] board = new byte[100][140];
@@ -23,8 +24,8 @@ public class Board {
     double yCounter;
     int cellSize;
     GraphicsContext gc;
-
     int generationCounter;
+    boolean grid;
 
     public Board (Canvas canvas) {
         this.canvasWidth = canvas.getWidth();
@@ -33,8 +34,16 @@ public class Board {
         this.yCounter = 0.0;
         this.cellSize = 2;
         this.gc = canvas.getGraphicsContext2D();
+        this.grid = true;
     }
 
+    public void setGrid(boolean gridInput) {
+        this.grid = gridInput;
+    }
+
+    public boolean getGrid() {
+        return this.grid;
+    }
 
     public void addBoard(byte[][] newBoard) {
         if ((newBoard[0].length > board[0].length) || (newBoard.length > board.length)) {
@@ -131,8 +140,20 @@ public class Board {
             }
 
         }
+
+        if (grid) {
+            drawGrid();
+        }
+
+        yCounter = 0;
+    }
+
+
+
+    public void drawGrid() {
+
         double gridSize = cellSize * 0.05;
-        gc.setStroke(Color.RED);
+        gc.setStroke(gridColor);
         gc.setLineWidth(gridSize);
 
         int i = 0;
@@ -145,9 +166,9 @@ public class Board {
             gc.strokeLine(i, 0, i, canvasHeight);
             i += cellSize;
         }
-
-        yCounter = 0;
     }
+
+
 
     public void clearBoard(){
         this.board = new byte[100][140];
