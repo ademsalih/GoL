@@ -9,6 +9,8 @@ import javafx.scene.paint.Color;
  *
  */
 
+//skal sjekke om dette kommer opp i git
+
 public class Board {
 
     Color cellColor = Color.WHITE;
