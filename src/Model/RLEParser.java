@@ -3,6 +3,8 @@ package Model;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -66,7 +68,7 @@ public class RLEParser {
      * @return a byte array that is a representation of the rle pattern from the .rle file.
      * @throws IOException
      */
-    public byte[][] importFile()  {
+    public ArrayList<List<Byte>> importFile()  {
         try {
             BufferedReader br = ReadFile.readFileFromDisk();
             if (br != null) {
@@ -87,7 +89,8 @@ public class RLEParser {
                 }
 
                 br.close();
-                return arr;
+                ArrayList<List<Byte>> arrLi = convertFromArrToArrLi(arr);
+                return arrLi;
             }
             return null;
         } catch (IOException e) {
@@ -338,6 +341,20 @@ public class RLEParser {
             }
             System.out.println("");
         }
+    }
+
+    private ArrayList<List<Byte>> convertFromArrToArrLi(byte[][] b) {
+        ArrayList<List<Byte>> byteArrayList = new ArrayList<List<Byte>>();
+
+        for (int y = 0; y < b.length; y++) {
+            List<Byte> oneDim = new ArrayList<Byte>();
+            for (int x = 0; x < b[0].length; x++) {
+                oneDim.add(b[y][x]);
+            }
+            byteArrayList.add(oneDim);
+        }
+        System.out.println(byteArrayList);
+        return byteArrayList;
     }
     public int[] getBorn() {
         return born;
