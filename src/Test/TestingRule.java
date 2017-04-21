@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
  * the nextGeneration method from the Controller class. (ikke ferdig kommentert)
  */
 
-//Tester for å se om puh/pull funker
 
 public class TestingRule {
 

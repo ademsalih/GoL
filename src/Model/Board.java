@@ -9,7 +9,6 @@ import javafx.scene.paint.Color;
  *
  */
 
-//skal sjekke om dette kommer opp i git
 
 public class Board {
 
@@ -67,7 +66,11 @@ public class Board {
 
     public void setBoard(byte[][] board) {this.board = board;}
 
+
     public void setBoardValues(int x, int y, byte value) {
+        if(x > 250 || y > 350){
+            throw new IndexOutOfBoundsException("THE POINT IS NOT LOCATED ON THE GAMEBOARD");
+        }
         board[x][y] = value;
     }
 
