@@ -21,21 +21,17 @@ public class Board {
 
     double canvasWidth;
     double canvasHeight;
-    double xCounter;
-    double yCounter;
-    int cellSize;
+    private double xCounter = 0.0;
+    private double yCounter = 0.0;
+    private int cellSize = 2;
     GraphicsContext gc;
     int generationCounter;
-    boolean grid;
+    boolean grid = true;
 
     public Board (Canvas canvas) {
         this.canvasWidth = canvas.getWidth();
         this.canvasHeight = canvas.getHeight();
-        this.xCounter = 0.0;
-        this.yCounter = 0.0;
-        this.cellSize = 2;
         this.gc = canvas.getGraphicsContext2D();
-        this.grid = true;
     }
 
     public void setGrid(boolean gridInput) {
@@ -113,6 +109,10 @@ public class Board {
             setBoardValues(rowx, coly, (byte)1);
         }
         drawBoard();
+
+    }
+
+    public void keyClicked(){
 
     }
 

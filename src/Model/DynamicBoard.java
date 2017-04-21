@@ -16,14 +16,14 @@ public class DynamicBoard {
     Color backgroundColor = Color.BLACK;
 
     //Sett denne til å være en størrelse!!!!!
-    public ArrayList<ArrayList<Byte>> board;
+    public ArrayList<ArrayList<Byte>> board = new ArrayList<ArrayList<Byte>>();
 
 
     double canvasWidth;
-    double canvasHeight;
-    double xCounter;
-    double yCounter;
-    int cellSize;
+    private double canvasHeight;
+    private double xCounter = 0.0;
+    private double yCounter = 0.0;
+    private int cellSize = 2;
     GraphicsContext gc;
 
     int generationCounter;
@@ -31,10 +31,10 @@ public class DynamicBoard {
     public DynamicBoard (Canvas canvas) {
         this.canvasWidth = canvas.getWidth();
         this.canvasHeight = canvas.getHeight();
-        this.xCounter = 0.0;
-        this.yCounter = 0.0;
-        this.cellSize = 5;
         this.gc = canvas.getGraphicsContext2D();
+
+        // her skal det være en for loop for arraylit størrelse
+
     }
 
     public void addBoard(ArrayList<ArrayList<Byte>> newBoard) {
