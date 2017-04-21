@@ -19,8 +19,6 @@ public class DynamicBoard {
     public ArrayList<ArrayList<Byte>> board;
 
 
-
-
     double canvasWidth;
     double canvasHeight;
     double xCounter;

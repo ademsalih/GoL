@@ -44,6 +44,7 @@ public class Controller implements Initializable {
     Model.RLEParser rleParser;
     public static Controller instance;
     Stage stage;
+    Stage gifStage;
     public int counter;
     Animate animate;
 
@@ -115,6 +116,8 @@ public class Controller implements Initializable {
     public void draw() {
         boardObj = new Board(canvas);
         boardObj.drawBoard();
+
+        System.out.println(boardObj);
     }
 
     public void nextGeneration() {
@@ -207,6 +210,25 @@ public class Controller implements Initializable {
         }
 
         boardObj.drawBoard();
+    }
+
+    public void openExportMenu() {
+
+        try {
+            Pane root = FXMLLoader.load(getClass().getResource("gif.fxml"));
+            gifStage = new Stage();
+            Scene scene = new Scene(root, 290, 110);
+
+            gifStage.setScene(scene);
+            gifStage.setTitle("Export as GIF");
+            gifStage.setResizable(false);
+            gifStage.show();
+
+        } catch (Exception e) {
+            System.out.println("Cannot open GIF Export Menu");
+            e.printStackTrace();
+        }
+
     }
 
 

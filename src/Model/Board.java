@@ -17,8 +17,8 @@ public class Board {
     Color backgroundColor = Color.BLACK;
     Color gridColor = Color.WHITE;
 
-    public static byte[][] initialBoard = new byte[100][140];
-    public static byte[][] board = new byte[100][140];
+    public static byte[][] initialBoard = new byte[250][350];
+    public static byte[][] board = new byte[250][350];
 
     double canvasWidth;
     double canvasHeight;
@@ -159,12 +159,15 @@ public class Board {
         gc.setLineWidth(gridSize);
 
         int i = 0;
-        while (i < canvasHeight) {
+
+        while (i <= canvasHeight) {
             gc.strokeLine(0, i, canvasWidth, i);
             i += cellSize;
         }
         i = 0;
-        while (i < canvasWidth) {
+
+
+        while (i <= canvasWidth) {
             gc.strokeLine(i, 0, i, canvasHeight);
             i += cellSize;
         }
@@ -173,8 +176,8 @@ public class Board {
 
 
     public void clearBoard(){
-        this.board = new byte[100][140];
-        this.initialBoard = new byte[100][140];
+        this.board = new byte[250][350];
+        this.initialBoard = new byte[250][350];
         drawBoard();
     }
 
