@@ -25,6 +25,8 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
 
+    ///kommentar
+
     @FXML public Canvas canvas;
     @FXML private Button nextGenButton;
     @FXML private Button startStopButton;
