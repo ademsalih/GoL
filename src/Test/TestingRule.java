@@ -1,4 +1,4 @@
-package test;
+package Test;
 
 import Model.Rule;
 import org.junit.jupiter.api.Test;
@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
  * This class tests most of the Rule class methods and
  * the nextGeneration method from the Controller class. (ikke ferdig kommentert)
  */
+
 
 public class TestingRule {
 
