@@ -32,8 +32,9 @@
             <items>
               <MenuItem mnemonicParsing="false" onAction="#newBlankAction" text="New blank" />
                   <MenuItem mnemonicParsing="false" onAction="#loadFile" text="Open..." />
+                  <MenuItem mnemonicParsing="false" onAction="#openURLMenu" text="Open from URL..." />
                   <MenuItem mnemonicParsing="false" onAction="#saveFile" text="Save..." />
-                  <MenuItem onAction="#openExportMenu" mnemonicParsing="false" text="Export as GIF..." />
+                  <MenuItem mnemonicParsing="false" onAction="#openExportMenu" text="Export as GIF..." />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#exitEvent" text="Exit" />
             </items>

@@ -166,7 +166,6 @@ public class Board {
         }
         i = 0;
 
-
         while (i <= canvasWidth) {
             gc.strokeLine(i, 0, i, canvasHeight);
             i += cellSize;

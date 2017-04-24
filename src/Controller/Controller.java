@@ -39,16 +39,17 @@ public class Controller implements Initializable {
     @FXML private Label scaleLabel;
 
     private List<Point> plist;
-    Board boardObj;
-    Rule rule;
-    Timeline timeline;
-    GraphicsContext gc;
-    Model.RLEParser rleParser;
+    public Board boardObj;
+    public Rule rule;
+    public Timeline timeline;
+    public GraphicsContext gc;
+    public Model.RLEParser rleParser;
     public static Controller instance;
-    Stage stage;
-    Stage gifStage;
+    public Stage stage;
+    public Stage gifStage;
+    public Stage urlStage;
     public int counter;
-    Animate animate;
+    public Animate animate;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -63,6 +64,8 @@ public class Controller implements Initializable {
         animate = new Animate();
 
         animate.setSpeed(10);
+
+
     }
 
     public void setID() {
@@ -118,8 +121,6 @@ public class Controller implements Initializable {
     public void draw() {
         boardObj = new Board(canvas);
         boardObj.drawBoard();
-
-        System.out.println(boardObj);
     }
 
     public void nextGeneration() {
@@ -219,7 +220,7 @@ public class Controller implements Initializable {
         try {
             Pane root = FXMLLoader.load(getClass().getResource("gif.fxml"));
             gifStage = new Stage();
-            Scene scene = new Scene(root, 290, 110);
+            Scene scene = new Scene(root, 490, 330);
 
             gifStage.setScene(scene);
             gifStage.setTitle("Export as GIF");
@@ -228,6 +229,26 @@ public class Controller implements Initializable {
 
         } catch (Exception e) {
             System.out.println("Cannot open GIF Export Menu");
+            e.printStackTrace();
+        }
+
+    }
+
+    public void openURLMenu() {
+
+        try {
+            Pane root = FXMLLoader.load(getClass().getResource("urlExport.fxml"));
+            urlStage = new Stage();
+
+            Scene scene = new Scene(root, 295, 80);
+
+            urlStage.setScene(scene);
+            urlStage.setTitle("Export as GIF");
+            urlStage.setResizable(false);
+            urlStage.show();
+
+        } catch (Exception e) {
+            System.out.println("Cannot open URL menu.");
             e.printStackTrace();
         }
 
