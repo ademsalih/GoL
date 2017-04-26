@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Narmatha on 11.04.2017.
@@ -16,7 +17,7 @@ public class DynamicBoard {
     Color backgroundColor = Color.BLACK;
 
     //Sett denne til å være en størrelse!!!!!
-    public ArrayList<ArrayList<Byte>> board = new ArrayList<ArrayList<Byte>>();
+    public List<List<Byte>> board = new ArrayList<List<Byte>>();
 
 
     double canvasWidth;
@@ -34,7 +35,13 @@ public class DynamicBoard {
         this.gc = canvas.getGraphicsContext2D();
 
         // her skal det være en for loop for arraylit størrelse
-
+        for (int i = 0; i < 250; i++) {
+            List<Byte> row = new ArrayList<Byte>();
+            for (int j = 0; j < 350; j++) {
+                row.add((byte) 0);
+            }
+            this.board.add(row);
+        }
     }
 
     public void addBoard(ArrayList<ArrayList<Byte>> newBoard) {
@@ -59,11 +66,11 @@ public class DynamicBoard {
 
     public void setCellSize(int a) { this.cellSize = a; }
 
-    public void setBoard(ArrayList<ArrayList<Byte>> board) {this.board = board;}
+    //public void setBoard(ArrayList<ArrayList<Byte>> board) {this.board = board;}
 
-    public ArrayList<ArrayList<Byte>> getBoard() {
-        return board;
-    }
+   // public ArrayList<ArrayList<Byte>> getBoard() {
+       // return board;
+    //}
 
     public void setCellColor(Color cellColor) {
         this.cellColor = cellColor;
@@ -132,7 +139,7 @@ public class DynamicBoard {
     }
 
     public void clearBoard(){
-        board = new ArrayList<ArrayList<Byte>>();
+        //board = new ArrayList<ArrayList<Byte>>();
         drawBoard();
     }
 }
