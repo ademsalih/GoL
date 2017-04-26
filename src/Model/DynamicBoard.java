@@ -100,6 +100,19 @@ public class DynamicBoard {
         drawBoard();
     }
 
+    public void mousedraggedonBoard(double x, double y, List<Point> somelist){
+        int coly = (int)(x/cellSize);
+        int rowx = (int)(y/cellSize);
+        for ( Point p : somelist ) {
+            if (board.get(rowx).get(coly) == 1){
+                setCellState(rowx, coly, (byte)0);
+            }else{
+                setCellState(rowx, coly, (byte)1);
+            }
+            drawBoard();
+        }
+    }
+
     public void drawBoard() {
 
         gc.setFill(backgroundColor);

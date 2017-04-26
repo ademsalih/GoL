@@ -188,12 +188,12 @@ public class Controller implements Initializable {
         boardObj.mouseclickedonBoard(p.x, p.y);
     }
 
-    // IKKE SLETT ELLER TA BORT DENNE, SKAL ENDRE PÅ DET OG BRUKE DET!
-    // Brettet skal kunne flyttes hvis man holder museklikken nede og drar
     public void mouseDragged(MouseEvent event) {
         Point p = new Point();
         p.x = event.getX();
         p.y = event.getY();
+        plist.add(p);
+        boardObj.mousedraggedonBoard(p.x, p.y, plist);
     }
 
     // Exits the application.
