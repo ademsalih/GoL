@@ -2,31 +2,37 @@ package Model;
 
 
 import Controller.Controller;
-import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import javafx.scene.control.Alert;
 import lieng.GIFWriter;
-import java.awt.*;
+import java.awt.Color;
+
+/**
+ *  This class creates a gif-object in which you can specify width, height,
+ *  generations and path for exporting. A gif created using the method "createGIF"
+ *  and recursive method "writeGoLSequenceToGIF".
+ */
 
 public class GIF {
 
-    public int width;
-    public int height;
-    public int generations;
-    public int milliseconds;
-    public int cellSize;
-    public int xCounter;
-    public int yCounter;
-    public byte[][] gifBoard;
-    public GIFWriter gwriter;
-    public Rule gifRule;
-    public String path;
-    public String filename;
-    public Color cellColor;
-    public Color backgroundColor;
-    public Board importedBoard;
+    private int width;
+    private int height;
+    private int generations;
+    private int milliseconds;
+    private int cellSize;
+    private int xCounter;
+    private int yCounter;
+    private byte[][] gifBoard;
+    private GIFWriter gwriter;
+    private Rule gifRule;
+    private String path;
+    private String filename;
+    private Color cellColor;
+    private Color backgroundColor;
+    private Board importedBoard;
 
-
+    // Class constructor which creates object.
     public GIF (int width, int height, int generations, String path) throws Exception {
+        this.importedBoard = Controller.instance.boardObj;
         this.width = width;
         this.height = height;
         this.generations = generations;
@@ -34,17 +40,44 @@ public class GIF {
         this.filename = "/export.gif";
         this.milliseconds = 50;
         this.cellSize = 2;
-        this.cellColor = Color.BLACK;
-        this.backgroundColor = Color.WHITE;
-        this.importedBoard = Controller.instance.boardObj;
+        this.cellColor = convertFXToAwtColor(importedBoard.getcellColor());
+        this.backgroundColor = convertFXToAwtColor(importedBoard.getBackgroundColor());
+
     }
 
+    // Takes in JavaFX Color Object and returns it as Java Awt Color object.
+    public Color convertFXToAwtColor(javafx.scene.paint.Color fxColor) {
+
+        return new Color(
+                (float) fxColor.getRed(),
+                (float) fxColor.getGreen(),
+                (float) fxColor.getBlue()
+        );
+
+    }
+
+    public void setFileName(String filename) {
+        this.filename = "/" + filename + ".gif";
+    }
+
+    public String getName() {
+        return this.filename;
+    }
+
+    public void setGenerations(int gen) {
+        this.generations = gen;
+    }
+
+    public int getGenerations() {
+        return this.generations;
+    }
+
+    // Method that copies the values from the board, and creates gif object and exports it.
     public void createGIF() throws Exception {
 
         copyImportedBoardToGIFBoard();
 
         if (path != null) {
-
             path+=filename;
             gwriter = new GIFWriter(width, height, path, milliseconds);
             writeGoLSequenceToGIF(gwriter, gifBoard, generations);
@@ -55,6 +88,7 @@ public class GIF {
 
     }
 
+    // Alerts the user if theres no export location selected.
     public void noLocationSelectedAlert() {
 
         Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -65,6 +99,7 @@ public class GIF {
 
     }
 
+    // Method used for copying the current board in the game to this class.
     private void copyImportedBoardToGIFBoard() {
 
         importedBoard = Controller.instance.boardObj;
@@ -84,6 +119,7 @@ public class GIF {
 
     }
 
+    // Method that draws the current state of the game to the gif sequence.
     public void drawFrame() {
 
         for (int y = 0; y < gifBoard.length; y++) {
@@ -107,39 +143,44 @@ public class GIF {
         yCounter = 0;
     }
 
+    // Iterates the game using the Model.Rule class.
     public void next() {
 
         gifRule = new Rule(gifBoard);
         gifBoard = gifRule.conwaysBoardRules();
     }
 
-
+    // Adds the states of the game to the gif object using rail recursion until base case is fulfilled.
     public void writeGoLSequenceToGIF(GIFWriter writer, byte[][] board, int counter) throws Exception {
 
+        // Base case (i.e. stop condition)
         if (counter == 0) {
             gwriter.close();
             exportFinishedAlert();
             return;
         }
 
+        // Draws the current board using "gwriter" method of GIFWriter class.
         drawFrame();
 
+        // Adds the drawn image to the gif sequence.
         gwriter.insertCurrentImage();
 
+        // Iterates the board once according to the rules.
         next();
 
+        // Recursive call to writeGoLSwquenceToGIF.
         writeGoLSequenceToGIF(gwriter, gifBoard, counter - 1);
 
     }
 
+    // Alerts the user that the gif has finished exporting.
     public void exportFinishedAlert() {
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
         alert.setTitle("GIF Export");
-
         alert.setHeaderText(null);
-
         alert.setContentText("The GIF was succesfully exported.");
 
         alert.showAndWait();
