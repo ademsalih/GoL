@@ -38,7 +38,7 @@ public class GIF {
         this.generations = generations;
         this.path = path;
         this.filename = "/export.gif";
-        this.milliseconds = 50;
+        this.milliseconds = 100;
         this.cellSize = 2;
         this.cellColor = convertFXToAwtColor(importedBoard.getcellColor());
         this.backgroundColor = convertFXToAwtColor(importedBoard.getBackgroundColor());
@@ -70,6 +70,14 @@ public class GIF {
 
     public int getGenerations() {
         return this.generations;
+    }
+
+    public void setSpeed(int newSpeed) {
+        this.milliseconds = newSpeed;
+    }
+
+    public int getSpeed() {
+        return this.milliseconds;
     }
 
     // Method that copies the values from the board, and creates gif object and exports it.

@@ -22,6 +22,7 @@ public class GIFController implements Initializable {
     @FXML private Label url;
     @FXML private TextField fileNameField;
     @FXML private TextField generationsField;
+    @FXML private TextField speedField;
     @FXML private Slider speedSlider;
 
     @Override
@@ -29,7 +30,7 @@ public class GIFController implements Initializable {
 
         instance = this;
         genTextFieldRestrictions();
-
+        speedFieldRestrictions();
     }
 
     // Method that restricts the user from typing letters or numbers above 99
@@ -42,9 +43,24 @@ public class GIFController implements Initializable {
                 generationsField.setText(newVal.replaceAll("[^\\d]", ""));
             }
 
-            if (!(newVal.length() <3)) {
+            if (!(newVal.length() < 3)) {
                 generationsField.setText(oldV);
             }
+        });
+    }
+
+    public void speedFieldRestrictions() {
+
+        speedField.textProperty().addListener((obs, oldV, newVal) -> {
+
+            if (!newVal.matches("\\d*")) {
+                speedField.setText(newVal.replaceAll("[^\\d]", ""));
+            }
+
+            if (!(newVal.length() < 4)) {
+                speedField.setText(oldV);
+            }
+
         });
     }
 
@@ -70,11 +86,8 @@ public class GIFController implements Initializable {
 
     }
 
-    // Method for "Export" Button. Instantiates GIF-objects and checks whether
-    // filename or generations have been specified. If not it uses default values.
-    public void exportButtonAction() throws Exception {
-
-        gif = new GIF(700,500, 20, path);
+    // Checks whether filename, generations or speed have been specified.
+    public void checkIfDefaultValuesHaveChanged() {
 
         if (!fileNameField.getText().isEmpty()) {
 
@@ -85,6 +98,19 @@ public class GIFController implements Initializable {
 
             gif.setGenerations(Integer.parseInt(generationsField.getText()));
         }
+
+        if (!speedField.getText().isEmpty()) {
+
+            gif.setSpeed(Integer.parseInt(speedField.getText()));
+        }
+    }
+
+    // Method for "Export" Button. Instantiates GIF-object.
+    public void exportButtonAction() throws Exception {
+
+        gif = new GIF(700,500, 20, path);
+
+        checkIfDefaultValuesHaveChanged();
 
         gif.createGIF();
 
