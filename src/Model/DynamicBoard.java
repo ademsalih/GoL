@@ -92,7 +92,7 @@ public class DynamicBoard {
     public void mouseclickedonBoard(double x, double y){
         int coly = (int)(x/cellSize);
         int rowx = (int)(y/cellSize);
-        if (board.get(coly).get(rowx) == 1){
+        if (board.get(rowx).get(coly) ==  1){
             setCellState(rowx, coly, (byte)0);
         }else{
             setCellState(rowx, coly, (byte)1);

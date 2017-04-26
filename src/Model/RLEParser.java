@@ -68,7 +68,8 @@ public class RLEParser {
      * @return a byte array that is a representation of the rle pattern from the .rle file.
      * @throws IOException
      */
-    public ArrayList<List<Byte>> importFile()  {
+    //public ArrayList<List<Byte>> importFile()  {
+    public byte[][] importFile() {
         try {
             BufferedReader br = ReadFile.readFileFromDisk();
             if (br != null) {
@@ -90,7 +91,7 @@ public class RLEParser {
 
                 br.close();
                 ArrayList<List<Byte>> arrLi = convertFromArrToArrLi(arr);
-                return arrLi;
+                return arr;
             }
             return null;
         } catch (IOException e) {
