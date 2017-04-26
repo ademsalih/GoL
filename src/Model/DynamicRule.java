@@ -1,21 +1,23 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Narmatha on 13.04.2017.
  */
 public class DynamicRule {
     ////INSTANCE VARIABLES
-    public ArrayList<ArrayList<Byte>> currentBoard;
-    public ArrayList<ArrayList<Byte>> ruledBoard;
-    public ArrayList<ArrayList<Byte>> conwaysBoard;
+    public List<List<Byte>> currentBoard;
+    public List<List<Byte>> ruledBoard;
+    public List<List<Byte>> conwaysBoard;
     private int[] survivor = {2, 3};
     private int[] born = {3};
 
 
     ////CONSTRUCTOR
-    public DynamicRule (ArrayList<ArrayList<Byte>> currentBoard) {
+    // MÅ DEKLARERE ALLE BOARDDENE MED NULL HER!
+    public DynamicRule (List<List<Byte>> currentBoard) {
         this.currentBoard = currentBoard;
     }
 
@@ -24,11 +26,11 @@ public class DynamicRule {
 
     ////CLASS METHODS
 
-    public ArrayList<ArrayList<Byte>> getCurrentBoard() {
+    public List<List<Byte>> getCurrentBoard() {
         return currentBoard;
     }
 
-    public void setCurrentBoard(ArrayList<ArrayList<Byte>> board) {
+    public void setCurrentBoard(ArrayList<List<Byte>> board) {
         this.currentBoard = board;
     }
 
@@ -87,10 +89,17 @@ public class DynamicRule {
 
     ////CONWAYS GAME OF LIFE RULES
 
-    public ArrayList<ArrayList<Byte>> conwaysBoardRules() {
+    public List<List<Byte>> conwaysBoardRules() {
 
-        //conwaysBoard = new byte[currentBoard.length][currentBoard[0].length];
-        conwaysBoard = new ArrayList<ArrayList<Byte>>();
+        conwaysBoard = new ArrayList<List<Byte>>();
+        for (int i = 0; i < currentBoard.size() ; i++) {
+            List<Byte> row = new ArrayList<Byte>();
+            for (int j = 0; j < currentBoard.get(0).size(); j++) {
+                row.add((byte) 0);
+            }
+            this.conwaysBoard.add(row);
+        }
+
         for (int y = 0; y < conwaysBoard.size(); y++) {
             for (int x = 0; x < conwaysBoard.get(0).size(); x++) {
                 int cellState = currentBoard.get(y).get(x);

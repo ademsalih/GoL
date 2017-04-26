@@ -19,13 +19,13 @@ public class DynamicBoard {
     //Sett denne til å være en størrelse!!!!!
     public List<List<Byte>> board = new ArrayList<List<Byte>>();
 
-
     double canvasWidth;
-    private double canvasHeight;
-    private double xCounter = 0.0;
-    private double yCounter = 0.0;
-    private int cellSize = 2;
+    double canvasHeight;
+    double xCounter = 0.0;
+    double yCounter = 0.0;
+    int cellSize = 2;
     GraphicsContext gc;
+    boolean grid = true;
 
     int generationCounter;
 
@@ -34,7 +34,6 @@ public class DynamicBoard {
         this.canvasHeight = canvas.getHeight();
         this.gc = canvas.getGraphicsContext2D();
 
-        // her skal det være en for loop for arraylit størrelse
         for (int i = 0; i < 250; i++) {
             List<Byte> row = new ArrayList<Byte>();
             for (int j = 0; j < 350; j++) {
@@ -44,7 +43,15 @@ public class DynamicBoard {
         }
     }
 
-    public void addBoard(ArrayList<ArrayList<Byte>> newBoard) {
+    public void setGrid(boolean gridInput) {
+        this.grid = gridInput;
+    }
+
+    public boolean getGrid() {
+        return this.grid;
+    }
+
+    public void addBoard(List<List<Byte>> newBoard) {
         for (int y = 0; y < newBoard.size(); y++) {
             for (int x = 0; x < newBoard.get(0).size(); x++) {
                 this.board.get(y).set(x, newBoard.get(y).get(x));
@@ -60,17 +67,17 @@ public class DynamicBoard {
     }
 
     //public byte getCellState(int x, int y) { //
-      //  return List??
+    //  return List??
 
     //}
 
     public void setCellSize(int a) { this.cellSize = a; }
 
-    //public void setBoard(ArrayList<ArrayList<Byte>> board) {this.board = board;}
+    public void setBoard(List<List<Byte>> board) {this.board = board;}
 
-   // public ArrayList<ArrayList<Byte>> getBoard() {
-       // return board;
-    //}
+    public List<List<Byte>> getBoard() {
+        return board;
+    }
 
     public void setCellColor(Color cellColor) {
         this.cellColor = cellColor;
@@ -92,7 +99,9 @@ public class DynamicBoard {
     public void mouseclickedonBoard(double x, double y){
         int coly = (int)(x/cellSize);
         int rowx = (int)(y/cellSize);
-        if (board.get(rowx).get(coly) ==  1){
+        //System.out.println(rowx);
+        //System.out.println(coly);
+        if (board.get(rowx).get(coly) == 1){
             setCellState(rowx, coly, (byte)0);
         }else{
             setCellState(rowx, coly, (byte)1);
@@ -104,11 +113,12 @@ public class DynamicBoard {
         int coly = (int)(x/cellSize);
         int rowx = (int)(y/cellSize);
         for ( Point p : somelist ) {
-            if (board.get(rowx).get(coly) == 1){
+            setCellState(rowx, coly, (byte) 1);
+            /*if (board.get(rowx).get(coly) == 1){
                 setCellState(rowx, coly, (byte)0);
             }else{
                 setCellState(rowx, coly, (byte)1);
-            }
+            }*/
             drawBoard();
         }
     }
@@ -152,7 +162,7 @@ public class DynamicBoard {
     }
 
     public void clearBoard(){
-        //board = new ArrayList<ArrayList<Byte>>();
+        board = new ArrayList<List<Byte>>();
         drawBoard();
     }
 }

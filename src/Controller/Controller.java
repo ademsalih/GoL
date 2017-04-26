@@ -45,6 +45,8 @@ public class Controller implements Initializable {
     private List<Point> plist;
     public Board boardObj;
     public Rule rule;
+    //public DynamicBoard boardObj;
+    //public DynamicRule rule;
     public Timeline timeline;
     public GraphicsContext gc;
     public Model.RLEParser rleParser;
@@ -148,7 +150,7 @@ public class Controller implements Initializable {
 
     // Resets the game to the first state and stops the animation.
     public void reset() {
-        boardObj.setBoard(boardObj.initialBoard);
+       // boardObj.setBoard(boardObj.initialBoard);
         boardObj.drawBoard();
         animate.stopAnimation();
     }
