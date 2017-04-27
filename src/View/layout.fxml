@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane fx:id="gridPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="569.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Controller">
+<GridPane fx:id="gridPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="569.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/" fx:controller="Controller.Controller">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="700.0" minWidth="700.0" prefWidth="700.0" />
       <ColumnConstraints />
@@ -57,7 +57,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <Canvas fx:id="canvas" height="500.0" onMouseClicked="#mouseClicked" width="700.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+      <Canvas fx:id="canvas" height="500.0" onMouseClicked="#mouseClicked" onMouseDragged="#mouseDragged" width="700.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
       <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
          <children>
             <HBox alignment="CENTER_LEFT" maxHeight="40.0" maxWidth="264.0" minHeight="26.0" minWidth="179.0" prefHeight="40.0" prefWidth="196.0">

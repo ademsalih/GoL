@@ -45,6 +45,8 @@ public class Controller implements Initializable {
     private List<Point> plist;
     public Board boardObj;
     public Rule rule;
+    //public DynamicBoard boardObj;
+    //public DynamicRule rule;
     public Timeline timeline;
     public GraphicsContext gc;
     public Model.RLEParser rleParser;
@@ -148,7 +150,7 @@ public class Controller implements Initializable {
 
     // Resets the game to the first state and stops the animation.
     public void reset() {
-        boardObj.setBoard(boardObj.initialBoard);
+       // boardObj.setBoard(boardObj.initialBoard);
         boardObj.drawBoard();
         animate.stopAnimation();
     }
@@ -188,12 +190,12 @@ public class Controller implements Initializable {
         boardObj.mouseclickedonBoard(p.x, p.y);
     }
 
-    // IKKE SLETT ELLER TA BORT DENNE, SKAL ENDRE PÅ DET OG BRUKE DET!
-    // Brettet skal kunne flyttes hvis man holder museklikken nede og drar
     public void mouseDragged(MouseEvent event) {
         Point p = new Point();
         p.x = event.getX();
         p.y = event.getY();
+        plist.add(p);
+        boardObj.mousedraggedonBoard(p.x, p.y, plist);
     }
 
     // Exits the application.

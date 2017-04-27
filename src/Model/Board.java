@@ -4,6 +4,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import java.util.List;
+
 /**
  * This class draws the board and fills the cells depending on the cells' state
  *
@@ -63,7 +65,7 @@ public class Board {
     public void setBoard(byte[][] board) {this.board = board;}
 
 
-    public void setBoardValues(int x, int y, byte value) {
+    public void setCellState(int x, int y, byte value) {
         if(x > 250 || y > 350){
             throw new IndexOutOfBoundsException("THE POINT IS NOT LOCATED ON THE GAMEBOARD");
         }
@@ -104,12 +106,25 @@ public class Board {
         int coly = (int)(x/cellSize);
         int rowx = (int)(y/cellSize);
         if (board[rowx][coly] == 1){
-            setBoardValues(rowx, coly, (byte)0);
+            setCellState(rowx, coly, (byte)0);
         }else{
-            setBoardValues(rowx, coly, (byte)1);
+            setCellState(rowx, coly, (byte)1);
         }
         drawBoard();
 
+    }
+
+    public void mousedraggedonBoard(double x, double y, List<Point> somelist){
+        int coly = (int)(x/cellSize);
+        int rowx = (int)(y/cellSize);
+        for ( Point p : somelist ) {
+            if (board[rowx][coly] == 1) {
+                setCellState(rowx, coly, (byte) 0);
+            } else {
+                setCellState(rowx, coly, (byte) 1);
+            }
+            drawBoard();
+        }
     }
 
     public void keyClicked(){
