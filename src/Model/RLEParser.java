@@ -16,7 +16,8 @@ import java.util.regex.Pattern;
 public class RLEParser {
 
     //TODO Add function that checks all new lines for zeroes and has a runcount for empty lines.
-    //TODO Enable loading of bigger patterns
+    //TODO - Separate data from logic?
+    //TODO - Read metadata
 
     private int x;
     private int y;
@@ -39,36 +40,14 @@ public class RLEParser {
         this.y = y;
     }
 
-    public void setxPlacement(int xPlacement) {
-        this.xPlacement = xPlacement;
-    }
-
-    public void setyPlacement(int yPlacement) {
-        this.yPlacement = yPlacement;
-    }
-
-    //FOR TESTING ONLY
-    public void tester(String xYRulesLine, String line) throws Exception {
-        try {
-            findXY(xYRulesLine);
-            findRules(xYRulesLine);
-            arr = new byte[y][x];
-            xPlacement = 0;
-            yPlacement = 0;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (PatternFormatException e) {
-            e.printStackTrace();
-        }
-        setByteArrayFromRlePattern(line);
-    }
 
     /**
-     * Main function of RLEParser. Returns a 2D byte array after loading in and parsing through a .rle file.
-     * @return a byte array that is a representation of the rle pattern from the .rle file.
+     * Main method of the class. Calls on all the other methods.
+     * Returns a 2D byte array after loading in and parsing a .rle file.
+     * @return - 2D byte array that is a representation of the rle pattern from the .rle file.
      * @throws IOException
      */
-    public ArrayList<List<Byte>> importFile()  {
+    public byte[][] importFile() {
         try {
             BufferedReader br = ReadFile.readFileFromDisk();
             if (br != null) {
@@ -89,8 +68,7 @@ public class RLEParser {
                 }
 
                 br.close();
-                ArrayList<List<Byte>> arrLi = convertFromArrToArrLi(arr);
-                return arrLi;
+                return arr;
             }
             return null;
         } catch (IOException e) {
@@ -99,6 +77,14 @@ public class RLEParser {
         return null;
     }
 
+
+    /**
+     *
+     * @param br - BufferedReader that holds the rle string.
+     * @return - String containing the x & y (dimentions) and the rules.
+     * @throws IOException
+     * @throws PatternFormatException
+     */
     private String findXYandRulesLine(BufferedReader br) throws IOException, PatternFormatException {
         String line;
         while ((line = br.readLine()) != null) {
@@ -109,6 +95,12 @@ public class RLEParser {
         throw new PatternFormatException("X, Y or Rules not found in file.");
     }
 
+    /**
+     * Finds the X & Y (Dimentions) of the board and stores them as the x and y variables
+     * @param line - String that holds X & Y
+     * @throws IOException
+     * @throws PatternFormatException
+     */
     private void findXY(String line) throws IOException, PatternFormatException {
         String test = "x ?= ?(\\d+),? ?y ?= ?(\\d+)";
         Matcher matcher = Pattern.compile(test, Pattern.CASE_INSENSITIVE).matcher(line);
@@ -121,8 +113,11 @@ public class RLEParser {
         }
     }
 
-
-
+    /**
+     * Finds the rules and converts them into array that is stored in the survive and born variables
+     * @param line - String that holds the rules
+     * @throws PatternFormatException
+     */
     private void findRules(String line) throws PatternFormatException {
         String test = "rule ?= ?b?(\\d+)/s?(\\d+)";
         line = line.toLowerCase();
@@ -143,6 +138,12 @@ public class RLEParser {
 
     }
 
+    /**
+     *
+     * @param br
+     * @return
+     * @throws IOException
+     */
     private String getLine(BufferedReader br) throws IOException {
         String line;
         if ((line = br.readLine()) != null) {
@@ -177,15 +178,6 @@ public class RLEParser {
                 }
                 updateArray(runCount, cellType);
             }
-        }
-    }
-
-
-    private Boolean checkForRleEnding(String line, int i) {
-        if (line.substring(i, i + 1) == "!") {
-            return true;
-        } else {
-            return false;
         }
     }
 
@@ -238,23 +230,23 @@ public class RLEParser {
     }
 
 
-
     /**
-     * Returns the X value of the Board from the RLE-file loaded into the given RLEParser-object
+     * Returns the X value (Number of Columns) of the Board from the RLE-file loaded into the given RLEParser-object
+     *
+     * @return - Number of columns
      */
-
     public int getX() {
         return x;
     }
 
     /**
-     * Returns the Y value of the Board from the RLE-file loaded into the given RLEParser-object
+     * Returns the Y value (Number of rows) of the Board from the RLE-file loaded into the given RLEParser-object
+     *
+     * @return - Number of rows
      */
     public int getY() {
         return y;
     }
-
-
 
     private int getRunCount(String line, int i) {
         String runCount = "";
@@ -299,14 +291,6 @@ public class RLEParser {
         }
     }
 
-    private String addToBitString(int runCount, char cellType) {
-        String updateBitString = "";
-        for (int i = 0; i < runCount; i++) {
-            updateBitString += cellType;
-        }
-        return updateBitString;
-    }
-
     private boolean prevCharIsNotInt(String rlePattern, int i) {
         char cha = rlePattern.charAt(i - 1);
         if (Character.isDigit(cha)) {
@@ -316,34 +300,23 @@ public class RLEParser {
         }
     }
 
-    private byte[][] stringToByteArray(String bitString) {
-        byte[][] byteArray = new byte[y][x];
-        int count = 0;
-        for (int i = 0; i < y; i++) {
-            for (int j = 0; j < x; j++) {
-                char charBit = bitString.charAt(count);
-                byteArray[i][j] = (byte) Character.getNumericValue(charBit);
-                count++;
-            }
-        }
-        return byteArray;
+    /**
+     * Import method that returns a 2D ArrayList
+     *
+     * @return - 2D ArrayList representation of the game board.
+     */
+    public ArrayList<List<Byte>> importAsList() {
+        importFile();
+        ArrayList<List<Byte>> arrLi = convertToArrayList(arr);
+        return arrLi;
     }
 
     /**
-     * Test function that prints the array that is loaded through the RLEParser-object.
-     *
-     * @param array - the array that the parser extracts from the .rle file.
+     * Converts the input 2D byte array to a 2D ArrayList of Byte objects.
+     * @param b - The 2D byte array that needs to be converted
+     * @return - ArrayList of byte objects used for further processing
      */
-    public void printArray(byte[][] array) {
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                System.out.print(array[i][j]);
-            }
-            System.out.println("");
-        }
-    }
-
-    private ArrayList<List<Byte>> convertFromArrToArrLi(byte[][] b) {
+    private ArrayList<List<Byte>> convertToArrayList(byte[][] b) {
         ArrayList<List<Byte>> byteArrayList = new ArrayList<List<Byte>>();
 
         for (int y = 0; y < b.length; y++) {
@@ -356,12 +329,55 @@ public class RLEParser {
         System.out.println(byteArrayList);
         return byteArrayList;
     }
+
+    /**
+     * Gives the number of neighbors needed for a cell to be born
+     *
+     * @return - Number of needed neighbors for cell to be born
+     */
     public int[] getBorn() {
         return born;
     }
 
+    /**
+     * Gives the number of neighbors needed for a cell to survive
+     *
+     * @return - Number of needed neighbors to survive
+     */
     public int[] getSurvive() {
         return survive;
+    }
+
+    /**
+     * Prints the board to console
+     *
+     */
+    @Override
+    public String toString() {
+        String toString = "";
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                toString += arr[i][j];
+            }
+            toString += "\n";
+        }
+        return  toString;
+    }
+
+    //FOR TESTING ONLY
+    public void tester(String xYRulesLine, String line) throws Exception {
+        try {
+            findXY(xYRulesLine);
+            findRules(xYRulesLine);
+            arr = new byte[y][x];
+            xPlacement = 0;
+            yPlacement = 0;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (PatternFormatException e) {
+            e.printStackTrace();
+        }
+        setByteArrayFromRlePattern(line);
     }
 }
 
