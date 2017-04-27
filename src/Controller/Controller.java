@@ -163,7 +163,6 @@ public class Controller implements Initializable {
             Rule.setRules(rleParser.getSurvive(), rleParser.getBorn());
             boardObj.clearBoard();
             boardObj.addBoard(temp);
-            //boardObj.drawBoard();
             boardObj.drawBoard();
             counter = 0;
         }

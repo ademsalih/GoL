@@ -11,7 +11,7 @@ public class ParseToRLE {
     //TODO Add help function that slims down the extracted board to the lowest possible X and Y value.
 
     /**
-     * Extracts the String that is to be written inside the the .rle file.
+     * Creates a RLE compatible String that represents the board.
      *
      * @param board - the current board at the time of the function call as a 2D array.
      * @return a String containing a RLE pattern, x and y values, and ruleset.
