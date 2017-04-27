@@ -16,7 +16,6 @@ public class DynamicBoard {
     Color cellColor = Color.WHITE;
     Color backgroundColor = Color.BLACK;
 
-    //Sett denne til å være en størrelse!!!!!
     public List<List<Byte>> board = new ArrayList<List<Byte>>();
 
     double canvasWidth;
@@ -25,30 +24,25 @@ public class DynamicBoard {
     double yCounter = 0.0;
     int cellSize = 2;
     GraphicsContext gc;
-    boolean grid = true;
+    int rowcount;
+    int columcount;
 
     int generationCounter;
 
-    public DynamicBoard (Canvas canvas) {
+    public DynamicBoard (Canvas canvas, int x, int y) {
         this.canvasWidth = canvas.getWidth();
         this.canvasHeight = canvas.getHeight();
         this.gc = canvas.getGraphicsContext2D();
+        this.rowcount = y;
+        this.columcount = x;
 
-        for (int i = 0; i < 250; i++) {
+        for (int i = 0; i < columcount; i++) {
             List<Byte> row = new ArrayList<Byte>();
-            for (int j = 0; j < 350; j++) {
+            for (int j = 0; j < rowcount; j++) {
                 row.add((byte) 0);
             }
             this.board.add(row);
         }
-    }
-
-    public void setGrid(boolean gridInput) {
-        this.grid = gridInput;
-    }
-
-    public boolean getGrid() {
-        return this.grid;
     }
 
     public void addBoard(List<List<Byte>> newBoard) {
@@ -60,16 +54,54 @@ public class DynamicBoard {
 
     }
 
-    public void setCellState(int x, int y, byte value) {
+    public void setCellState(int rowy, int colx, byte value) {
         //Hvis cellen (x,y) er definert utenfor brettet, skal brettet
         //automatisk utvides slik at brettet inneholder cellen (x,y).
-        board.get(x).set(y, value);
+
+        // Extends the gameboard with colums
+
+        if(colx > columcount && rowy < rowcount){
+            for(int i = 0; i < rowcount; i++){
+                for(int j = 0; j < colx-columcount; j++){
+                    this.board.get(i).add((byte) 0);
+                }
+            }
+        }
+        // Extends the gameboard with rows
+
+        else if (rowy > rowcount && colx < columcount){
+            for(int i = 0; i < rowy-rowcount; i++){
+                List<Byte> row = new ArrayList<Byte>();
+                for(int j = 0; j < columcount; j++){
+                    row.add((byte) 0);
+                }
+                this.board.add(row);
+            }
+        }
+        // Extends the gameboard with rows and colums
+        else if (colx > columcount && rowy > rowcount ){
+            for(int i = 0; i < rowcount; i++){
+                for(int j = 0; j < colx-columcount; j++){
+                    this.board.get(i).add((byte) 0);
+                }
+            }
+            for(int i = 0; i < rowy-rowcount; i++){
+                List<Byte> row = new ArrayList<Byte>();
+                for(int j = 0; j < colx; j++){
+                    row.add((byte) 0);
+                }
+                this.board.add(row);
+
+            }
+
+        }
+        this.board.get(rowy-1).set(colx-1, value);
     }
 
-    //public byte getCellState(int x, int y) { //
-    //  return List??
+    public byte getCellState(int x, int y) {
+        return this.board.get(x-1).get(y-1);
 
-    //}
+    }
 
     public void setCellSize(int a) { this.cellSize = a; }
 
@@ -97,28 +129,28 @@ public class DynamicBoard {
 
     // Draw/undraw a cell depending on its state when we click on the board
     public void mouseclickedonBoard(double x, double y){
-        int coly = (int)(x/cellSize);
-        int rowx = (int)(y/cellSize);
-        //System.out.println(rowx);
-        //System.out.println(coly);
-        if (board.get(rowx).get(coly) == 1){
-            setCellState(rowx, coly, (byte)0);
+        int colx = (int)(x/cellSize);
+        int rowy = (int)(y/cellSize);
+        System.out.println(rowy);
+        System.out.println(colx);
+        if (board.get(rowy).get(colx) == 1){
+            setCellState(rowy, colx, (byte)0);
         }else{
-            setCellState(rowx, coly, (byte)1);
+            setCellState(rowy, colx, (byte)1);
         }
         drawBoard();
     }
 
     public void mousedraggedonBoard(double x, double y, List<Point> somelist){
-        int coly = (int)(x/cellSize);
-        int rowx = (int)(y/cellSize);
+        int colx = (int)(x/cellSize);
+        int rowy = (int)(y/cellSize);
         for ( Point p : somelist ) {
-            setCellState(rowx, coly, (byte) 1);
-            /*if (board.get(rowx).get(coly) == 1){
-                setCellState(rowx, coly, (byte)0);
-            }else{
-                setCellState(rowx, coly, (byte)1);
-            }*/
+            //setCellState(rowx, coly, (byte) 1);
+            if (board.get(rowy).get(colx) == 1){
+                setCellState(rowy, colx, (byte)0);
+            }else if (board.get(rowy).get(colx) == 0){
+                setCellState(rowy, colx, (byte)1);
+            }else{/*Fyll inn setCellState(rowx, coly, (byte)1) for punkter som er utafor brettet */}
             drawBoard();
         }
     }
