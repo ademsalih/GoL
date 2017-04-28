@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * A class that parses a .rle file and returns it as a 2D byte array through the importFile method.
+ * A class that parses a .rle file and returns it as a 2D byte array through the getStaticBoard method.
  * It can also return the X and Y value if needed later on.
  */
 
@@ -19,27 +19,76 @@ public class RLEParser {
     //TODO - Separate data from logic?
     //TODO - Read metadata
 
+    // Board & Rule variables
     private int x;
     private int y;
     private int xPlacement;
     private int yPlacement;
-    private String boardInBitString = "";
     private int[] born;
     private int[] survive;
-    public byte[][] arr;
+    private byte[][] arr;
 
-    char cellType;
-    int runCount;
+    // Metadata
+    private String patternName;
+    private String author;
+    private String comment;
 
+    private char cellType;
+    private int runCount;
 
-    public void setX(int x) {
-        this.x = x;
+    /**
+     * Returns the X value (Number of Columns) of the Board
+     *
+     * @return - Number of columns
+     */
+    public int getX() {
+        return x;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    /**
+     * Returns the Y value (Number of rows) of the Board from the RLE-file loaded into the given RLEParser-object
+     *
+     * @return - Number of rows
+     */
+    public int getY() {
+        return y;
     }
 
+    /**
+     * Returns the name of the pattern if it was found in the metadata
+     *
+     * @return - String containing the name of the pattern
+     */
+    public String getPatternName() {
+        return patternName;
+    }
+
+    /**
+     * Returns the name of the author if it was found in the metadata
+     *
+     * @return - String containing the name of the author
+     */
+    public String getAuthor() {
+        return author;
+    }
+
+    /**
+     * Returns the a comment if it was found in the metadata
+     *
+     * @return - String containing comment extracted from the metadata
+     */
+    public String getComment() {
+        return comment;
+    }
+
+    /**
+     * Returns the byte array
+     *
+     * @return - byte[][] containing the gameboard. 
+     */
+    public byte[][] getArr() {
+        return arr;
+    }
 
     /**
      * Main method of the class. Calls on all the other methods.
@@ -47,11 +96,15 @@ public class RLEParser {
      * @return - 2D byte array that is a representation of the rle pattern from the .rle file.
      * @throws IOException
      */
-    public byte[][] importFile() {
+    public byte[][] getStaticBoard() {
         try {
             BufferedReader br = ReadFile.readFileFromDisk();
             if (br != null) {
                 try {
+                    // Sets up the buffered reader to easily go back and forth while looking for metadata, xy and rules.
+                    // 1000 chars as limit to be on the safe side.
+                    br.mark(1000);
+                    findMetaData(br);
                     String xYRulesLine = findXYandRulesLine(br);
                     findXY(xYRulesLine);
                     findRules(xYRulesLine);
@@ -77,6 +130,47 @@ public class RLEParser {
         return null;
     }
 
+    /**
+     * Reads the Meta data from the RLE file an stores them in various variables
+     * that can be accessed through get-methods.
+     * @param br - BufferedReader that contains the RLE-file
+     */
+    private void findMetaData(BufferedReader br) {
+        this.patternName = metaDataFinder(br, "#n");
+        this.author = metaDataFinder(br, "#o");
+        this.comment = metaDataFinder(br, "#c");
+    }
+
+
+
+    /**
+     * General method to be used to find different types of metadata
+     * @param br - BufferedReader that hold the RLE-file
+     * @param lineStart - String thats used to find the start of the line of a given segment of metadata
+     * @return - String that holds the given metadata
+     */
+    private String metaDataFinder(BufferedReader br, String lineStart) {
+        try {
+            boolean notEndOfMeta = true;
+            String line;
+            String metaData = "";
+            while (notEndOfMeta && (line = br.readLine()) != null) {
+                line = line.toLowerCase();
+                if (line.startsWith(lineStart)) {
+                    metaData += line.substring(2);
+                }
+                else if (line.startsWith("x")) {
+                    notEndOfMeta = false;
+                }
+            }
+            br.reset();
+            return metaData;
+        }
+        catch (IOException e) {
+            FileHandling.alert("Error trying to locate metadata");
+        }
+        return null;
+    }
 
     /**
      *
@@ -229,25 +323,6 @@ public class RLEParser {
         }
     }
 
-
-    /**
-     * Returns the X value (Number of Columns) of the Board from the RLE-file loaded into the given RLEParser-object
-     *
-     * @return - Number of columns
-     */
-    public int getX() {
-        return x;
-    }
-
-    /**
-     * Returns the Y value (Number of rows) of the Board from the RLE-file loaded into the given RLEParser-object
-     *
-     * @return - Number of rows
-     */
-    public int getY() {
-        return y;
-    }
-
     private int getRunCount(String line, int i) {
         String runCount = "";
         if (line.substring(i, i + 1).matches("\\d")) {
@@ -306,7 +381,7 @@ public class RLEParser {
      * @return - 2D ArrayList representation of the game board.
      */
     public ArrayList<List<Byte>> importAsList() {
-        importFile();
+        getStaticBoard();
         ArrayList<List<Byte>> arrLi = convertToArrayList(arr);
         return arrLi;
     }

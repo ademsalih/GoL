@@ -1,4 +1,4 @@
-package test;
+package Test;
 
 /**
  * Created by patrikkvarmehansen on 04/04/17.
@@ -23,10 +23,11 @@ public class RLEParsterTest {
 
 
         RLEParser rle = new RLEParser();
+        byte[][] arr = rle.getArr();
         rle.tester(xY, testString);
 
         rle.setByteArrayFromRlePattern(testString);
-        org.junit.Assert.assertArrayEquals(row0, rle.arr[0]);
+        org.junit.Assert.assertArrayEquals(row0, arr[0]);
 
 
 

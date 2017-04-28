@@ -10,7 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
     /**
-     * A class that parses a .rle file and returns it as a 2D byte array through the importFile method.
+     * A class that parses a .rle file and returns it as a 2D byte array through the getStaticBoard method.
      * It can also return the X and Y value if needed later on.
      */
 

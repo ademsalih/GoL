@@ -2,7 +2,6 @@ package Controller;
 
 import Model.*;
 import View.Main;
-import javafx.animation.Animation;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -150,21 +149,24 @@ public class Controller implements Initializable {
 
     // Resets the game to the first state and stops the animation.
     public void reset() {
-       // boardObj.setBoard(boardObj.initialBoard);
+        boardObj.setBoard(boardObj.initialBoard);
         boardObj.drawBoard();
+        counter = 0;
         animate.stopAnimation();
     }
 
     // Loads an RLE files and draws the file to the canvas.
     public void loadFile() throws IOException {
         rleParser = new RLEParser();
-        byte[][] temp = rleParser.importFile();
+        byte[][] temp = rleParser.getStaticBoard();
         if (temp != null) {
             Rule.setRules(rleParser.getSurvive(), rleParser.getBorn());
             boardObj.clearBoard();
             boardObj.addBoard(temp);
             boardObj.drawBoard();
             counter = 0;
+            Main.getStage().setTitle(rleParser.getPatternName());
+
         }
     }
 
