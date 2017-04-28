@@ -32,7 +32,7 @@ public class GIF {
 
     // Class constructor which creates object.
     public GIF (int width, int height, int generations, String path) throws Exception {
-        this.importedBoard = Controller.instance.boardObj;
+        //this.importedBoard = Controller.instance.boardObj;
         this.width = width;
         this.height = height;
         this.generations = generations;
@@ -110,7 +110,7 @@ public class GIF {
     // Method used for copying the current board in the game to this class.
     private void copyImportedBoardToGIFBoard() {
 
-        importedBoard = Controller.instance.boardObj;
+        //importedBoard = Controller.instance.boardObj;
 
         gifBoard = new byte[importedBoard.board.length][importedBoard.board[0].length];
 

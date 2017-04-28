@@ -42,10 +42,10 @@ public class Controller implements Initializable {
     @FXML private Label scaleLabel;
 
     private List<Point> plist;
-    public Board boardObj;
-    public Rule rule;
-    //public DynamicBoard boardObj;
-    //public DynamicRule rule;
+    //public Board boardObj;
+    //public Rule rule;
+    public DynamicBoard boardObj;
+    public DynamicRule rule;
     public Timeline timeline;
     public GraphicsContext gc;
     public Model.RLEParser rleParser;
@@ -128,13 +128,13 @@ public class Controller implements Initializable {
 
     // Method that uses the draw method of Board class for drawing the game to canvas.
     public void draw() {
-        boardObj = new Board(canvas);
+        boardObj = new DynamicBoard(canvas, 350, 250);
         boardObj.drawBoard();
     }
 
     // Uses the Rule class to iterate to next generation and draws the game.
     public void nextGeneration() {
-        rule = new Rule(boardObj.board);
+        rule = new DynamicRule(boardObj.board);
         boardObj.setBoard(rule.conwaysBoardRules());
         boardObj.drawBoard();
         counter += 1;
@@ -149,7 +149,7 @@ public class Controller implements Initializable {
 
     // Resets the game to the first state and stops the animation.
     public void reset() {
-        boardObj.setBoard(boardObj.initialBoard);
+        //boardObj.setBoard(boardObj.initialBoard);
         boardObj.drawBoard();
         counter = 0;
         animate.stopAnimation();
@@ -158,10 +158,12 @@ public class Controller implements Initializable {
     // Loads an RLE files and draws the file to the canvas.
     public void loadFile() throws IOException {
         rleParser = new RLEParser();
-        byte[][] temp = rleParser.getStaticBoard();
+        List<List<Byte>> temp = rleParser.importAsList();
         if (temp != null) {
             Rule.setRules(rleParser.getSurvive(), rleParser.getBorn());
             boardObj.clearBoard();
+            System.out.println(temp.size());
+            System.out.println(temp.get(0).size());
             boardObj.addBoard(temp);
             boardObj.drawBoard();
             counter = 0;
@@ -173,7 +175,7 @@ public class Controller implements Initializable {
     // Saves the current game as a RLE.file.
     public void saveFile() {
         SaveFile sf = new SaveFile();
-        sf.saveFile(boardObj.getBoard());
+        //sf.saveFile(boardObj.getBoard());
     }
 
     // Creates a new black board.
@@ -228,7 +230,7 @@ public class Controller implements Initializable {
 
     // Toggles the grid using boolean value in Board class.
     public void toggleGrid() {
-
+        /*
         if (boardObj.getGrid()) {
             boardObj.setGrid(false);
 
@@ -238,6 +240,7 @@ public class Controller implements Initializable {
         }
 
         boardObj.drawBoard();
+        */
     }
 
     // Creates the "GIF Export" Stage and shows the Stage.

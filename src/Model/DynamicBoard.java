@@ -36,9 +36,9 @@ public class DynamicBoard {
         this.rowcount = y;
         this.columcount = x;
 
-        for (int i = 0; i < columcount; i++) {
+        for (int i = 0; i < rowcount; i++) {
             List<Byte> row = new ArrayList<Byte>();
-            for (int j = 0; j < rowcount; j++) {
+            for (int j = 0; j < columcount; j++) {
                 row.add((byte) 0);
             }
             this.board.add(row);
@@ -46,10 +46,23 @@ public class DynamicBoard {
     }
 
     public void addBoard(List<List<Byte>> newBoard) {
-        for (int y = 0; y < newBoard.size(); y++) {
+        /*for (int y = 0; y < newBoard.size(); y++) {
             for (int x = 0; x < newBoard.get(0).size(); x++) {
                 this.board.get(y).set(x, newBoard.get(y).get(x));
             }
+        }*/
+
+
+        System.out.println(newBoard.size());
+        System.out.println(newBoard.get(0).size());
+        System.out.println(this.board.size());
+        //System.out.println(this.board.get(0).size());
+        for (int y = 0; y < newBoard.size(); y++) {
+            List<Byte> oneDim = new ArrayList<Byte>();
+            for (int x = 0; x < newBoard.get(0).size(); x++) {
+                oneDim.add(x, (byte) x);
+            }
+            this.board.add(oneDim);
         }
 
     }
@@ -131,8 +144,8 @@ public class DynamicBoard {
     public void mouseclickedonBoard(double x, double y){
         int colx = (int)(x/cellSize);
         int rowy = (int)(y/cellSize);
-        System.out.println(rowy);
-        System.out.println(colx);
+        //System.out.println(rowy);
+        //System.out.println(colx);
         if (board.get(rowy).get(colx) == 1){
             setCellState(rowy, colx, (byte)0);
         }else{
@@ -144,15 +157,17 @@ public class DynamicBoard {
     public void mousedraggedonBoard(double x, double y, List<Point> somelist){
         int colx = (int)(x/cellSize);
         int rowy = (int)(y/cellSize);
+        //System.out.println(rowy);
+        //System.out.println(colx);
         for ( Point p : somelist ) {
-            //setCellState(rowx, coly, (byte) 1);
-            if (board.get(rowy).get(colx) == 1){
-                setCellState(rowy, colx, (byte)0);
-            }else if (board.get(rowy).get(colx) == 0){
-                setCellState(rowy, colx, (byte)1);
-            }else{/*Fyll inn setCellState(rowx, coly, (byte)1) for punkter som er utafor brettet */}
-            drawBoard();
+            if ((colx >= columcount) || (rowy >= rowcount)){
+                setCellState(rowy, colx, (byte)1);}
+        }if (this.board.get(rowy).get(colx) == 0){
+            setCellState(rowy, colx, (byte)1);
+        }else if(this.board.get(rowy).get(colx) == 1){
+            setCellState(rowy, colx, (byte)0);
         }
+        drawBoard();
     }
 
     public void drawBoard() {
@@ -173,11 +188,6 @@ public class DynamicBoard {
                     xCounter += cellSize;
 
                 } else {
-                    Point p = new Point();
-                    p.x = xCounter;
-                    p.y = yCounter;
-                    p.draw(gc, backgroundColor, (double)cellSize);
-
                     xCounter += cellSize;
                 }
 
