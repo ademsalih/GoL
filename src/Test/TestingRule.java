@@ -97,19 +97,7 @@ public class TestingRule {
         org.junit.Assert.assertEquals(rule2.toString(),"0111010001100011000101110");
     }
 
-    @Test
-    public void testInvertBoard(){
-        byte[][] board = {
-                {1, 0, 0},
-                {0, 1, 0},
-                {0, 0, 1}
-        };
 
-        Rule rule = new Rule(board);
-        rule.setCurrentBoard(rule.invertBoard());
-        org.junit.Assert.assertEquals(rule.toString(),"011101110");
-
-    }
 
     @Test
     public void testCountNeighbor(){

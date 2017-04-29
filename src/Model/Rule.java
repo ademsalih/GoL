@@ -11,7 +11,6 @@ public class Rule {
 
     ////INSTANCE VARIABLES
     public byte[][] currentBoard;
-    public byte[][] ruledBoard;
     public byte[][] conwaysBoard;
     private static int[] survivor = {2, 3};
     private static int[] born = {3};
@@ -51,27 +50,6 @@ public class Rule {
         }
         return output;
     }
-
-    // Rules to invert the board (dead becomes alive vice versa)
-    public byte[][] invertBoard() {
-
-        ruledBoard = new byte[currentBoard.length][currentBoard.length];
-
-        for (int k = 0; k < ruledBoard.length; k++) {
-
-            for (int l = 0; l < ruledBoard.length; l++ ) {
-                if (currentBoard[k][l] == 1) {
-                    ruledBoard[k][l] = 0;
-                } else {
-                    ruledBoard[k][l] = 1;
-                }
-
-            }
-        }
-
-        return ruledBoard;
-    }
-
 
     public static void setRules(int[] s, int[] b) {
         survivor = s;
