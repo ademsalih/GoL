@@ -42,7 +42,7 @@ public class Controller implements Initializable {
     @FXML private Label scaleLabel;
 
     private List<Point> plist;
-    //public Board boardObj;
+    //public StaticBoard boardObj;
     //public Rule rule;
     public DynamicBoard boardObj;
     public DynamicRule rule;
@@ -126,7 +126,7 @@ public class Controller implements Initializable {
 
     }
 
-    // Method that uses the draw method of Board class for drawing the game to canvas.
+    // Method that uses the draw method of StaticBoard class for drawing the game to canvas.
     public void draw() {
         boardObj = new DynamicBoard(canvas, 350, 250);
         boardObj.drawBoard();
@@ -190,15 +190,15 @@ public class Controller implements Initializable {
         Point p = new Point();
         p.x = event.getX();
         p.y = event.getY();
-        boardObj.mouseclickedonBoard(p.x, p.y);
+        boardObj.mouseclickedordraggedonBoard(p.x, p.y);
     }
 
     public void mouseDragged(MouseEvent event) {
         Point p = new Point();
         p.x = event.getX();
         p.y = event.getY();
-        plist.add(p);
-        boardObj.mousedraggedonBoard(p.x, p.y, plist);
+        //plist.add(p);
+        boardObj.mouseclickedordraggedonBoard(p.x, p.y);// plist);
     }
 
     // Exits the application.
@@ -228,7 +228,7 @@ public class Controller implements Initializable {
         animate.startStopButtonAction();
     }
 
-    // Toggles the grid using boolean value in Board class.
+    // Toggles the grid using boolean value in StaticBoard class.
     public void toggleGrid() {
         /*
         if (boardObj.getGrid()) {

@@ -11,18 +11,12 @@ import java.util.List;
 /**
  * Created by Narmatha on 11.04.2017.
  */
-public class DynamicBoard {
-
-    Color cellColor = Color.WHITE;
-    Color backgroundColor = Color.BLACK;
+public class DynamicBoard extends Board{
 
     public List<List<Byte>> board = new ArrayList<List<Byte>>();
 
     double canvasWidth;
     double canvasHeight;
-    double xCounter = 0.0;
-    double yCounter = 0.0;
-    int cellSize = 2;
     GraphicsContext gc;
     int rowcount;
     int columcount;
@@ -55,12 +49,11 @@ public class DynamicBoard {
 
         System.out.println(newBoard.size());
         System.out.println(newBoard.get(0).size());
-        System.out.println(this.board.size());
-        //System.out.println(this.board.get(0).size());
+        // DETTE ER EN DEL AV GRUNNEN TIL HVORFOR INNLASTINGEN AV PATTERNS IKKE FUNKER HELT
         for (int y = 0; y < newBoard.size(); y++) {
             List<Byte> oneDim = new ArrayList<Byte>();
             for (int x = 0; x < newBoard.get(0).size(); x++) {
-                oneDim.add(x, (byte) x);
+                oneDim.add(x, (byte) 1);
             }
             this.board.add(oneDim);
         }
@@ -92,7 +85,7 @@ public class DynamicBoard {
             }
         }
         // Extends the gameboard with rows and colums
-        else if (colx > columcount && rowy > rowcount ){
+        else if (colx >= columcount && rowy >= rowcount ){
             for(int i = 0; i < rowcount; i++){
                 for(int j = 0; j < colx-columcount; j++){
                     this.board.get(i).add((byte) 0);
@@ -124,50 +117,21 @@ public class DynamicBoard {
         return board;
     }
 
-    public void setCellColor(Color cellColor) {
-        this.cellColor = cellColor;
-    }
-
-    public void setBackgroundColor(Color backgroundColor) {
-        this.backgroundColor = backgroundColor;
-    }
-
-    public Color getcellColor() {
-        return this.cellColor;
-    }
-
-    public Color getBackgroundColor() {
-        return this.backgroundColor;
-    }
-
     // Draw/undraw a cell depending on its state when we click on the board
-    public void mouseclickedonBoard(double x, double y){
+    public void mouseclickedordraggedonBoard(double x, double y){
         int colx = (int)(x/cellSize);
         int rowy = (int)(y/cellSize);
         //System.out.println(rowy);
         //System.out.println(colx);
-        if (board.get(rowy).get(colx) == 1){
-            setCellState(rowy, colx, (byte)0);
-        }else{
+        if ((colx >= columcount) || (rowy >= rowcount)){
+            setCellState(rowy, colx, (byte)1);}
+        else if (this.board.get(rowy).get(colx) == 0){
             setCellState(rowy, colx, (byte)1);
+        }else if(this.board.get(rowy).get(colx) == 1) {
+            setCellState(rowy, colx, (byte) 0);
         }
         drawBoard();
-    }
 
-    public void mousedraggedonBoard(double x, double y, List<Point> somelist){
-        int colx = (int)(x/cellSize);
-        int rowy = (int)(y/cellSize);
-        //System.out.println(rowy);
-        //System.out.println(colx);
-        for ( Point p : somelist ) {
-            if ((colx >= columcount) || (rowy >= rowcount)){
-                setCellState(rowy, colx, (byte)1);}
-        }if (this.board.get(rowy).get(colx) == 0){
-            setCellState(rowy, colx, (byte)1);
-        }else if(this.board.get(rowy).get(colx) == 1){
-            setCellState(rowy, colx, (byte)0);
-        }
-        drawBoard();
     }
 
     public void drawBoard() {

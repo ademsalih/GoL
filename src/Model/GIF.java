@@ -1,7 +1,6 @@
 package Model;
 
 
-import Controller.Controller;
 import javafx.scene.control.Alert;
 import lieng.GIFWriter;
 import java.awt.Color;
@@ -28,11 +27,11 @@ public class GIF {
     private String filename;
     private Color cellColor;
     private Color backgroundColor;
-    private Board importedBoard;
+    private StaticBoard importedStaticBoard;
 
     // Class constructor which creates object.
     public GIF (int width, int height, int generations, String path) throws Exception {
-        //this.importedBoard = Controller.instance.boardObj;
+        //this.importedStaticBoard = Controller.instance.boardObj;
         this.width = width;
         this.height = height;
         this.generations = generations;
@@ -40,8 +39,8 @@ public class GIF {
         this.filename = "/export.gif";
         this.milliseconds = 100;
         this.cellSize = 2;
-        this.cellColor = convertFXToAwtColor(importedBoard.getcellColor());
-        this.backgroundColor = convertFXToAwtColor(importedBoard.getBackgroundColor());
+        this.cellColor = convertFXToAwtColor(importedStaticBoard.getcellColor());
+        this.backgroundColor = convertFXToAwtColor(importedStaticBoard.getBackgroundColor());
 
     }
 
@@ -110,14 +109,14 @@ public class GIF {
     // Method used for copying the current board in the game to this class.
     private void copyImportedBoardToGIFBoard() {
 
-        //importedBoard = Controller.instance.boardObj;
+        //importedStaticBoard = Controller.instance.boardObj;
 
-        gifBoard = new byte[importedBoard.board.length][importedBoard.board[0].length];
+        gifBoard = new byte[importedStaticBoard.board.length][importedStaticBoard.board[0].length];
 
         for (int y = 0; y < gifBoard.length; y++) {
             for (int x = 0; x < gifBoard[0].length; x++) {
 
-                if (importedBoard.board[y][x] == 1) {
+                if (importedStaticBoard.board[y][x] == 1) {
                     gifBoard[y][x] = 1;
                 } else {
                     gifBoard[y][x] = 0;

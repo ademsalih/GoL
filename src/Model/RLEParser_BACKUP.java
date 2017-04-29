@@ -105,7 +105,7 @@ import java.util.regex.Pattern;
         }
 
         /**
-         * Returns the X value of the Board from the RLE-file loaded into the given RLEParser-object
+         * Returns the X value of the StaticBoard from the RLE-file loaded into the given RLEParser-object
          */
 
         public int getX() {
@@ -113,7 +113,7 @@ import java.util.regex.Pattern;
         }
 
         /**
-         * Returns the Y value of the Board from the RLE-file loaded into the given RLEParser-object
+         * Returns the Y value of the StaticBoard from the RLE-file loaded into the given RLEParser-object
          */
         public int getY() {
             return y;

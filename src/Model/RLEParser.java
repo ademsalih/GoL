@@ -19,7 +19,7 @@ public class RLEParser {
     //TODO - Separate data from logic?
     //TODO - Read metadata
 
-    // Board & Rule variables
+    // StaticBoard & Rule variables
     private int x;
     private int y;
     private int xPlacement;
@@ -37,7 +37,7 @@ public class RLEParser {
     private int runCount;
 
     /**
-     * Returns the X value (Number of Columns) of the Board
+     * Returns the X value (Number of Columns) of the StaticBoard
      *
      * @return - Number of columns
      */
@@ -46,7 +46,7 @@ public class RLEParser {
     }
 
     /**
-     * Returns the Y value (Number of rows) of the Board from the RLE-file loaded into the given RLEParser-object
+     * Returns the Y value (Number of rows) of the StaticBoard from the RLE-file loaded into the given RLEParser-object
      *
      * @return - Number of rows
      */
@@ -401,7 +401,7 @@ public class RLEParser {
             }
             byteArrayList.add(oneDim);
         }
-        System.out.println(byteArrayList);
+        //System.out.println(byteArrayList);
         return byteArrayList;
     }
 
