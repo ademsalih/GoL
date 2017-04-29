@@ -38,7 +38,13 @@ public abstract class Board {
 
     public abstract void mouseclickedordraggedonBoard(double x, double y);
 
+    public void setCellSize(int a) { this.cellSize = a;}
 
 
 
-}
+
+
+
+
+
+    }

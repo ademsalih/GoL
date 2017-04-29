@@ -85,12 +85,15 @@ public class StaticBoard extends Board {
 
     // Draw/undraw a cell depending on its state when we click on the board
     public void mouseclickedordraggedonBoard(double x, double y){
-        int coly = (int)(x/cellSize);
-        int rowx = (int)(y/cellSize);
-        if (board[rowx][coly] == 1){
-            setCellState(rowx, coly, (byte)0);
+        int colx = (int)(x/cellSize);
+        int rowy = (int)(y/cellSize);
+        if(rowy > 250 || colx > 350){
+            setCellState(rowy, colx, (byte) 1);
+        }
+        else if (board[rowy][colx] == 1){
+            setCellState(rowy, colx, (byte)0);
         }else{
-            setCellState(rowx, coly, (byte)1);
+            setCellState(rowy, colx, (byte)1);
         }
         drawBoard();
 

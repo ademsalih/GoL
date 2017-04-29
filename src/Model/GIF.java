@@ -22,7 +22,7 @@ public class GIF {
     private int yCounter;
     private byte[][] gifBoard;
     private GIFWriter gwriter;
-    private Rule gifRule;
+    private StaticRule gifStaticRule;
     private String path;
     private String filename;
     private Color cellColor;
@@ -150,11 +150,11 @@ public class GIF {
         yCounter = 0;
     }
 
-    // Iterates the game using the Model.Rule class.
+    // Iterates the game using the Model.StaticRule class.
     public void next() {
 
-        gifRule = new Rule(gifBoard);
-        gifBoard = gifRule.conwaysBoardRules();
+        gifStaticRule = new StaticRule(gifBoard);
+        gifBoard = gifStaticRule.conwaysBoardRules();
     }
 
     // Adds the states of the game to the gif object using rail recursion until base case is fulfilled.

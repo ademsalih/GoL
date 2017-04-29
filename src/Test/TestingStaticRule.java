@@ -1,15 +1,15 @@
 package Test;
 
-import Model.Rule;
+import Model.StaticRule;
 import org.junit.jupiter.api.Test;
 
 /**
- * This class tests most of the Rule class methods and
+ * This class tests most of the StaticRule class methods and
  * the nextGeneration method from the Controller class. (ikke ferdig kommentert)
  */
 
 
-public class TestingRule {
+public class TestingStaticRule {
 
     @Test
     public void testToString(){
@@ -19,8 +19,8 @@ public class TestingRule {
                 {0, 0, 1}
         };
 
-        Rule rule = new Rule(board);
-        org.junit.Assert.assertEquals(rule.toString(),"100010001");
+        StaticRule staticRule = new StaticRule(board);
+        org.junit.Assert.assertEquals(staticRule.toString(),"100010001");
 
     }
 
@@ -33,8 +33,8 @@ public class TestingRule {
                 {0,1,0}
         };
 
-        Rule rule1 = new Rule(board1);
-        org.junit.Assert.assertEquals(rule1.toString(),"010111010");
+        StaticRule staticRule1 = new StaticRule(board1);
+        org.junit.Assert.assertEquals(staticRule1.toString(),"010111010");
     }
 
     @Test
@@ -48,8 +48,8 @@ public class TestingRule {
                 {0,0,1,0,0}
         };
 
-        Rule rule2 = new Rule(board2);
-        org.junit.Assert.assertEquals(rule2.toString(),"0010001110110110111000100");
+        StaticRule staticRule2 = new StaticRule(board2);
+        org.junit.Assert.assertEquals(staticRule2.toString(),"0010001110110110111000100");
     }
 
     @Test
@@ -61,9 +61,9 @@ public class TestingRule {
                 { 0, 0, 0, 0 }
         };
 
-        Rule rule = new Rule(board);
-        rule.setCurrentBoard(rule.conwaysBoardRules());
-        org.junit.Assert.assertEquals(rule.toString(),"0000011001100000");
+        StaticRule staticRule = new StaticRule(board);
+        staticRule.setCurrentBoard(staticRule.conwaysBoardRules());
+        org.junit.Assert.assertEquals(staticRule.toString(),"0000011001100000");
 
     }
 
@@ -76,9 +76,9 @@ public class TestingRule {
                 {0,1,0}
         };
 
-        Rule rule1 = new Rule(board1);
-        rule1.setCurrentBoard(rule1.conwaysBoardRules());
-        org.junit.Assert.assertEquals(rule1.toString(),"111101111");
+        StaticRule staticRule1 = new StaticRule(board1);
+        staticRule1.setCurrentBoard(staticRule1.conwaysBoardRules());
+        org.junit.Assert.assertEquals(staticRule1.toString(),"111101111");
     }
 
     @Test
@@ -92,9 +92,9 @@ public class TestingRule {
                 {0,0,1,0,0}
         };
 
-        Rule rule2 = new Rule(board2);
-        rule2.setCurrentBoard(rule2.conwaysBoardRules());
-        org.junit.Assert.assertEquals(rule2.toString(),"0111010001100011000101110");
+        StaticRule staticRule2 = new StaticRule(board2);
+        staticRule2.setCurrentBoard(staticRule2.conwaysBoardRules());
+        org.junit.Assert.assertEquals(staticRule2.toString(),"0111010001100011000101110");
     }
 
 
@@ -107,8 +107,8 @@ public class TestingRule {
                 {0, 0, 1}
         };
 
-        Rule rule = new Rule(board);
-        int c = rule.countNeighbor(board, 1, 1);
+        StaticRule staticRule = new StaticRule(board);
+        int c = staticRule.countNeighbor(/*board,*/ 1, 1);
         org.junit.Assert.assertEquals(c,2);
 
     }
@@ -122,8 +122,8 @@ public class TestingRule {
                 {0,1,0}
         };
 
-        Rule rule1 = new Rule(board1);
-        int c1 = rule1.countNeighbor(board1, 0, 0);
+        StaticRule staticRule1 = new StaticRule(board1);
+        int c1 = staticRule1.countNeighbor(/*board1,*/ 0, 0);
         org.junit.Assert.assertEquals(c1,3);
 
     }
@@ -139,8 +139,8 @@ public class TestingRule {
                 {0,0,1,0,0}
         };
 
-        Rule rule2 = new Rule(board2);
-        int c2 = rule2.countNeighbor(board2, 2, 2);
+        StaticRule staticRule2 = new StaticRule(board2);
+        int c2 = staticRule2.countNeighbor(/*board2,*/ 2, 2);
         org.junit.Assert.assertEquals(c2,8);
 
     }

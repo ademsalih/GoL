@@ -5,7 +5,6 @@ package Test;
  */
 
 import Model.RLEParser;
-import Model.Rule;
 import org.junit.jupiter.api.Test;
 
 public class RLEParsterTest {

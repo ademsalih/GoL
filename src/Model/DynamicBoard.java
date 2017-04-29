@@ -109,7 +109,7 @@ public class DynamicBoard extends Board{
 
     }
 
-    public void setCellSize(int a) { this.cellSize = a; }
+
 
     public void setBoard(List<List<Byte>> board) {this.board = board;}
 

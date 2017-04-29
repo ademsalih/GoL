@@ -19,7 +19,7 @@ public class RLEParser {
     //TODO - Separate data from logic?
     //TODO - Read metadata
 
-    // StaticBoard & Rule variables
+    // StaticBoard & StaticRule variables
     private int x;
     private int y;
     private int xPlacement;

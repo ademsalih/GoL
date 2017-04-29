@@ -34,8 +34,8 @@ public class ParseToRLE {
     }
 
     private String addingRules () {
-        int[] bornAr = Rule.getBorn();
-        int[] surviveAr = Rule.getSurvivor();
+        int[] bornAr = StaticRule.getBorn();
+        int[] surviveAr = StaticRule.getSurvivor();
         String born = "";
         String survive = "";
         for (int i = 0; i < bornAr.length; i++) {

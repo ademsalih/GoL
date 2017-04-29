@@ -6,14 +6,11 @@ import java.util.List;
 /**
  * Created by Narmatha on 13.04.2017.
  */
-public class DynamicRule {
+public class DynamicRule extends Rule{
     ////INSTANCE VARIABLES
     public List<List<Byte>> currentBoard;
     public List<List<Byte>> ruledBoard;
     public List<List<Byte>> conwaysBoard;
-    private int[] survivor = {2, 3};
-    private int[] born = {3};
-
 
     ////CONSTRUCTOR
     // MÅ DEKLARERE ALLE BOARDDENE MED NULL HER!
@@ -68,25 +65,6 @@ public class DynamicRule {
     }*/
 
 
-
-    public byte checkIfOnOrOff(int neighbors, int cellState) {
-        if (cellState == 1) {
-            for (int s : survivor) {
-                if (s == neighbors) {
-                    return 1;
-                }
-            }
-        }
-        else if (cellState == 0) {
-            for (int b : born) {
-                if (b == neighbors) {
-                    return 1;
-                }
-            }
-        }
-        return 0;
-    }
-
     ////CONWAYS GAME OF LIFE RULES
 
     public List<List<Byte>> conwaysBoardRules() {
@@ -107,50 +85,12 @@ public class DynamicRule {
             }
         }
         return conwaysBoard;
-
     }
-
-
-    // Counts the neighbor of a cell and returns antall
-    public int countNeighbor( int y, int x){
-
-
-        int neighborsCounter = 0;
-
-        if (neighborTopLeft(y,x)) {
-            neighborsCounter += 1;
-        }
-        if (neighborOver(y,x)) {
-            neighborsCounter += 1;
-        }
-        if (neighborTopRight(y,x)) {
-            neighborsCounter += 1;
-        }
-        if (neighborLeft(y,x)) {
-            neighborsCounter += 1;
-        }
-        if (neighborRight(y,x)) {
-            neighborsCounter += 1;
-        }
-        if (neighborBottomLeft(y,x)) {
-            neighborsCounter += 1;
-        }
-        if (neighborUnder(y,x)) {
-            neighborsCounter += 1;
-        }
-        if (neighborBottomRight(y,x)) {
-            neighborsCounter += 1;
-        }
-
-        return neighborsCounter;
-
-    }
-
 
     ////COUNT NEIGHBOR METHODS
 
 
-    private boolean neighborOver(int y, int x) {
+    boolean neighborOver(int y, int x) {
 
         if (y - 1 != - 1) {
 
@@ -163,7 +103,7 @@ public class DynamicRule {
 
     }
 
-    private boolean neighborUnder(int y, int x) {
+    boolean neighborUnder(int y, int x) {
 
         int boardLength = currentBoard.size();
 
@@ -177,7 +117,7 @@ public class DynamicRule {
         return false;
     }
 
-    private boolean neighborLeft(int y, int x) {
+    boolean neighborLeft(int y, int x) {
 
         if (x - 1 != - 1) {
 
@@ -189,7 +129,7 @@ public class DynamicRule {
         return false;
     }
 
-    private boolean neighborRight(int y, int x) {
+    boolean neighborRight(int y, int x) {
 
         int boardLength = currentBoard.size();
 
@@ -203,7 +143,7 @@ public class DynamicRule {
         return false;
     }
 
-    private boolean neighborTopLeft(int y, int x) {
+    boolean neighborTopLeft(int y, int x) {
 
         if ((y - 1 != - 1) && (x - 1 != - 1)) {
 
@@ -215,7 +155,7 @@ public class DynamicRule {
         return false;
     }
 
-    private boolean neighborTopRight(int y, int x) {
+    boolean neighborTopRight(int y, int x) {
 
         int boardLength = currentBoard.size();
 
@@ -229,7 +169,7 @@ public class DynamicRule {
         return false;
     }
 
-    private boolean neighborBottomLeft(int y, int x) {
+    boolean neighborBottomLeft(int y, int x) {
 
         int boardLength = currentBoard.size();
 
@@ -243,7 +183,7 @@ public class DynamicRule {
         return false;
     }
 
-    private boolean neighborBottomRight(int y, int x) {
+    boolean neighborBottomRight(int y, int x) {
 
         int boardLength = currentBoard.size();
 

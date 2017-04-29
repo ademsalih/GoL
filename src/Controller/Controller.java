@@ -42,10 +42,12 @@ public class Controller implements Initializable {
     @FXML private Label scaleLabel;
 
     private List<Point> plist;
-    //public StaticBoard boardObj;
+    public StaticBoard boardObj;
+    public StaticRule rule;
+    //public DynamicBoard boardObj;
+    //public DynamicRule rule;
+    //public Board boardObj;
     //public Rule rule;
-    public DynamicBoard boardObj;
-    public DynamicRule rule;
     public Timeline timeline;
     public GraphicsContext gc;
     public Model.RLEParser rleParser;
@@ -128,13 +130,15 @@ public class Controller implements Initializable {
 
     // Method that uses the draw method of StaticBoard class for drawing the game to canvas.
     public void draw() {
-        boardObj = new DynamicBoard(canvas, 350, 250);
+        //boardObj = new DynamicBoard(canvas, 350, 250);
+        boardObj = new StaticBoard(canvas);
         boardObj.drawBoard();
     }
 
-    // Uses the Rule class to iterate to next generation and draws the game.
+    // Uses the StaticRule class to iterate to next generation and draws the game.
     public void nextGeneration() {
-        rule = new DynamicRule(boardObj.board);
+        rule = new StaticRule(boardObj.board);
+        //rule = new DynamicRule(boardObj.board);
         boardObj.setBoard(rule.conwaysBoardRules());
         boardObj.drawBoard();
         counter += 1;
@@ -158,12 +162,11 @@ public class Controller implements Initializable {
     // Loads an RLE files and draws the file to the canvas.
     public void loadFile() throws IOException {
         rleParser = new RLEParser();
-        List<List<Byte>> temp = rleParser.importAsList();
+        //List<List<Byte>> temp = rleParser.importAsList();
+        byte[][] temp = rleParser.getStaticBoard();
         if (temp != null) {
-            Rule.setRules(rleParser.getSurvive(), rleParser.getBorn());
+            StaticRule.setRules(rleParser.getSurvive(), rleParser.getBorn());
             boardObj.clearBoard();
-            System.out.println(temp.size());
-            System.out.println(temp.get(0).size());
             boardObj.addBoard(temp);
             boardObj.drawBoard();
             counter = 0;
@@ -197,8 +200,7 @@ public class Controller implements Initializable {
         Point p = new Point();
         p.x = event.getX();
         p.y = event.getY();
-        //plist.add(p);
-        boardObj.mouseclickedordraggedonBoard(p.x, p.y);// plist);
+        boardObj.mouseclickedordraggedonBoard(p.x, p.y);
     }
 
     // Exits the application.
