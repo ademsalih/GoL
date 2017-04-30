@@ -15,7 +15,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import org.hibernate.annotations.SourceType;
+//import org.hibernate.annotations.SourceType;
 
 import java.io.IOException;
 import java.net.URL;
@@ -51,7 +51,7 @@ public class Controller implements Initializable {
     //public Rule rule;
     public Timeline timeline;
     public GraphicsContext gc;
-    public Model.RLEParser rleParser;
+    public RLEParser_Static rleParser;
     public static Controller instance;
     public Stage stage;
     public Stage gifStage;
@@ -165,9 +165,9 @@ public class Controller implements Initializable {
 
     // Loads an RLE files and draws the file to the canvas.
     public void loadFile() throws IOException {
-        rleParser = new RLEParser();
+        rleParser = new RLEParser_Static();
         //List<List<Byte>> temp = rleParser.importAsList();
-        byte[][] temp = rleParser.getStaticBoard();
+        byte[][] temp = rleParser.getBoard();
         if (temp != null) {
             StaticRule.setRules(rleParser.getSurvive(), rleParser.getBorn());
             boardObj.clearBoard();

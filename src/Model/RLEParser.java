@@ -9,24 +9,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * A class that parses a .rle file and returns it as a 2D byte array through the getStaticBoard method.
+ * A class that parses a .rle file and returns it as a 2D byte array through the importBoard method.
  * It can also return the X and Y value if needed later on.
  */
 
-public class RLEParser {
+public abstract class RLEParser {
 
     //TODO Add function that checks all new lines for zeroes and has a runcount for empty lines.
     //TODO - Separate data from logic?
     //TODO - Read metadata
 
-    // StaticBoard & StaticRule variables
-    private int x;
-    private int y;
-    private int xPlacement;
-    private int yPlacement;
+    // Board & Rule variables
+    protected int x, y, xPlacement, yPlacement;
     private int[] born;
     private int[] survive;
-    private byte[][] arr;
 
     // Metadata
     private String patternName;
@@ -37,7 +33,7 @@ public class RLEParser {
     private int runCount;
 
     /**
-     * Returns the X value (Number of Columns) of the StaticBoard
+     * Returns the X value (Number of Columns) of the Board
      *
      * @return - Number of columns
      */
@@ -46,7 +42,7 @@ public class RLEParser {
     }
 
     /**
-     * Returns the Y value (Number of rows) of the StaticBoard from the RLE-file loaded into the given RLEParser-object
+     * Returns the Y value (Number of rows) of the Board from the RLE-file loaded into the given RLEParser_Static-object
      *
      * @return - Number of rows
      */
@@ -81,14 +77,6 @@ public class RLEParser {
         return comment;
     }
 
-    /**
-     * Returns the byte array
-     *
-     * @return - byte[][] containing the gameboard. 
-     */
-    public byte[][] getArr() {
-        return arr;
-    }
 
     /**
      * Main method of the class. Calls on all the other methods.
@@ -96,7 +84,7 @@ public class RLEParser {
      * @return - 2D byte array that is a representation of the rle pattern from the .rle file.
      * @throws IOException
      */
-    public byte[][] getStaticBoard() {
+    public void importBoard() {
         try {
             BufferedReader br = ReadFile.readFileFromDisk();
             if (br != null) {
@@ -104,30 +92,31 @@ public class RLEParser {
                     // Sets up the buffered reader to easily go back and forth while looking for metadata, xy and rules.
                     // 1000 chars as limit to be on the safe side.
                     br.mark(1000);
+
                     findMetaData(br);
+
+                    // Stores the line containing X and Y and Rules on a String
                     String xYRulesLine = findXYandRulesLine(br);
                     findXY(xYRulesLine);
                     findRules(xYRulesLine);
-                    arr = new byte[y][x];
+
+                    initBoard();
                     xPlacement = 0;
                     yPlacement = 0;
                     String line;
                     while ((line = getLine(br)) != null) {
-                        setByteArrayFromRlePattern(line);
+                        findCountCellThenUpdate(line);
                     }
                 } catch (PatternFormatException e) {
                     FileHandling.alert("An error occured while reading the .rle file");
 
                 }
-
+                
                 br.close();
-                return arr;
             }
-            return null;
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     /**
@@ -140,8 +129,6 @@ public class RLEParser {
         this.author = metaDataFinder(br, "#o");
         this.comment = metaDataFinder(br, "#c");
     }
-
-
 
     /**
      * General method to be used to find different types of metadata
@@ -246,16 +233,8 @@ public class RLEParser {
         return null;
     }
 
-    private boolean startNotFound(String line) {
-        if (line.substring(0, 1).matches("[0-9ob$]")) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     //Runs through the rlePattern and updates the local variable boardInBitString using the updateBitString method.
-    public void setByteArrayFromRlePattern(String rlePattern) {
+    public void findCountCellThenUpdate(String rlePattern) {
         for (int i = 0; i < rlePattern.length(); i++) {
 
             int tempRunCount;
@@ -263,63 +242,15 @@ public class RLEParser {
 
             if ((tempRunCount = getRunCount(rlePattern, i)) != 0) {
                 runCount = tempRunCount;
-                i += iUpdate(runCount);
+                i += numberOfDigits(runCount);
             }
             else if ((tempCellType = getCellType(rlePattern, i)) != 'a') {
                 cellType = tempCellType;
                 if (i == 0 || prevCharIsNotInt(rlePattern, i)) {
                     runCount = 1;
                 }
-                updateArray(runCount, cellType);
+                initiateBoardUpdate(runCount, cellType);
             }
-        }
-    }
-
-    private int[] convertRuleToArray(int r) {
-        String a = Integer.toString(r);
-        int[] rule = new int[a.length()];
-        for (int i = 0; i < a.length(); i++) {
-            rule[i] = Character.digit(a.charAt(i), 10);
-        }
-        return rule;
-    }
-
-
-    //Updates the BitString with the number of 1s or 0s that is needed according to the latest reading from the RLE-string
-    private void updateArray(int runCount, char cellType) {
-        if (cellType == 'b') {
-            updateArray2(runCount, (byte)0);
-        } else if (cellType == 'o') {
-            updateArray2(runCount, (byte)1);
-        } else if (cellType == '$') {
-            for (int i = 0; i < runCount; i++) {
-                if (i == 0) {
-                    if (xPlacement != 0) {
-                         updateArray2((x - xPlacement), (byte)0);
-                    }
-                } else {
-                    updateArray2(x, (byte)0);
-                }
-            }
-        }
-        else if (cellType == '!') {
-            updateArray2(x - xPlacement, (byte)0);
-        }
-    }
-
-    private void updateArray2 (int r, byte b){
-        for (int i = 0; i < r; i++) {
-            if  (xPlacement != x) {
-                arr[yPlacement][xPlacement] = b;
-            }
-            if ((xPlacement+1) == x){
-                xPlacement = -1;
-                if ((yPlacement + 1) != y) {
-                    yPlacement++;
-                }
-            }
-            xPlacement++;
-
         }
     }
 
@@ -350,7 +281,7 @@ public class RLEParser {
         return 'a';
     }
 
-    private int iUpdate(int runCount) {
+    private int numberOfDigits(int runCount) {
         int numberOfDigits = String.valueOf(runCount).length();
         if (numberOfDigits == 2) {
             return 1;
@@ -375,16 +306,16 @@ public class RLEParser {
         }
     }
 
-    /**
-     * Import method that returns a 2D ArrayList
-     *
-     * @return - 2D ArrayList representation of the game board.
-     */
-    public ArrayList<List<Byte>> importAsList() {
-        getStaticBoard();
-        ArrayList<List<Byte>> arrLi = convertToArrayList(arr);
-        return arrLi;
+    private int[] convertRuleToArray(int r) {
+        String a = Integer.toString(r);
+        int[] rule = new int[a.length()];
+        for (int i = 0; i < a.length(); i++) {
+            rule[i] = Character.digit(a.charAt(i), 10);
+        }
+        return rule;
     }
+
+
 
     /**
      * Converts the input 2D byte array to a 2D ArrayList of Byte objects.
@@ -401,7 +332,7 @@ public class RLEParser {
             }
             byteArrayList.add(oneDim);
         }
-        //System.out.println(byteArrayList);
+        System.out.println(byteArrayList);
         return byteArrayList;
     }
 
@@ -423,37 +354,23 @@ public class RLEParser {
         return survive;
     }
 
-    /**
-     * Prints the board to console
-     *
-     */
-    @Override
-    public String toString() {
-        String toString = "";
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr[i].length; j++) {
-                toString += arr[i][j];
-            }
-            toString += "\n";
-        }
-        return  toString;
-    }
 
-    //FOR TESTING ONLY
-    public void tester(String xYRulesLine, String line) throws Exception {
-        try {
-            findXY(xYRulesLine);
-            findRules(xYRulesLine);
-            arr = new byte[y][x];
-            xPlacement = 0;
-            yPlacement = 0;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (PatternFormatException e) {
-            e.printStackTrace();
-        }
-        setByteArrayFromRlePattern(line);
-    }
+    /**
+     * Abstract method were the different methods for updating array or list is implementet.
+     *
+     * @param r - int that holds the runcount. This is the number of placements the byte should have.
+     * @param b - byte that holds the value of the cells that is placed on the board.
+     */
+    abstract void updateBoard(int r, byte b);
+
+    /**
+     * Initialisation of the board.
+     */
+    abstract void initBoard();
+
+    //Updates the BitString with the number of 1s or 0s that is needed according to the latest reading from the RLE-string
+    abstract void initiateBoardUpdate(int runCount, char cellType);
+
 }
 
 
