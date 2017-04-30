@@ -166,6 +166,7 @@ public class Controller implements Initializable {
     // Loads an RLE files and draws the file to the canvas.
     public void loadFile() throws IOException {
         rleParser = new RLEParser_Static();
+        rleParser.importBoard();
         //List<List<Byte>> temp = rleParser.importAsList();
         byte[][] temp = rleParser.getBoard();
         if (temp != null) {
