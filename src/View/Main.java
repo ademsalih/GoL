@@ -20,11 +20,10 @@ public class Main extends Application {
 
         mainStage = stage;
 
-        Parent root = FXMLLoader.load(getClass().getResource("layout.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/View/FXML/layout.fxml"));
 
         Scene scene = new Scene(root, 700, 569);
-
-        scene.getStylesheets().add("View/stylesheet.css");
+        scene.getStylesheets().add("View/CSS/stylesheet.css");
         stage.setTitle("Conways Game of Life");
         stage.setScene(scene);
         stage.setResizable(true);

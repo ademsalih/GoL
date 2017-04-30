@@ -15,6 +15,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.hibernate.annotations.SourceType;
 
 import java.io.IOException;
 import java.net.URL;
@@ -54,9 +55,10 @@ public class Controller implements Initializable {
     public static Controller instance;
     public Stage stage;
     public Stage gifStage;
-    public Stage urlStage;
     public int counter;
     public Animate animate;
+
+    public Stage urlStage;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -109,11 +111,11 @@ public class Controller implements Initializable {
     public void colorStage() {
 
         try {
-            Pane root = FXMLLoader.load(getClass().getResource("colorStage.fxml"));
+            Pane root = FXMLLoader.load(getClass().getResource("/View/FXML/colorStage.fxml"));
             stage = new Stage();
             Scene scene = new Scene(root, 270, 112);
 
-            scene.getStylesheets().add("View/colorStageSS.css");
+            scene.getStylesheets().add("/View/CSS/colorStageSS.css");
             stage.setScene(scene);
             stage.setTitle("Change color");
             stage.setResizable(false);
@@ -123,8 +125,10 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
 
-        ColorStageController.instance.setCellColorPicker(boardObj.getcellColor());
-        ColorStageController.instance.setBackgroundColorPicker(boardObj.getBackgroundColor());
+
+        // Disse "sender" fargene på brettet over til fargevelger! Må justeres for dynamic board
+        //ColorStageController.instance.setCellColorPicker(boardObj.getcellColor());
+        //ColorStageController.instance.setBackgroundColorPicker(boardObj.getBackgroundColor());
 
     }
 
@@ -249,7 +253,7 @@ public class Controller implements Initializable {
     public void openExportMenu() {
 
         try {
-            Pane root = FXMLLoader.load(getClass().getResource("gifMenu.fxml"));
+            Pane root = FXMLLoader.load(getClass().getResource("/View/FXML/gifMenu.fxml"));
             gifStage = new Stage();
             Scene scene = new Scene(root, 517, 283  );
 
@@ -269,21 +273,18 @@ public class Controller implements Initializable {
     public void openURLMenu() {
 
         try {
-            Pane root = FXMLLoader.load(getClass().getResource("urlExport.fxml"));
+            Pane root = FXMLLoader.load(getClass().getResource("/View/FXML/URLImport.fxml"));
             urlStage = new Stage();
 
-            Scene scene = new Scene(root, 295, 80);
-
+            Scene scene = new Scene(root, 295,77);
             urlStage.setScene(scene);
-            urlStage.setTitle("Export as GIF");
+            urlStage.setTitle("Open URL");
             urlStage.setResizable(false);
             urlStage.show();
 
         } catch (Exception e) {
-            System.out.println("Cannot open URL menu.");
-            e.printStackTrace();
+            System.out.println("Cannot open url import menu");
         }
-
     }
 
 

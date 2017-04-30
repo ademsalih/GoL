@@ -1,6 +1,8 @@
 package Controller;
 
 import Model.GIF;
+import javafx.application.Platform;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -18,12 +20,14 @@ public class GIFController implements Initializable {
 
     public GIF gif;
     public String path;
+    public Thread exportThread;
     public static GIFController instance;
     @FXML private Label url;
     @FXML private TextField fileNameField;
     @FXML private TextField generationsField;
     @FXML private TextField speedField;
-    @FXML private Slider speedSlider;
+    @FXML public ProgressBar progressBar;
+    @FXML public Button exportButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -90,17 +94,14 @@ public class GIFController implements Initializable {
     public void checkIfDefaultValuesHaveChanged() {
 
         if (!fileNameField.getText().isEmpty()) {
-
             gif.setFileName(fileNameField.getText());
         }
 
         if (!generationsField.getText().isEmpty()) {
-
             gif.setGenerations(Integer.parseInt(generationsField.getText()));
         }
 
         if (!speedField.getText().isEmpty()) {
-
             gif.setSpeed(Integer.parseInt(speedField.getText()));
         }
     }
@@ -113,14 +114,17 @@ public class GIFController implements Initializable {
         checkIfDefaultValuesHaveChanged();
 
         gif.createGIF();
+    }
 
+    public void updateProgressBar() {
+        progressBar.progressProperty().addListener((obs, oldProgress, newProgress) -> {
+
+        });
     }
 
     // Closes the GIF Export Stage when "Cancel" Button is clicked.
     public void cancelButtonAction() {
         Controller.instance.gifStage.close();
     }
-
-
 
 }

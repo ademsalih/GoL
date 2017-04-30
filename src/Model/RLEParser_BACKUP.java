@@ -28,8 +28,8 @@ import java.util.regex.Pattern;
             while (xNotFound) {
                 String line = br.readLine();
                 if (line.startsWith("x")) {
-                    String test = " ? (\\d+)/, / ? (\\d+)";
-                    Matcher matcher = Pattern.compile(test).matcher(line);
+                    String Test = " ? (\\d+)/, / ? (\\d+)";
+                    Matcher matcher = Pattern.compile(Test).matcher(line);
                     matcher.find();
                     System.out.println(matcher.group(1));
                 }
