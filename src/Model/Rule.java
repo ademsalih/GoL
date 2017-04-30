@@ -4,6 +4,7 @@ package Model;
  * Created by Narmatha on 29.04.2017.
  */
 public abstract class Rule {
+
     static private int[] survivor = {2, 3};
     static private int[] born = {3};
 
@@ -38,7 +39,6 @@ public abstract class Rule {
     // Counts the neighbor of a cell and returns antall
     public int countNeighbor( int y, int x){
 
-
         int neighborsCounter = 0;
 
         if (neighborTopLeft(y,x)) {
@@ -67,7 +67,6 @@ public abstract class Rule {
         }
 
         return neighborsCounter;
-
     }
 
     abstract boolean neighborOver(int y, int x);

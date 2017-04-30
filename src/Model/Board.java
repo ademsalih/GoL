@@ -40,11 +40,4 @@ public abstract class Board {
 
     public void setCellSize(int a) { this.cellSize = a;}
 
-
-
-
-
-
-
-
     }

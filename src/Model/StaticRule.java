@@ -7,16 +7,13 @@ import java.util.Arrays;
  *
  */
 
-public class StaticRule extends Rule{
+public class StaticRule extends Rule {
 
     ////INSTANCE VARIABLES
     public byte[][] currentBoard;
     public byte[][] conwaysBoard;
     private static int[] survivor = {2, 3};
     private static int[] born = {3};
-
-
-
 
     // Class constructor
     public StaticRule(byte[][] currentBoard) {
@@ -25,7 +22,7 @@ public class StaticRule extends Rule{
 
 
     public byte[][] getCurrentBoard() {
-        return currentBoard;
+        return this.currentBoard;
     }
 
     public void setCurrentBoard(byte[][] board) {
@@ -62,7 +59,7 @@ public class StaticRule extends Rule{
         checkRule(born);
     }
 
-    /*public byte checkIfOnOrOff(int neighbors, int cellState) {
+    public byte checkIfOnOrOff(int neighbors, int cellState) {
         if (cellState == 1) {
             for (int s : survivor) {
                 if (s == neighbors) {
@@ -79,7 +76,7 @@ public class StaticRule extends Rule{
         }
 
         return 0;
-    }*/
+    }
 
     // Conways Game of life Rules (B3S23)
     public byte[][] conwaysBoardRules() {
@@ -88,22 +85,18 @@ public class StaticRule extends Rule{
 
         for (int y = 0; y < conwaysBoard.length; y++) {
 
-            for (int x = 0; x < conwaysBoard.length; x++) {
+            for (int x = 0; x < conwaysBoard[0].length; x++) {
 
                 int cellState = currentBoard[y][x];
-
-                conwaysBoard[y][x] = checkIfOnOrOff(countNeighbor(/*currentBoard,*/ y, x), cellState);
+                conwaysBoard[y][x] = checkIfOnOrOff(countNeighbor(y, x), cellState);
             }
         }
         return conwaysBoard;
-
     }
 
 
     // Counts the neighbor of a cell and returns value
-    //public int countNeighbor(/*byte[][] board,*/ int y, int x){
-
-       /* //board = currentBoard;
+    public int countNeighbor(int y, int x){
 
         int neighborsCounter = 0;
 
@@ -134,7 +127,7 @@ public class StaticRule extends Rule{
 
         return neighborsCounter;
 
-    }*/
+    }
 
 
     // Methods that checks whether a cell has a neighbor or not
@@ -153,9 +146,7 @@ public class StaticRule extends Rule{
 
     boolean neighborUnder(int y, int x) {
 
-        int boardLength = currentBoard.length;
-
-        if (y + 1 < boardLength) {
+        if (y + 1 < currentBoard.length) {
 
             if (currentBoard[y+1][x] == 1) {
                 return true;
@@ -179,9 +170,7 @@ public class StaticRule extends Rule{
 
     boolean neighborRight(int y, int x) {
 
-        int boardLength = currentBoard.length;
-
-        if (x + 1 < boardLength) {
+        if (x + 1 < currentBoard[0].length) {
 
             if (currentBoard[y][x+1] == 1) {
                 return true;
@@ -205,9 +194,7 @@ public class StaticRule extends Rule{
 
     boolean neighborTopRight(int y, int x) {
 
-        int boardLength = currentBoard.length;
-
-        if ((y - 1 != - 1) && (x + 1 < boardLength)) {
+        if ((y - 1 != - 1) && (x + 1 < currentBoard[0].length)) {
 
             if (currentBoard[y-1][x+1] == 1) {
                 return true;
@@ -219,9 +206,7 @@ public class StaticRule extends Rule{
 
     boolean neighborBottomLeft(int y, int x) {
 
-        int boardLength = currentBoard.length;
-
-        if ((y + 1 < boardLength) && (x - 1 != - 1)) {
+        if ((y + 1 < currentBoard.length) && (x - 1 != - 1)) {
 
             if (currentBoard[y+1][x-1] == 1) {
                 return true;
@@ -233,9 +218,7 @@ public class StaticRule extends Rule{
 
     boolean neighborBottomRight(int y, int x) {
 
-        int boardLength = currentBoard.length;
-
-        if ((y + 1 < boardLength) && (x + 1 < boardLength)) {
+        if ((y + 1 < currentBoard.length) && (x + 1 < currentBoard[0].length)) {
 
             if (currentBoard[y+1][x+1] == 1) {
                 return true;

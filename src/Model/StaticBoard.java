@@ -25,7 +25,7 @@ public class StaticBoard extends Board {
     double canvasHeight;
     GraphicsContext gc;
     int generationCounter;
-    boolean grid = true;
+    boolean grid = false;
 
     public StaticBoard(Canvas canvas) {
         this.canvasWidth = canvas.getWidth();
@@ -85,8 +85,10 @@ public class StaticBoard extends Board {
 
     // Draw/undraw a cell depending on its state when we click on the board
     public void mouseclickedordraggedonBoard(double x, double y){
+
         int colx = (int)(x/cellSize);
         int rowy = (int)(y/cellSize);
+
         if(rowy > 250 || colx > 350){
             setCellState(rowy, colx, (byte) 1);
         }
@@ -97,6 +99,7 @@ public class StaticBoard extends Board {
         }
         drawBoard();
 
+        System.out.println(colx + "   " + rowy);
     }
 
     public void keyClicked(){
