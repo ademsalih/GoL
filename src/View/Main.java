@@ -8,7 +8,6 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-
     private static Stage mainStage;
 
     public static Stage getStage() {
