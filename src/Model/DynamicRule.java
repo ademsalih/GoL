@@ -9,7 +9,6 @@ import java.util.List;
 public class DynamicRule extends Rule{
     ////INSTANCE VARIABLES
     public List<List<Byte>> currentBoard;
-    public List<List<Byte>> ruledBoard;
     public List<List<Byte>> conwaysBoard;
 
     ////CONSTRUCTOR
@@ -44,27 +43,6 @@ public class DynamicRule extends Rule{
         return output;
     }
 
-    ////SIMPLE RULES, INVERSION
-    /*public ArrayList<ArrayList<Byte>> invertBoard() {
-
-        ruledBoard = new byte[currentBoard.length][currentBoard.length];
-
-        for (int k = 0; k < ruledBoard.length; k++) {
-
-            for (int l = 0; l < ruledBoard.length; l++ ) {
-                if (currentBoard[k][l] == 1) {
-                    ruledBoard[k][l] = 0;
-                } else {
-                    ruledBoard[k][l] = 1;
-                }
-
-            }
-        }
-
-        return ruledBoard;
-    }*/
-
-
     ////CONWAYS GAME OF LIFE RULES
 
     public List<List<Byte>> conwaysBoardRules() {
@@ -80,6 +58,7 @@ public class DynamicRule extends Rule{
 
         for (int y = 0; y < conwaysBoard.size(); y++) {
             for (int x = 0; x < conwaysBoard.get(0).size(); x++) {
+
                 int cellState = currentBoard.get(y).get(x);
                 conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
             }
@@ -105,9 +84,7 @@ public class DynamicRule extends Rule{
 
     boolean neighborUnder(int y, int x) {
 
-        int boardLength = currentBoard.size();
-
-        if (y + 1 < boardLength) {
+        if (y + 1 < currentBoard.size()) {
 
             if (currentBoard.get(y+1).get(x) == 1) {
                 return true;
@@ -131,9 +108,7 @@ public class DynamicRule extends Rule{
 
     boolean neighborRight(int y, int x) {
 
-        int boardLength = currentBoard.size();
-
-        if (x + 1 < boardLength) {
+        if (x + 1 < currentBoard.get(0).size()) {
 
             if (currentBoard.get(y).get(x+1) == 1) {
                 return true;
@@ -157,9 +132,7 @@ public class DynamicRule extends Rule{
 
     boolean neighborTopRight(int y, int x) {
 
-        int boardLength = currentBoard.size();
-
-        if ((y - 1 != - 1) && (x + 1 < boardLength)) {
+        if ((y - 1 != - 1) && (x + 1 < currentBoard.get(0).size())) {
 
             if (currentBoard.get(y-1).get(x+1) == 1) {
                 return true;
@@ -171,9 +144,7 @@ public class DynamicRule extends Rule{
 
     boolean neighborBottomLeft(int y, int x) {
 
-        int boardLength = currentBoard.size();
-
-        if ((y + 1 < boardLength) && (x - 1 != - 1)) {
+        if ((y + 1 < currentBoard.size()) && (x - 1 != - 1)) {
 
             if (currentBoard.get(y+1).get(x-1) == 1) {
                 return true;
@@ -185,9 +156,7 @@ public class DynamicRule extends Rule{
 
     boolean neighborBottomRight(int y, int x) {
 
-        int boardLength = currentBoard.size();
-
-        if ((y + 1 < boardLength) && (x + 1 < boardLength)) {
+        if ((y + 1 < currentBoard.size()) && (x + 1 < currentBoard.get(0).size())) {
 
             if (currentBoard.get(y+1).get(x+1) == 1) {
                 return true;
