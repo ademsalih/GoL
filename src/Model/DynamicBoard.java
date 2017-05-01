@@ -40,15 +40,10 @@ public class DynamicBoard extends Board{
     }
 
     public void addBoard(List<List<Byte>> newBoard) {
-        /*for (int y = 0; y < newBoard.size(); y++) {
-            for (int x = 0; x < newBoard.get(0).size(); x++) {
-                this.board.get(y).set(x, newBoard.get(y).get(x));
-            }
-        }*/
-
-
+        /*
         System.out.println(newBoard.size());
         System.out.println(newBoard.get(0).size());
+        this.board.clear();
         // DETTE ER EN DEL AV GRUNNEN TIL HVORFOR INNLASTINGEN AV PATTERNS IKKE FUNKER HELT
         for (int y = 0; y < newBoard.size(); y++) {
             List<Byte> oneDim = new ArrayList<Byte>();
@@ -57,6 +52,22 @@ public class DynamicBoard extends Board{
             }
             this.board.add(oneDim);
         }
+
+        for (int y = 0; y < this.board.size(); y++) {
+            for (int x = 0; x < this.board.get(y).size(); x++) {
+                System.out.print(this.board.get(y).get(x));
+            }
+            System.out.println("");
+        }
+        for (int y = 0; y < newBoard.size(); y++) {
+            for (int x = 0; x < newBoard.get(y).size(); x++) {
+                System.out.print(newBoard.get(y).get(x));
+            }
+            System.out.println("");
+        }*/
+
+        this.board = newBoard;
+
 
     }
 
@@ -138,13 +149,13 @@ public class DynamicBoard extends Board{
 
         gc.setFill(backgroundColor);
         gc.fillRect(0,0,canvasWidth,canvasHeight);
+        Point p = new Point();
 
         for (int y = 0; y < board.size(); y++ ) {
 
-            for (int x = 0; x < board.get(0).size(); x++) {
+            for (int x = 0; x < board.get(y).size(); x++) {
 
                 if (board.get(y).get(x) == 1) {
-                    Point p = new Point();
                     p.x = xCounter;
                     p.y = yCounter;
                     p.draw(gc, cellColor, (double)cellSize);

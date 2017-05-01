@@ -43,16 +43,16 @@ public class Controller implements Initializable {
     @FXML private Label speedLabel;
     @FXML private Label scaleLabel;
 
-    private List<Point> plist;
-    public StaticBoard boardObj;
+    public DynamicBoard boardObj;
+    public DynamicRule rule;
+    public RLEParser_Dynamic rleParser;
+    /*public StaticBoard boardObj;
     public StaticRule rule;
-    //public DynamicBoard boardObj;
-    //public DynamicRule rule;
-    //public Board boardObj;
-    //public Rule rule;
+    public RLEParser_Static rleParser;*/
+
+    private List<Point> plist;
     public Timeline timeline;
     public GraphicsContext gc;
-    public RLEParser_Static rleParser;
     public static Controller instance;
     public Stage stage;
     public Stage gifStage;
@@ -135,15 +135,15 @@ public class Controller implements Initializable {
 
     // Method that uses the draw method of StaticBoard class for drawing the game to canvas.
     public void draw() {
-        //boardObj = new DynamicBoard(canvas, 350, 250);
-        boardObj = new StaticBoard(canvas);
+        boardObj = new DynamicBoard(canvas, 350, 250);
+        //boardObj = new StaticBoard(canvas);
         boardObj.drawBoard();
     }
 
     // Uses the StaticRule class to iterate to next generation and draws the game.
     public void nextGeneration() {
-        rule = new StaticRule(boardObj.board);
-        //rule = new DynamicRule(boardObj.board);
+        //rule = new StaticRule(boardObj.board);
+        rule = new DynamicRule(boardObj.board);
         boardObj.setBoard(rule.conwaysBoardRules());
         boardObj.drawBoard();
         counter += 1;
@@ -166,10 +166,11 @@ public class Controller implements Initializable {
 
     // Loads an RLE files and draws the file to the canvas.
     public void loadFileFromDisk() throws IOException {
-        rleParser = new RLEParser_Static();
+        //rleParser = new RLEParser_Static();
+        rleParser = new RLEParser_Dynamic();
         rleParser.importFromDisk();
-        //List<List<Byte>> temp = rleParser.importAsList();
-        byte[][] temp = rleParser.getBoard();
+        //byte[][] temp = rleParser.getBoard();
+        List<List<Byte>> temp  = rleParser.getBoard();
         if (temp != null) {
             StaticRule.setRules(rleParser.getSurvive(), rleParser.getBorn());
             boardObj.clearBoard();
@@ -278,7 +279,8 @@ public class Controller implements Initializable {
         String urlString;
         if ((urlString = url.getURL()) != null){
             System.out.println("It's not null");
-            RLEParser_Static rle = new RLEParser_Static();
+            RLEParser_Dynamic rle = new RLEParser_Dynamic();
+            //RLEParser_Static rle = new RLEParser_Static();
             try {
                 rle.importFromURL(urlString);
                 boardObj.clearBoard();

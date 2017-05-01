@@ -115,7 +115,7 @@ public abstract class RLEParser {
      *
      * @param br - BufferedReader holding the RLE-File
      */
-    private void importBoard(BufferedReader br) {
+    public void importBoard(BufferedReader br) {
         try {
             if (br != null) {
                 try {
@@ -305,7 +305,7 @@ public abstract class RLEParser {
     }
 
     private char getCellType(String line, int i) {
-        if (line.substring(i, i + 1).matches("[bo$]")) {
+        if (line.substring(i, i + 1).matches("[bo$!]")) {
             return line.charAt(i);
         }
         return 'a';
