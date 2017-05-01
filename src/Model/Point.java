@@ -9,6 +9,17 @@ import javafx.scene.paint.Color;
 public class Point {
     public double x,y;
 
+    public int xOffset;
+    public int yOffset;
+
+    public void setXOffset(int x) {
+        this.xOffset = x;
+    }
+
+    public void setYOffset(int y) {
+        this.yOffset = y;
+    }
+
     public void setX(double x) {
         this.x = x;
     }
@@ -19,6 +30,6 @@ public class Point {
 
     public void draw(GraphicsContext gc, Color drawColor, double cellSize) {
         gc.setFill(drawColor);
-        gc.fillRect(x, y, cellSize, cellSize);
+        gc.fillRect(xOffset + x, yOffset + y, xOffset + cellSize, yOffset + cellSize);
     }
 }

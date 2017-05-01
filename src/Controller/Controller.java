@@ -1,6 +1,9 @@
 package Controller;
 
 import Model.*;
+import Model.RLEParser_Static;
+import Model.StaticBoard;
+import Model.StaticRule;
 import View.Main;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -15,8 +18,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-//import org.hibernate.annotations.SourceType;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -46,6 +47,7 @@ public class Controller implements Initializable {
     public DynamicBoard boardObj;
     public DynamicRule rule;
     public RLEParser_Dynamic rleParser;
+
     /*public StaticBoard boardObj;
     public StaticRule rule;
     public RLEParser_Static rleParser;*/
@@ -153,7 +155,8 @@ public class Controller implements Initializable {
     // Counts the generations of the game and displays on top of Stage.
     public void genCounter() {
         int gen = counter;
-        Main.getStage().setTitle("Conways Game of Life (" + gen + ")");
+
+        Main.getStage().setTitle((rleParser == null ? "Game of Life" : rleParser.getPatternName()) + " (" + gen + ")");
     }
 
     // Resets the game to the first state and stops the animation.
@@ -178,7 +181,6 @@ public class Controller implements Initializable {
             boardObj.drawBoard();
             counter = 0;
             Main.getStage().setTitle(rleParser.getPatternName());
-
         }
     }
 
@@ -192,7 +194,7 @@ public class Controller implements Initializable {
     public void newBlankAction() {
         boardObj.clearBoard();
         counter = 0;
-        Main.getStage().setTitle("Conways Game of Life");
+        Main.getStage().setTitle("Game of Life");
     }
 
     // Draws cell on canvas when clicked.
