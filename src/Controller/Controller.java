@@ -17,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 //import org.hibernate.annotations.SourceType;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -164,9 +165,9 @@ public class Controller implements Initializable {
     }
 
     // Loads an RLE files and draws the file to the canvas.
-    public void loadFile() throws IOException {
+    public void loadFileFromDisk() throws IOException {
         rleParser = new RLEParser_Static();
-        rleParser.importBoard();
+        rleParser.importFromDisk();
         //List<List<Byte>> temp = rleParser.importAsList();
         byte[][] temp = rleParser.getBoard();
         if (temp != null) {
@@ -272,20 +273,24 @@ public class Controller implements Initializable {
 
     // Creates the "URL Import" Stage and shows the Stage.
     public void openURLMenu() {
-
-        try {
-            Pane root = FXMLLoader.load(getClass().getResource("/View/FXML/URLImport.fxml"));
-            urlStage = new Stage();
-
-            Scene scene = new Scene(root, 295,77);
-            urlStage.setScene(scene);
-            urlStage.setTitle("Open URL");
-            urlStage.setResizable(false);
-            urlStage.show();
-
-        } catch (Exception e) {
-            System.out.println("Cannot open url import menu");
+        URLDialog url = new URLDialog();
+        url.showStage();
+        String urlString;
+        if ((urlString = url.getURL()) != null){
+            System.out.println("It's not null");
+            RLEParser_Static rle = new RLEParser_Static();
+            try {
+                rle.importFromURL(urlString);
+                boardObj.clearBoard();
+                boardObj.addBoard(rle.getBoard());
+                boardObj.drawBoard();
+                counter = 0;
+            } catch (IOException e) {
+                FileHandling.alert("Unable to find or read from url");
+            }
         }
+
+
     }
 
 

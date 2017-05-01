@@ -7,7 +7,7 @@ import javafx.scene.control.Alert;
  */
 public class FileHandling {
 
-    protected static void alert (String title, String text) {
+    public static void alert (String title, String text) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(null);
@@ -15,7 +15,7 @@ public class FileHandling {
         alert.showAndWait();
     }
 
-    protected static void alert (String text) {
+    public static void alert (String text) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("An error occured");
         alert.setHeaderText(null);

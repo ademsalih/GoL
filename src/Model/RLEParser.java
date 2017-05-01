@@ -1,8 +1,11 @@
 package Model;
 
 
+import javafx.scene.control.TextField;
+
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -77,16 +80,43 @@ public abstract class RLEParser {
         return comment;
     }
 
-
     /**
-     * Main method of the class. Calls on all the other methods.
-     * Returns a 2D byte array after loading in and parsing a .rle file.
-     * @return - 2D byte array that is a representation of the rle pattern from the .rle file.
+     * Imports the board from Disk.
+     * Uses the importBoard method to create a object that holds the board
      * @throws IOException
      */
-    public void importBoard() {
+    public void importFromDisk() throws IOException {
+        BufferedReader br = ReadFile.readFileFromDisk();
+        importBoard(br);
+    }
+
+
+    /**
+     * Imports the board from a URL
+     * Uses the importBoard method to create a object that holds the board
+     *
+     * @param url - String that contains the url.
+     * @throws IOException
+     */
+    public void importFromURL(String url) throws IOException {
+        BufferedReader br = ReadFile.readFileFromUrl(url);
+
+        if (br != null) {
+            importBoard(br);
+        }
+        else throw new IOException("Unable to locate or read from URL");
+
+    }
+
+
+    /**
+     * Imports a RLE-board from a given sources.
+     * Subclasses defines what kind of container the board is held as.
+     *
+     * @param br - BufferedReader holding the RLE-File
+     */
+    private void importBoard(BufferedReader br) {
         try {
-            BufferedReader br = ReadFile.readFileFromDisk();
             if (br != null) {
                 try {
                     // Sets up the buffered reader to easily go back and forth while looking for metadata, xy and rules.
@@ -111,7 +141,7 @@ public abstract class RLEParser {
                     FileHandling.alert("An error occured while reading the .rle file");
 
                 }
-                
+
                 br.close();
             }
         } catch (IOException e) {
@@ -370,6 +400,8 @@ public abstract class RLEParser {
 
     //Updates the BitString with the number of 1s or 0s that is needed according to the latest reading from the RLE-string
     abstract void initiateBoardUpdate(int runCount, char cellType);
+
+    abstract Object getBoard();
 
 }
 

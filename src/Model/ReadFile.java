@@ -3,17 +3,21 @@ package Model;
 /**
  * Created by patrikkvarmehansen on 03/03/17.
  */
-import java.io.FileReader;
-import java.io.File;
-import java.io.BufferedReader;
-import java.io.IOException;
+import java.io.*;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import javafx.stage.FileChooser;
 
 public class ReadFile extends FileHandling{
 
     //TODO URL-file-opener
 
-    public void readFileFromUrl() throws IOException {
+    public static BufferedReader readFileFromUrl(String filePath) throws IOException {
+        URL url = new URL(filePath);
+        BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
+        return br;
 
     }
 
