@@ -36,10 +36,6 @@ public class ReadFile extends FileHandling{
         return null;
     }
 
-    public void readGameBoardFromDisk(File file) throws IOException {
-
-
-    }
 
     public static File openFile () {
         try {
