@@ -1,4 +1,4 @@
-package Model;
+package Model.Interfaces;
 
 /**
  * Created by Narmatha on 29.04.2017.
@@ -69,21 +69,21 @@ public abstract class Rule {
         return neighborsCounter;
     }
 
-    abstract boolean neighborOver(int y, int x);
+    public abstract boolean neighborOver(int y, int x);
 
-    abstract boolean neighborUnder(int y, int x);
+    public abstract boolean neighborUnder(int y, int x);
 
-    abstract boolean neighborRight(int y, int x);
+    public abstract boolean neighborRight(int y, int x);
 
-    abstract boolean neighborLeft(int y, int x);
+    public abstract boolean neighborLeft(int y, int x);
 
-    abstract boolean neighborTopLeft(int y, int x);
+    public abstract boolean neighborTopLeft(int y, int x);
 
-    abstract boolean neighborTopRight(int y, int x);
+    public abstract boolean neighborTopRight(int y, int x);
 
-    abstract boolean neighborBottomRight(int y, int x);
+    public abstract boolean neighborBottomRight(int y, int x);
 
-    abstract boolean neighborBottomLeft(int y, int x);
+    public abstract boolean neighborBottomLeft(int y, int x);
 
 
 }

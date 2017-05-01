@@ -1,10 +1,9 @@
-package Model;
+package Model.StaticFiles;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-
-import java.util.List;
+import Model.Interfaces.Board;
+import Model.Point;
 
 /**
  * This class draws the board and fills the cells depending on the cells' state

@@ -1,6 +1,6 @@
 package Test;
 
-import Model.StaticRule;
+import Model.StaticFiles.StaticRule;
 import org.junit.jupiter.api.Test;
 
 /**

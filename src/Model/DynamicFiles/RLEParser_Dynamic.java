@@ -1,7 +1,8 @@
-package Model;
+package Model.DynamicFiles;
 
 import java.util.ArrayList;
 import java.util.List;
+import Model.Interfaces.RLEParser;
 
 /**
  * Created by patrikkvarmehansen on 29/04/17.
@@ -13,7 +14,7 @@ public class RLEParser_Dynamic extends RLEParser{
     private List<Byte> line;
 
     @Override
-    void initiateBoardUpdate(int runCount, char cellType) {
+    public void initiateBoardUpdate(int runCount, char cellType) {
         if (cellType == 'b') {
             updateBoard(runCount, (byte)0);
         } else if (cellType == 'o') {
@@ -46,7 +47,7 @@ public class RLEParser_Dynamic extends RLEParser{
     }
 
     @Override
-    void updateBoard(int r, byte b) {
+    public void updateBoard(int r, byte b) {
         for (int i = 0; i < r; i++) {
             if (xPlacement != x) {
                 line.add(b);
@@ -64,7 +65,7 @@ public class RLEParser_Dynamic extends RLEParser{
     }
 
     @Override
-    void initBoard() {
+    public void initBoard() {
         arrLi = new ArrayList<>();
         line = new ArrayList<>();
     }

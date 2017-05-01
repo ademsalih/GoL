@@ -4,8 +4,8 @@ package Test;
  * Created by patrikkvarmehansen on 04/04/17.
  */
 
-import Model.RLEParser_Dynamic;
-import Model.RLEParser_Static;
+import Model.DynamicFiles.RLEParser_Dynamic;
+import Model.StaticFiles.RLEParser_Static;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;

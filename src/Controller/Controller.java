@@ -1,9 +1,11 @@
 package Controller;
 
 import Model.*;
-import Model.RLEParser_Static;
-import Model.StaticBoard;
-import Model.StaticRule;
+import Model.DynamicFiles.RLEParser_Dynamic;
+import Model.StaticFiles.RLEParser_Static;
+import Model.StaticFiles.StaticBoard;
+import Model.StaticFiles.StaticRule;
+import Model.DynamicFiles.DynamicBoard;
 import View.Main;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -24,6 +26,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import Model.DynamicFiles.DynamicRule;
 
 /**
  * Controller class that handles user inputs i.e. button click and slider

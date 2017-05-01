@@ -1,5 +1,7 @@
 package Model;
 
+import Model.StaticFiles.StaticRule;
+
 /**
  *
  * A class that parses the current board into a string that is passed to the SaveFile class for writing to file.
