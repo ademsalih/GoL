@@ -58,8 +58,12 @@ public class Controller implements Initializable {
     public static Controller instance;
     public Stage stage;
     public Stage gifStage;
+
     public int counter;
+    public String titleName;
+
     public Animate animate;
+    public URLDialog url;
 
     public Stage urlStage;
 
@@ -67,6 +71,7 @@ public class Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         instance = this;
+        titleName = "Game of Life";
 
         plist = new ArrayList<Point>();
 
@@ -148,15 +153,13 @@ public class Controller implements Initializable {
         rule = new DynamicRule(boardObj.board);
         boardObj.setBoard(rule.conwaysBoardRules());
         boardObj.drawBoard();
-        counter += 1;
-        genCounter();
+        counter++;
+        Main.getStage().setTitle(titleName + " (" + counter + ")");
     }
 
-    // Counts the generations of the game and displays on top of Stage.
-    public void genCounter() {
-        int gen = counter;
-
-        Main.getStage().setTitle((rleParser == null ? "Game of Life" : rleParser.getPatternName()) + " (" + gen + ")");
+    public void updateTitle(String newName) {
+        Main.getStage().setTitle(newName);
+        titleName = newName;
     }
 
     // Resets the game to the first state and stops the animation.
@@ -165,6 +168,7 @@ public class Controller implements Initializable {
         boardObj.drawBoard();
         counter = 0;
         animate.stopAnimation();
+        updateTitle(titleName);
     }
 
     // Loads an RLE files and draws the file to the canvas.
@@ -180,7 +184,7 @@ public class Controller implements Initializable {
             boardObj.addBoard(temp);
             boardObj.drawBoard();
             counter = 0;
-            Main.getStage().setTitle(rleParser.getPatternName());
+            updateTitle(rleParser.getPatternName());
         }
     }
 
@@ -194,7 +198,7 @@ public class Controller implements Initializable {
     public void newBlankAction() {
         boardObj.clearBoard();
         counter = 0;
-        Main.getStage().setTitle("Game of Life");
+        updateTitle("Game of Life");
     }
 
     // Draws cell on canvas when clicked.
@@ -276,7 +280,7 @@ public class Controller implements Initializable {
 
     // Creates the "URL Import" Stage and shows the Stage.
     public void openURLMenu() {
-        URLDialog url = new URLDialog();
+        url = new URLDialog();
         url.showStage();
         String urlString;
         if ((urlString = url.getURL()) != null){
@@ -289,6 +293,7 @@ public class Controller implements Initializable {
                 boardObj.addBoard(rle.getBoard());
                 boardObj.drawBoard();
                 counter = 0;
+                updateTitle("Pattern from URL");
             } catch (IOException e) {
                 FileHandling.alert("Unable to find or read from url");
             }
