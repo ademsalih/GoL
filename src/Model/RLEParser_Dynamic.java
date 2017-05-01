@@ -24,25 +24,24 @@ public class RLEParser_Dynamic extends RLEParser{
                     if (xPlacement != 0) {
                         updateBoard((x - xPlacement), (byte)0);
                     }
-                    if (yPlacement == 4) {
-                        System.out.println("");
-                    }
                     arrLi.add(line);
-                    line.clear();
-
+                    line = new ArrayList<>();
                 } else {
                     updateBoard(x, (byte)0);
                     arrLi.add(line);
-                    line.clear();
+                    line = new ArrayList<>();
                 }
             }
-            //System.out.println(arrLi.toString());
 
         }
 
         // Makes sure that the end of the last line is filled with 0s according to width.
         else if (cellType == '!') {
-            updateBoard(x - xPlacement, (byte)0);
+            if (xPlacement != 0) {
+                updateBoard(x - xPlacement, (byte)0);
+            }
+            arrLi.add(line);
+            line = new ArrayList<>();
         }
     }
 
@@ -54,9 +53,6 @@ public class RLEParser_Dynamic extends RLEParser{
             }
             if ((xPlacement + 1) == x) {
                 xPlacement = -1;
-                System.out.print(count);
-                System.out.print(line.toString());
-                System.out.println("\n");
                 count++;
                 if ((yPlacement + 1) != y) {
                     yPlacement++;

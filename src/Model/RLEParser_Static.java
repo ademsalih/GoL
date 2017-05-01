@@ -37,7 +37,7 @@ public class RLEParser_Static extends RLEParser {
         }
 
         // Makes sure that the end of the last line is filled with 0s according to width.
-        else if (cellType == '!') {
+        else if (cellType == '!' && xPlacement != 0) {
             updateBoard(x - xPlacement, (byte)0);
         }
     }
