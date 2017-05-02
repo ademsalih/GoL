@@ -6,13 +6,11 @@ import Model.Abstract.Rule;
 
 public class DynamicRule extends Rule {
 
-    ///////////////////////////////
-    //public byte[][] boardOfActiveCells;
-    ///////////////////////////////
 
     ////INSTANCE VARIABLES
     public List<List<Byte>> currentBoard;
     public List<List<Byte>> conwaysBoard;
+    public List<List<Byte>> boardOfActiveCells;
 
     ////CONSTRUCTOR
     // MÅ DEKLARERE ALLE BOARDDENE MED NULL HER!
@@ -170,14 +168,21 @@ public class DynamicRule extends Rule {
     ////////////////////////////////////////////////////////////////
 
     // Calculates the cells that are active. Active cell is either alive itself or has at least one neighbor.
-    /*public void calculateBoardOfActiveCells() {
-        boardOfActiveCells = new byte[currentBoard.length][currentBoard[0].length];
+    public void calculateBoardOfActiveCells() {
+        boardOfActiveCells = new ArrayList<List<Byte>>();
+        for (int i = 0; i < currentBoard.size() ; i++) {
+            List<Byte> row = new ArrayList<Byte>();
+            for (int j = 0; j < currentBoard.get(0).size(); j++) {
+                row.add((byte) 0);
+            }
+            this.boardOfActiveCells.add(row);
+        }
 
-        for (int y = 0; y < boardOfActiveCells.length; y++) {
-            for (int x = 0; x < boardOfActiveCells[0].length; x++) {
+        for (int y = 0; y < boardOfActiveCells.size(); y++) {
+            for (int x = 0; x < boardOfActiveCells.get(0).size(); x++) {
 
-                if (currentBoard[y][x] == 1) {
-                    boardOfActiveCells[y][x] = 1;
+                if (currentBoard.get(y).get(x) == 1) {
+                    boardOfActiveCells.get(y).set(x, (byte) 1);
                     markTopLeft(y,x);
                     markTop(y,x);
                     markTopRight(y,x);
@@ -193,61 +198,61 @@ public class DynamicRule extends Rule {
 
     public void markTopLeft(int y, int x) {
 
-        if ((y - 1 != - 1) && (x - 1 != - 1) && currentBoard[y-1][x-1] == 0) {
-            boardOfActiveCells[y-1][x-1] = 1;
+        if ((y - 1 != - 1) && (x - 1 != - 1) && currentBoard.get(y-1).get(x-1) == 0) {
+            boardOfActiveCells.get(y-1).set(x-1,(byte) 1);
         }
 
     }
 
     public void markTop(int y, int x) {
 
-        if (y - 1 != - 1 && currentBoard[y-1][x] == 0) {
-            boardOfActiveCells[y-1][x] = 1;
+        if (y - 1 != - 1 && currentBoard.get(y-1).get(x) == 0) {
+            boardOfActiveCells.get(y-1).set(x,(byte) 1);
         }
     }
 
     public void markTopRight(int y, int x) {
 
-        if ((y - 1 != - 1) && (x + 1 < currentBoard[0].length) && (currentBoard[y-1][x+1] == 0) ) {
-            boardOfActiveCells[y-1][x+1] = 1;
+        if ((y - 1 != - 1) && (x + 1 < currentBoard.get(0).size()) && (currentBoard.get(y-1).get(x+1) == 0) ) {
+            boardOfActiveCells.get(y-1).set(x+1, (byte) 1);
         }
     }
 
     public void markLeft(int y, int x) {
 
-        if (x - 1 != - 1 && (currentBoard[y][x-1] == 0)) {
-            boardOfActiveCells[y][x-1] = 1;
+        if (x - 1 != - 1 && (currentBoard.get(y).get(x-1) == 0)) {
+            boardOfActiveCells.get(y).set(x-1,(byte) 1);
         }
     }
 
     public void markRight(int y, int x) {
 
-        if (x + 1 < currentBoard[0].length && currentBoard[y][x+1] == 0) {
-            boardOfActiveCells[y][x+1] = 1;
+        if (x + 1 < currentBoard.get(0).size() && currentBoard.get(y).get(x+1) == 0) {
+            boardOfActiveCells.get(y).set(x+1, (byte) 1);
         }
     }
 
     public void markBottomLeft(int y, int x) {
 
-        if ((y + 1 < currentBoard.length) && (x - 1 != - 1) && (currentBoard[y+1][x-1] == 0) ) {
-            boardOfActiveCells[y+1][x-1] = 1;
+        if ((y + 1 < currentBoard.size()) && (x - 1 != - 1) && (currentBoard.get(y+1).get(x-1) == 0) ) {
+            boardOfActiveCells.get(y+1).set(x-1, (byte) 1);
         }
 
     }
 
     public void markBottom(int y, int x) {
 
-        if (y + 1 < currentBoard.length && currentBoard[y+1][x] == 0) {
-            boardOfActiveCells[y+1][x] = 1;
+        if (y + 1 < currentBoard.size() && currentBoard.get(y+1).get(x) == 0) {
+            boardOfActiveCells.get(y+1).set(x,(byte) 1);
         }
     }
 
     public void markBottomRight(int y, int x) {
 
-        if ((y + 1 < currentBoard.length) && (x + 1 < currentBoard[0].length) && (currentBoard[y+1][x+1] == 0) ) {
-            boardOfActiveCells[y+1][x+1] = 1;
+        if ((y + 1 < currentBoard.size()) && (x + 1 < currentBoard.get(0).size()) && (currentBoard.get(y+1).get(x+1) == 0) ) {
+            boardOfActiveCells.get(y+1).set(x+1, (byte) 1);
         }
-    }*/
+    }
     ////////////////////////////////////////////////////////////////
 
 }

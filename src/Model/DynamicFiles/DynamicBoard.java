@@ -1,5 +1,6 @@
 package Model.DynamicFiles;
 
+import Model.Abstract.Board;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import java.util.ArrayList;
@@ -135,7 +136,7 @@ public class DynamicBoard extends Board {
         int colx = (int)(x/cellSize);
         int rowy = (int)(y/cellSize);
 
-        System.out.println(rowy + "   " + colx);
+        //System.out.println(rowy + "   " + colx);
 
         if ((colx >= columcount) || (rowy >= rowcount)){
             setCellState(rowy, colx, (byte)1);}

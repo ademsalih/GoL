@@ -152,7 +152,7 @@ public class Controller implements Initializable {
     public void nextGeneration() {
         //rule = new StaticRule(boardObj.board);
         rule = new DynamicRule(boardObj.board);
-        //rule.calculateBoardOfActiveCells();
+        rule.calculateBoardOfActiveCells();
         boardObj.setBoard(rule.conwaysBoardRules());
         boardObj.drawBoard();
         counter++;
