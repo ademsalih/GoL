@@ -1,6 +1,6 @@
 package Test;
 
-import Model.DynamicBoard;
+import Model.DynamicFiles.DynamicBoard;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;

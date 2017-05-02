@@ -1,4 +1,4 @@
-package Model;
+package Model.StaticFiles;
 
 
 import java.io.BufferedReader;
@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import Model.Interfaces.RLEParser;
 
 /**
  * A class that parses a .rle file and returns it as a 2D byte array through the importBoard method.

@@ -1,6 +1,11 @@
 package Controller;
 
 import Model.*;
+import Model.DynamicFiles.RLEParser_Dynamic;
+import Model.StaticFiles.RLEParser_Static;
+import Model.StaticFiles.StaticBoard;
+import Model.StaticFiles.StaticRule;
+import Model.DynamicFiles.DynamicBoard;
 import View.Main;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -15,14 +20,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-//import org.hibernate.annotations.SourceType;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import Model.DynamicFiles.DynamicRule;
 
 /**
  * Controller class that handles user inputs i.e. button click and slider
@@ -46,6 +50,7 @@ public class Controller implements Initializable {
     public DynamicBoard boardObj;
     public DynamicRule rule;
     public RLEParser_Dynamic rleParser;
+
     /*public StaticBoard boardObj;
     public StaticRule rule;
     public RLEParser_Static rleParser;*/
@@ -56,8 +61,12 @@ public class Controller implements Initializable {
     public static Controller instance;
     public Stage stage;
     public Stage gifStage;
+
     public int counter;
+    public String titleName;
+
     public Animate animate;
+    public URLDialog url;
 
     public Stage urlStage;
 
@@ -65,6 +74,7 @@ public class Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         instance = this;
+        titleName = "Game of Life";
 
         plist = new ArrayList<Point>();
 
@@ -146,14 +156,13 @@ public class Controller implements Initializable {
         rule = new DynamicRule(boardObj.board);
         boardObj.setBoard(rule.conwaysBoardRules());
         boardObj.drawBoard();
-        counter += 1;
-        genCounter();
+        counter++;
+        Main.getStage().setTitle(titleName + " (" + counter + ")");
     }
 
-    // Counts the generations of the game and displays on top of Stage.
-    public void genCounter() {
-        int gen = counter;
-        Main.getStage().setTitle("Conways Game of Life (" + gen + ")");
+    public void updateTitle(String newName) {
+        Main.getStage().setTitle(newName);
+        titleName = newName;
     }
 
     // Resets the game to the first state and stops the animation.
@@ -162,6 +171,7 @@ public class Controller implements Initializable {
         boardObj.drawBoard();
         counter = 0;
         animate.stopAnimation();
+        updateTitle(titleName);
     }
 
     // Loads an RLE files and draws the file to the canvas.
@@ -177,8 +187,7 @@ public class Controller implements Initializable {
             boardObj.addBoard(temp);
             boardObj.drawBoard();
             counter = 0;
-            Main.getStage().setTitle(rleParser.getPatternName());
-
+            updateTitle(rleParser.getPatternName());
         }
     }
 
@@ -192,7 +201,7 @@ public class Controller implements Initializable {
     public void newBlankAction() {
         boardObj.clearBoard();
         counter = 0;
-        Main.getStage().setTitle("Conways Game of Life");
+        updateTitle("Game of Life");
     }
 
     // Draws cell on canvas when clicked.
@@ -274,7 +283,7 @@ public class Controller implements Initializable {
 
     // Creates the "URL Import" Stage and shows the Stage.
     public void openURLMenu() {
-        URLDialog url = new URLDialog();
+        url = new URLDialog();
         url.showStage();
         String urlString;
         if ((urlString = url.getURL()) != null){
@@ -287,6 +296,7 @@ public class Controller implements Initializable {
                 boardObj.addBoard(rle.getBoard());
                 boardObj.drawBoard();
                 counter = 0;
+                updateTitle("Pattern from URL");
             } catch (IOException e) {
                 FileHandling.alert("Unable to find or read from url");
             }

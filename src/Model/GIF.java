@@ -1,6 +1,8 @@
 package Model;
 
 
+import Model.StaticFiles.StaticBoard;
+import Model.StaticFiles.StaticRule;
 import javafx.scene.control.Alert;
 import lieng.GIFWriter;
 import java.awt.Color;

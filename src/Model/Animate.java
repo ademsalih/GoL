@@ -24,7 +24,6 @@ public class Animate {
         this.animationRate = 1;
         this.generations = Animation.INDEFINITE;
         this.timeline = new Timeline(new KeyFrame(Duration.millis(speed), ae -> Controller.instance.nextGeneration() ));
-
         this.status = false;
         timeline.setCycleCount(generations);
     }

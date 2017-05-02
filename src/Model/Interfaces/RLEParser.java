@@ -1,6 +1,8 @@
-package Model;
+package Model.Interfaces;
 
 
+import Model.FileHandling;
+import Model.PatternFormatException;
 import javafx.scene.control.TextField;
 
 import java.io.BufferedReader;
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import Model.ReadFile;
 
 /**
  * A class that parses a .rle file and returns it as a 2D byte array through the importBoard method.
@@ -391,17 +394,17 @@ public abstract class RLEParser {
      * @param r - int that holds the runcount. This is the number of placements the byte should have.
      * @param b - byte that holds the value of the cells that is placed on the board.
      */
-    abstract void updateBoard(int r, byte b);
+    public abstract void updateBoard(int r, byte b);
 
     /**
      * Initialisation of the board.
      */
-    abstract void initBoard();
+    public abstract void initBoard();
 
     //Updates the BitString with the number of 1s or 0s that is needed according to the latest reading from the RLE-string
-    abstract void initiateBoardUpdate(int runCount, char cellType);
+    public abstract void initiateBoardUpdate(int runCount, char cellType);
 
-    abstract Object getBoard();
+    public abstract Object getBoard();
 
 }
 

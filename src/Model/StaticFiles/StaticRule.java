@@ -1,6 +1,6 @@
-package Model;
+package Model.StaticFiles;
 
-import java.util.Arrays;
+import Model.Interfaces.Rule;
 
 /* This class handles the rules for the application. A board object is
  * imported, manipulated and returned to the calling method.
@@ -9,13 +9,12 @@ import java.util.Arrays;
 
 public class StaticRule extends Rule {
 
-    ////INSTANCE VARIABLES
     public byte[][] currentBoard;
     public byte[][] conwaysBoard;
     private static int[] survivor = {2, 3};
     private static int[] born = {3};
 
-    // Class constructor
+
     public StaticRule(byte[][] currentBoard) {
         this.currentBoard = currentBoard;
     }
@@ -130,8 +129,7 @@ public class StaticRule extends Rule {
     }
 
 
-    // Methods that checks whether a cell has a neighbor or not
-    boolean neighborOver(int y, int x) {
+    public boolean neighborOver(int y, int x) {
 
         if (y - 1 != - 1) {
 
@@ -144,7 +142,7 @@ public class StaticRule extends Rule {
 
     }
 
-    boolean neighborUnder(int y, int x) {
+    public boolean neighborUnder(int y, int x) {
 
         if (y + 1 < currentBoard.length) {
 
@@ -156,7 +154,7 @@ public class StaticRule extends Rule {
         return false;
     }
 
-    boolean neighborLeft(int y, int x) {
+    public boolean neighborLeft(int y, int x) {
 
         if (x - 1 != - 1) {
 
@@ -168,7 +166,7 @@ public class StaticRule extends Rule {
         return false;
     }
 
-    boolean neighborRight(int y, int x) {
+    public boolean neighborRight(int y, int x) {
 
         if (x + 1 < currentBoard[0].length) {
 
@@ -180,7 +178,7 @@ public class StaticRule extends Rule {
         return false;
     }
 
-    boolean neighborTopLeft(int y, int x) {
+    public boolean neighborTopLeft(int y, int x) {
 
         if ((y - 1 != - 1) && (x - 1 != - 1)) {
 
@@ -192,7 +190,8 @@ public class StaticRule extends Rule {
         return false;
     }
 
-    boolean neighborTopRight(int y, int x) {
+
+    public boolean neighborTopRight(int y, int x) {
 
         if ((y - 1 != - 1) && (x + 1 < currentBoard[0].length)) {
 
@@ -204,7 +203,7 @@ public class StaticRule extends Rule {
         return false;
     }
 
-    boolean neighborBottomLeft(int y, int x) {
+    public boolean neighborBottomLeft(int y, int x) {
 
         if ((y + 1 < currentBoard.length) && (x - 1 != - 1)) {
 
@@ -216,7 +215,7 @@ public class StaticRule extends Rule {
         return false;
     }
 
-    boolean neighborBottomRight(int y, int x) {
+    public boolean neighborBottomRight(int y, int x) {
 
         if ((y + 1 < currentBoard.length) && (x + 1 < currentBoard[0].length)) {
 

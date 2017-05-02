@@ -23,7 +23,7 @@ public class Main extends Application {
 
         Scene scene = new Scene(root, 700, 569);
         scene.getStylesheets().add("View/CSS/stylesheet.css");
-        stage.setTitle("Conways Game of Life");
+        stage.setTitle("Game of Life");
         stage.setScene(scene);
         stage.setResizable(true);
         stage.show();
