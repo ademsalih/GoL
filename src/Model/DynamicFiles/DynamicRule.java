@@ -11,14 +11,13 @@ public class DynamicRule extends Rule {
     public List<List<Byte>> conwaysBoard;
     public List<List<Byte>> boardOfActiveCells;
 
-    private int rowBorder;
+    private int rowCount;
     private int colCount;
-    private int margin;
 
     ////CONSTRUCTOR
     // MÅ DEKLARERE ALLE BOARDDENE MED NULL HER!
     public DynamicRule () {
-        this.margin = 10;
+        this.currentBoard = new ArrayList<>();
     }
 
 
@@ -32,8 +31,8 @@ public class DynamicRule extends Rule {
 
     public void setCurrentBoard(List<List<Byte>> board) {
         this.currentBoard = board;
-        this.rowBorder = currentBoard.size() - margin;
-        this.colCount = currentBoard.get(0).size() - margin;
+        this.rowCount = currentBoard.size() - 1;
+        this.colCount = currentBoard.get(0).size() - 1;
     }
 
     //Retunerer next generation verdier
@@ -65,13 +64,13 @@ public class DynamicRule extends Rule {
         for (int y = 0; y < conwaysBoard.size(); y++) {
             for (int x = 0; x < conwaysBoard.get(0).size(); x++) {
 
-                if (boardOfActiveCells.get(y).get(x) == 1) {
-                    int cellState = currentBoard.get(y).get(x);
-                    conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
-                }
+                int cellState = currentBoard.get(y).get(x);
+                conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
 
             }
+
         }
+
         return conwaysBoard;
     }
 
@@ -178,7 +177,6 @@ public class DynamicRule extends Rule {
     // Calculates the cells that are active. Active cell is either alive itself or has at least one neighbor.
     public void calculateBoardOfActiveCells() {
         boardOfActiveCells = new ArrayList<List<Byte>>();
-
         for (int i = 0; i < currentBoard.size() ; i++) {
             List<Byte> row = new ArrayList<Byte>();
             for (int j = 0; j < currentBoard.get(0).size(); j++) {
@@ -199,7 +197,7 @@ public class DynamicRule extends Rule {
                     markRight(y,x);
                     markBottomLeft(y,x);
                     markBottom(y,x);
-                    markBottomRight(y,x);
+                    markBottomLeft(y,x);
                 }
             }
         }
@@ -285,16 +283,18 @@ public class DynamicRule extends Rule {
     @Override
     public void expandBoardIfNeeded(int y, int x) {
 
+        if (y == rowCount && x == rowCount) {
+            if ((y == (rowCount)) && (x != (colCount))) {
+                addRows(1);
+            }
+            else if ((x == (colCount)) && (y != (rowCount))) {
+                addCols(1);
+            }
+            else if ((x == (colCount)) && (y == (rowCount))) {
+                addCols(1);
+                addRows(1);
+            }
+        }
 
-        if ((y >= (rowBorder - 1)) && (x <= (colCount - 1))) {
-            addRows(margin);
-        }
-        else if ((x >= (colCount - 1)) && (y <= (rowBorder - 1))) {
-            addCols(margin);
-        }
-        else if ((x >= (colCount - 1)) && (y <= (rowBorder - 1))) {
-            addCols(margin);
-            addRows(margin);
-        }
     }
 }

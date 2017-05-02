@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import Model.DynamicFiles.DynamicRule;
-import org.hibernate.annotations.SourceType;
 
 /**
  * Controller class that handles user inputs i.e. button click and slider
@@ -87,6 +86,8 @@ public class Controller implements Initializable {
         rule = new DynamicRule();
 
         animate.setSpeed(10);
+
+
     }
 
     // Sets the ID of the objects in this class for CSS styling.
@@ -153,21 +154,18 @@ public class Controller implements Initializable {
 
     // Uses the StaticRule class to iterate to next generation and draws the game.
     public void nextGeneration() {
-
-        long a = System.currentTimeMillis();
-
-        //rule = new StaticRule(boardObj.board);
-
-
-        rule.setCurrentBoard(boardObj.board);
+        rule.setCurrentBoard(boardObj.getBoard());
         rule.calculateBoardOfActiveCells();
-        boardObj.setBoard(rule.conwaysBoardRules());
+
+        double time = System.currentTimeMillis();
+
+        List<List<Byte>> tempArr = rule.conwaysBoardRules();
+
+        double timeTaken = System.currentTimeMillis() - time;
+        System.out.println("conwaysBoardRules: " + timeTaken);
+
+        boardObj.setBoard(tempArr);
         boardObj.drawBoard();
-
-        long b = System.currentTimeMillis();
-
-        System.out.println(b-a);
-
         counter++;
         Main.getStage().setTitle(titleName + " (" + counter + ")");
     }
@@ -212,7 +210,6 @@ public class Controller implements Initializable {
     // Creates a new black board.
     public void newBlankAction() {
         boardObj.clearBoard();
-        boardObj.initialBoard = boardObj.board;
         counter = 0;
         updateTitle("Game of Life");
     }
@@ -222,14 +219,14 @@ public class Controller implements Initializable {
         Point p = new Point();
         p.x = event.getX();
         p.y = event.getY();
-        boardObj.mouseclickedordraggedonBoard(p.x, p.y);
+        boardObj.mouseClickedOrDraggedOnBoard(p.x, p.y);
     }
 
     public void mouseDragged(MouseEvent event) {
         Point p = new Point();
         p.x = event.getX();
         p.y = event.getY();
-        boardObj.mouseclickedordraggedonBoard(p.x, p.y);
+        boardObj.mouseClickedOrDraggedOnBoard(p.x, p.y);
     }
 
     // Exits the application.

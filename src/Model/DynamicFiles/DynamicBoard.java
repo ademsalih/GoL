@@ -31,22 +31,8 @@ public class DynamicBoard extends Board {
         this.rowcount = y;
         this.columcount = x;
         this.margin  = 10;
-
-        for (int i = 0; i < rowcount; i++) {
-            List<Byte> row = new ArrayList<Byte>();
-            for (int j = 0; j < columcount; j++) {
-                row.add((byte) 0);
-            }
-            this.board.add(row);
-        }
-
-        for (int i = 0; i < rowcount; i++) {
-            List<Byte> row = new ArrayList<Byte>();
-            for (int j = 0; j < columcount; j++) {
-                row.add((byte) 0);
-            }
-            this.initialBoard.add(row);
-        }
+        this.board = initBoard(x, y);
+        this.initialBoard = initBoard(x, y);
     }
 
     public void addBoard(List<List<Byte>> newBoard) {
@@ -81,6 +67,18 @@ public class DynamicBoard extends Board {
 
     }
 
+    private List<List<Byte>> initBoard(int x, int y) {
+        List<List<Byte>> tempBoard = new ArrayList<>();
+        for (int row = 0; row < x; row++) {
+            List<Byte> rowList = new ArrayList<>();
+            for (int col = 0; col < y; col++) {
+                rowList.add((byte) 0);
+            }
+            tempBoard.add(rowList);
+        }
+        return tempBoard;
+    }
+
     private void addCols(int numberOfCols) {
         for (int i = 0; i < numberOfCols; i++) {
             for (List<Byte> byteLists : board) {
@@ -99,33 +97,17 @@ public class DynamicBoard extends Board {
         }
     }
 
-    private void expandBoardIfNeeded(int rowy, int colx) {
-        int x = board.get(0).size();
-        int y = board.size();
+    private void expandBoard(int rowy, int colx, int y, int x) {
 
-        if ((x - colx) < margin && (y - rowy) > margin) {
-            addCols(margin);
-        }
-
-        else if ((x - colx) > margin && (y - rowy) < margin) {
-            System.out.println("ExpandY");
-            addRows(margin);
-        }
-
-        else if ((x - colx) < margin && (y - rowy) < margin) {
-            addCols(margin);
-            addRows(margin);
-        }
-
-        if (x < colx && y > rowy) {
+        if (x < (colx + margin) && y > (rowy + margin)) {
             addCols(colx - x + margin);
         }
 
-        else if (x > colx && y < rowy) {
+        else if (x > (colx + margin) && y < (rowy + margin)) {
             addRows(rowy - y + margin);
         }
 
-        else if (x < colx && y < rowy) {
+        else if (x < (colx + margin) && y < (rowy + margin)) {
             addCols(colx - x + margin);
             addRows(rowy - y + margin);
         }
@@ -136,8 +118,6 @@ public class DynamicBoard extends Board {
         //automatisk utvides slik at brettet inneholder cellen (x,y).
 
         // Checks if cell is outside the margin of the board. Updates the board if needed.
-        expandBoardIfNeeded(rowy, colx);
-
         this.board.get(rowy).set(colx, value);
     }
 
@@ -148,22 +128,25 @@ public class DynamicBoard extends Board {
 
 
 
-    public void setBoard(List<List<Byte>> board) {this.board = board;}
+    public void setBoard(List<List<Byte>> board) {
+        this.board = board;
+
+    }
 
     public List<List<Byte>> getBoard() {
         return board;
     }
 
     // Draw/undraw a cell depending on its state when we click on the board
-    public void mouseclickedordraggedonBoard(double x, double y){
-
-        int colx = (int)(x/cellSize);
-        int rowy = (int)(y/cellSize);
-        //System.out.println(rowy);
-        //System.out.println(colx);
-        if ((colx >= columcount) || (rowy >= rowcount)){
-            setCellState(rowy, colx, (byte)1);}
-        else if (this.board.get(rowy).get(colx) == 0){
+    public void mouseClickedOrDraggedOnBoard(double x, double y){
+        rowcount = board.size();
+        columcount = board.get(0).size();
+        int colx = (int) ((x/cellSize));
+        int rowy = (int) ((y/cellSize));
+        if ((colx + margin) > columcount || (rowy + margin)> rowcount) {
+            expandBoard(rowy, colx, rowcount, columcount);
+        }
+        if (this.board.get(rowy).get(colx) == 0){
             setCellState(rowy, colx, (byte)1);
         }else if(this.board.get(rowy).get(colx) == 1) {
             setCellState(rowy, colx, (byte) 0);
