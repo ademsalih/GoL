@@ -166,6 +166,7 @@ public class Controller implements Initializable {
 
         boardObj.setBoard(tempArr);
         boardObj.drawBoard();
+        
         counter++;
         Main.getStage().setTitle(titleName + " (" + counter + ")");
     }

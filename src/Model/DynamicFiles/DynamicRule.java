@@ -64,8 +64,11 @@ public class DynamicRule extends Rule {
         for (int y = 0; y < conwaysBoard.size(); y++) {
             for (int x = 0; x < conwaysBoard.get(0).size(); x++) {
 
-                int cellState = currentBoard.get(y).get(x);
-                conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
+                if (boardOfActiveCells.get(y).get(x) == 1) {
+                    int cellState = currentBoard.get(y).get(x);
+                    conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
+                }
+
 
             }
 
@@ -197,7 +200,7 @@ public class DynamicRule extends Rule {
                     markRight(y,x);
                     markBottomLeft(y,x);
                     markBottom(y,x);
-                    markBottomLeft(y,x);
+                    markBottomRight(y,x);
                 }
             }
         }
