@@ -2,6 +2,8 @@ package Controller;
 
 import Model.*;
 import Model.DynamicFiles.DynamicRLEParser;
+import Model.StaticFiles.StaticBoard;
+import Model.StaticFiles.StaticRLEParser;
 import Model.StaticFiles.StaticRule;
 import Model.DynamicFiles.DynamicBoard;
 import View.Main;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import Model.DynamicFiles.DynamicRule;
+import org.hibernate.annotations.SourceType;
 
 /**
  * Controller class that handles user inputs i.e. button click and slider
@@ -49,7 +52,8 @@ public class Controller implements Initializable {
     public DynamicRule rule;
     public DynamicRLEParser rleParser;
 
-    /*public StaticBoard boardObj;
+    /*
+    public StaticBoard boardObj;
     public StaticRule rule;
     public StaticRLEParser rleParser;*/
 
@@ -151,11 +155,19 @@ public class Controller implements Initializable {
 
     // Uses the StaticRule class to iterate to next generation and draws the game.
     public void nextGeneration() {
+
+        long a = System.currentTimeMillis();
+
         //rule = new StaticRule(boardObj.board);
-        rule.calculateBoardOfActiveCells();
+        //rule.calculateBoardOfActiveCells();
         rule.setCurrentBoard(boardObj.board);
         boardObj.setBoard(rule.conwaysBoardRules());
         boardObj.drawBoard();
+
+        long b = System.currentTimeMillis();
+
+        System.out.println(b-a);
+
         counter++;
         Main.getStage().setTitle(titleName + " (" + counter + ")");
     }
@@ -167,7 +179,7 @@ public class Controller implements Initializable {
 
     // Resets the game to the first state and stops the animation.
     public void reset() {
-        //boardObj.setBoard(boardObj.initialBoard);
+        boardObj.setBoard(boardObj.initialBoard);
         boardObj.drawBoard();
         counter = 0;
         animate.stopAnimation();

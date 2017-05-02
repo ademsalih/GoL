@@ -6,11 +6,12 @@ import javafx.scene.paint.Color;
 /**
  * This class draws rectangles and fills them with color on a point.
  */
+
 public class Point {
     public double x,y;
 
-    public int xOffset;
-    public int yOffset;
+    public double xOffset;
+    public double yOffset;
 
     public void setXOffset(int x) {
         this.xOffset = x;

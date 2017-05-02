@@ -13,6 +13,7 @@ import Model.Point;
 public class DynamicBoard extends Board {
 
     public List<List<Byte>> board = new ArrayList<List<Byte>>();
+    public List<List<Byte>> initialBoard = new ArrayList<List<Byte>>();
 
     double canvasWidth;
     double canvasHeight;
@@ -37,6 +38,14 @@ public class DynamicBoard extends Board {
                 row.add((byte) 0);
             }
             this.board.add(row);
+        }
+
+        for (int i = 0; i < rowcount; i++) {
+            List<Byte> row = new ArrayList<Byte>();
+            for (int j = 0; j < columcount; j++) {
+                row.add((byte) 0);
+            }
+            this.initialBoard.add(row);
         }
     }
 
@@ -68,7 +77,7 @@ public class DynamicBoard extends Board {
         }*/
 
         this.board = newBoard;
-
+        this.initialBoard = newBoard;
 
     }
 

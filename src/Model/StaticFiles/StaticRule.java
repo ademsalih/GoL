@@ -14,6 +14,8 @@ public class StaticRule extends Rule {
     private static int[] survivor = {2, 3};
     private static int[] born = {3};
 
+    public byte[][] boardOfActiveCells;
+
 
     public StaticRule(byte[][] currentBoard) {
         this.currentBoard = currentBoard;
@@ -86,8 +88,11 @@ public class StaticRule extends Rule {
 
             for (int x = 0; x < conwaysBoard[0].length; x++) {
 
-                int cellState = currentBoard[y][x];
-                conwaysBoard[y][x] = checkIfOnOrOff(countNeighbor(y, x), cellState);
+                if (boardOfActiveCells[y][x] == 1) {
+                    int cellState = currentBoard[y][x];
+                    conwaysBoard[y][x] = checkIfOnOrOff(countNeighbor(y, x), cellState);
+                }
+
             }
         }
         return conwaysBoard;
@@ -240,6 +245,85 @@ public class StaticRule extends Rule {
         }
 
         return false;
+    }
+
+    public void calculateBoardOfActiveCells() {
+        boardOfActiveCells = new byte[currentBoard.length][currentBoard[0].length];
+
+        for (int y = 0; y < boardOfActiveCells.length; y++) {
+            for (int x = 0; x < boardOfActiveCells[0].length; x++) {
+
+                if (currentBoard[y][x] == 1) {
+                    boardOfActiveCells[y][x] = 1;
+                    markTopLeft(y,x);
+                    markTop(y,x);
+                    markTopRight(y,x);
+                    markLeft(y,x);
+                    markRight(y,x);
+                    markBottomLeft(y,x);
+                    markBottom(y,x);
+                    markBottomRight(y,x);
+                }
+            }
+        }
+    }
+
+    public void markTopLeft(int y, int x) {
+
+        if ((y - 1 != - 1) && (x - 1 != - 1) && currentBoard[y-1][x-1] == 0) {
+            boardOfActiveCells[y-1][x-1] = 1;
+        }
+
+    }
+
+    public void markTop(int y, int x) {
+
+        if (y - 1 != - 1 && currentBoard[y-1][x] == 0) {
+            boardOfActiveCells[y-1][x] = 1;
+        }
+    }
+
+    public void markTopRight(int y, int x) {
+
+        if ((y - 1 != - 1) && (x + 1 < currentBoard[0].length) && (currentBoard[y-1][x+1] == 0) ) {
+            boardOfActiveCells[y-1][x+1] = 1;
+        }
+    }
+
+    public void markLeft(int y, int x) {
+
+        if (x - 1 != - 1 && (currentBoard[y][x-1] == 0)) {
+            boardOfActiveCells[y][x-1] = 1;
+        }
+    }
+
+    public void markRight(int y, int x) {
+
+        if (x + 1 < currentBoard[0].length && currentBoard[y][x+1] == 0) {
+            boardOfActiveCells[y][x+1] = 1;
+        }
+    }
+
+    public void markBottomLeft(int y, int x) {
+
+        if ((y + 1 < currentBoard.length) && (x - 1 != - 1) && (currentBoard[y+1][x-1] == 0) ) {
+            boardOfActiveCells[y+1][x-1] = 1;
+        }
+
+    }
+
+    public void markBottom(int y, int x) {
+
+        if (y + 1 < currentBoard.length && currentBoard[y+1][x] == 0) {
+            boardOfActiveCells[y+1][x] = 1;
+        }
+    }
+
+    public void markBottomRight(int y, int x) {
+
+        if ((y + 1 < currentBoard.length) && (x + 1 < currentBoard[0].length) && (currentBoard[y+1][x+1] == 0) ) {
+            boardOfActiveCells[y+1][x+1] = 1;
+        }
     }
 
 }

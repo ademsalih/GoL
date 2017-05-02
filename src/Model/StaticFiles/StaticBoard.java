@@ -23,7 +23,6 @@ public class StaticBoard extends Board {
     double canvasWidth;
     double canvasHeight;
     GraphicsContext gc;
-    int generationCounter;
     boolean grid = false;
 
     public StaticBoard(Canvas canvas) {
