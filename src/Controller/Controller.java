@@ -111,11 +111,11 @@ public class Controller implements Initializable {
         });
 
         scaleSlider.setValue(2);
-        scaleSlider.setMin(2);
+        scaleSlider.setMin(0.3);
         scaleSlider.setMax(10);
 
         scaleSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
-            boardObj.setCellSize(newValue.intValue());
+            boardObj.setCellSize(newValue.doubleValue());
             boardObj.drawBoard();
         });
     }
@@ -154,21 +154,27 @@ public class Controller implements Initializable {
 
     // Uses the StaticRule class to iterate to next generation and draws the game.
     public void nextGeneration() {
-        rule.setCurrentBoard(boardObj.getBoard());
-        rule.calculateBoardOfActiveCells();
 
         double time = System.currentTimeMillis();
 
+        rule.setCurrentBoard(boardObj.getBoard());
+
+        rule.calculateBoardOfActiveCells();
+
         List<List<Byte>> tempArr = rule.conwaysBoardRules();
+
+        boardObj.setBoard(tempArr);
+
+
+        boardObj.drawBoard();
 
         double timeTaken = System.currentTimeMillis() - time;
         System.out.println("conwaysBoardRules: " + timeTaken);
 
-        boardObj.setBoard(tempArr);
-        boardObj.drawBoard();
-        
         counter++;
         Main.getStage().setTitle(titleName + " (" + counter + ")");
+
+
     }
 
     public void updateTitle(String newName) {

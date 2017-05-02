@@ -35,6 +35,6 @@ public abstract class Board {
 
     public abstract void mouseClickedOrDraggedOnBoard(double x, double y);
 
-    public void setCellSize(int a) { this.cellSize = a;}
+    public void setCellSize(double a) { this.cellSize = a;}
 
     }
