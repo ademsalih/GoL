@@ -1,6 +1,5 @@
 package Model.DynamicFiles;
 
-import Model.Abstract.Board;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import java.util.ArrayList;
@@ -148,12 +147,10 @@ public class DynamicBoard extends Board {
 
     // Draw/undraw a cell depending on its state when we click on the board
     public void mouseclickedordraggedonBoard(double x, double y){
-
         int colx = (int)(x/cellSize);
         int rowy = (int)(y/cellSize);
-
-        //System.out.println(rowy + "   " + colx);
-
+        //System.out.println(rowy);
+        //System.out.println(colx);
         if ((colx >= columcount) || (rowy >= rowcount)){
             setCellState(rowy, colx, (byte)1);}
         else if (this.board.get(rowy).get(colx) == 0){
