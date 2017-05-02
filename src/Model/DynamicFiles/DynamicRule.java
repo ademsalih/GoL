@@ -93,6 +93,10 @@ public class DynamicRule extends Rule {
                 }
 
                 conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
+                if (boardOfActiveCells.get(y).get(x) == 1) {
+                    conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
+                }
+
 
             }
 
@@ -224,7 +228,7 @@ public class DynamicRule extends Rule {
                     markRight(y,x);
                     markBottomLeft(y,x);
                     markBottom(y,x);
-                    markBottomLeft(y,x);
+                    markBottomRight(y,x);
                 }
             }
         }

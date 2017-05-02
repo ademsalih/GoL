@@ -10,7 +10,6 @@ import Model.Point;
  *
  */
 
-
 public class StaticBoard extends Board {
 
     // Testing implementation of X and Y offset
