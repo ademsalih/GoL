@@ -1,4 +1,4 @@
-package Model.Interfaces;
+package Model.Abstract;
 
 /**
  * Created by Narmatha on 29.04.2017.

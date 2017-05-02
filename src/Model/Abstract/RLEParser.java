@@ -1,4 +1,4 @@
-package Model.Interfaces;
+package Model.Abstract;
 
 
 import Model.FileHandling;

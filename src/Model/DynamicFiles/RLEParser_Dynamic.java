@@ -2,7 +2,7 @@ package Model.DynamicFiles;
 
 import java.util.ArrayList;
 import java.util.List;
-import Model.Interfaces.RLEParser;
+import Model.Abstract.RLEParser;
 
 /**
  * Created by patrikkvarmehansen on 29/04/17.

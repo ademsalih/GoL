@@ -1,16 +1,13 @@
-package Model.Interfaces;
+package Model.Abstract;
 
 import javafx.scene.paint.Color;
 
-/**
- * Created by Narmatha on 29.04.2017.
- */
 public abstract class Board {
 
     public Color cellColor = Color.WHITE;
     public Color backgroundColor = Color.BLACK;
     public Color gridColor = Color.WHITE;
-    public int cellSize = 2;
+    public double cellSize = 0.4;
     public double xCounter = 0.0;
     public double yCounter = 0.0;
 

@@ -1,6 +1,6 @@
 package Model.StaticFiles;
 
-import Model.Interfaces.Rule;
+import Model.Abstract.Rule;
 
 /* This class handles the rules for the application. A board object is
  * imported, manipulated and returned to the calling method.

@@ -2,12 +2,9 @@ package Model.DynamicFiles;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import Model.Interfaces.Board;
+import Model.Abstract.Board;
 import Model.Point;
 
 /**
@@ -172,16 +169,24 @@ public class DynamicBoard extends Board {
                     xCounter = 0;
                     yCounter += cellSize;
                 }
-
             }
-
         }
 
         yCounter = 0;
     }
 
     public void clearBoard(){
+
         board = new ArrayList<List<Byte>>();
+
+        for (int i = 0; i < 250; i++) {
+            List<Byte> row = new ArrayList<Byte>();
+            for (int j = 0; j < 350; j++) {
+                row.add((byte) 0);
+            }
+            this.board.add(row);
+        }
+
         drawBoard();
     }
 }
