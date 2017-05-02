@@ -87,8 +87,6 @@ public class Controller implements Initializable {
         rule = new DynamicRule();
 
         animate.setSpeed(10);
-
-
     }
 
     // Sets the ID of the objects in this class for CSS styling.
@@ -159,8 +157,10 @@ public class Controller implements Initializable {
         long a = System.currentTimeMillis();
 
         //rule = new StaticRule(boardObj.board);
-        //rule.calculateBoardOfActiveCells();
+
+
         rule.setCurrentBoard(boardObj.board);
+        rule.calculateBoardOfActiveCells();
         boardObj.setBoard(rule.conwaysBoardRules());
         boardObj.drawBoard();
 
@@ -212,6 +212,7 @@ public class Controller implements Initializable {
     // Creates a new black board.
     public void newBlankAction() {
         boardObj.clearBoard();
+        boardObj.initialBoard = boardObj.board;
         counter = 0;
         updateTitle("Game of Life");
     }

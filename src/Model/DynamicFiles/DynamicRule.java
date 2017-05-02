@@ -65,8 +65,11 @@ public class DynamicRule extends Rule {
         for (int y = 0; y < conwaysBoard.size(); y++) {
             for (int x = 0; x < conwaysBoard.get(0).size(); x++) {
 
-                int cellState = currentBoard.get(y).get(x);
-                conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
+                if (boardOfActiveCells.get(y).get(x) == 1) {
+                    int cellState = currentBoard.get(y).get(x);
+                    conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
+                }
+
             }
         }
         return conwaysBoard;
@@ -175,6 +178,7 @@ public class DynamicRule extends Rule {
     // Calculates the cells that are active. Active cell is either alive itself or has at least one neighbor.
     public void calculateBoardOfActiveCells() {
         boardOfActiveCells = new ArrayList<List<Byte>>();
+
         for (int i = 0; i < currentBoard.size() ; i++) {
             List<Byte> row = new ArrayList<Byte>();
             for (int j = 0; j < currentBoard.get(0).size(); j++) {
@@ -195,7 +199,7 @@ public class DynamicRule extends Rule {
                     markRight(y,x);
                     markBottomLeft(y,x);
                     markBottom(y,x);
-                    markBottomLeft(y,x);
+                    markBottomRight(y,x);
                 }
             }
         }
