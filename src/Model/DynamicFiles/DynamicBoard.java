@@ -30,41 +30,39 @@ public class DynamicBoard extends Board {
         this.gc = canvas.getGraphicsContext2D();
         this.rowcount = y;
         this.columcount = x;
-        this.margin  = 10;
+        this.margin  = 20;
         this.board = initBoard(x, y);
         this.initialBoard = initBoard(x, y);
     }
 
     public void addBoard(List<List<Byte>> newBoard) {
-        /*
-        System.out.println(newBoard.size());
-        System.out.println(newBoard.get(0).size());
-        this.board.clear();
-        // DETTE ER EN DEL AV GRUNNEN TIL HVORFOR INNLASTINGEN AV PATTERNS IKKE FUNKER HELT
-        for (int y = 0; y < newBoard.size(); y++) {
-            List<Byte> oneDim = new ArrayList<Byte>();
-            for (int x = 0; x < newBoard.get(0).size(); x++) {
-                oneDim.add(x, (byte) 1);
-            }
-            this.board.add(oneDim);
-        }
-
-        for (int y = 0; y < this.board.size(); y++) {
-            for (int x = 0; x < this.board.get(y).size(); x++) {
-                System.out.print(this.board.get(y).get(x));
-            }
-            System.out.println("");
-        }
-        for (int y = 0; y < newBoard.size(); y++) {
-            for (int x = 0; x < newBoard.get(y).size(); x++) {
-                System.out.print(newBoard.get(y).get(x));
-            }
-            System.out.println("");
-        }*/
-
         this.board = newBoard;
         this.initialBoard = newBoard;
+        this.board = centerBoard(this.board);
+        this.initialBoard = centerBoard(this.initialBoard);
+    }
 
+    private List<List<Byte>> centerBoard(List<List<Byte>> board) {
+
+        int bigMargin = margin * 4;
+        int twoBigMargin = bigMargin * 2;
+
+        List<List<Byte>> centeredBoard = new ArrayList<>();
+
+        for (int y = 0; y < twoBigMargin + board.size(); y++) {
+            List<Byte> temp = new ArrayList<Byte>();
+            centeredBoard.add(temp);
+        }
+
+        centeredBoard = addCols(twoBigMargin + board.get(0).size(), centeredBoard);
+
+
+        for (int y = bigMargin; y < board.size() + bigMargin; y++) {
+            for (int x = bigMargin; x < board.get(y - bigMargin).size() + bigMargin; x++) {
+                centeredBoard.get(y).set(x, (board.get(y - bigMargin).get(x - bigMargin)));
+            }
+        }
+        return centeredBoard;
     }
 
     private List<List<Byte>> initBoard(int x, int y) {
@@ -79,15 +77,16 @@ public class DynamicBoard extends Board {
         return tempBoard;
     }
 
-    private void addCols(int numberOfCols) {
+    private List<List<Byte>> addCols(int numberOfCols, List<List<Byte>> board) {
         for (int i = 0; i < numberOfCols; i++) {
             for (List<Byte> byteLists : board) {
                 byteLists.add((byte) 0);
             }
         }
+        return board;
     }
 
-    private void addRows(int numberOfRows) {
+    private List<List<Byte>> addRows(int numberOfRows, List<List<Byte>> board) {
         for (int i = 0; i < numberOfRows; i++) {
             List<Byte> row = new ArrayList<Byte>();
             for (int x = 0; x < board.get(0).size(); x++) {
@@ -95,21 +94,22 @@ public class DynamicBoard extends Board {
             }
             board.add(row);
         }
+        return board;
     }
 
     private void expandBoard(int rowy, int colx, int y, int x) {
 
         if (x < (colx + margin) && y > (rowy + margin)) {
-            addCols(colx - x + margin);
+            this.board = addCols(colx - x + margin, this.board);
         }
 
         else if (x > (colx + margin) && y < (rowy + margin)) {
-            addRows(rowy - y + margin);
+            this.board = addRows(rowy - y + margin, this.board);
         }
 
         else if (x < (colx + margin) && y < (rowy + margin)) {
-            addCols(colx - x + margin);
-            addRows(rowy - y + margin);
+            this.board = addCols(colx - x + margin, this.board);
+            this.board = addRows(rowy - y + margin, this.board);
         }
     }
 

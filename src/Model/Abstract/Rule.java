@@ -40,8 +40,6 @@ public abstract class Rule {
     // Counts the neighbor of a cell and returns antall
     public int countNeighbor( int y, int x){
 
-        expandBoardIfNeeded(y, x);
-
         int neighborsCounter = 0;
 
         if (neighborTopLeft(y,x)) {

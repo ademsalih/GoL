@@ -13,11 +13,23 @@ public class DynamicRule extends Rule {
 
     private int rowCount;
     private int colCount;
+    private int expandNum;
+    private int xOffSet;
+    private int yOffSet;
+
+    private boolean expandedDown, expandedRight, expandedLeft, expandedUp;
 
     ////CONSTRUCTOR
     // MÅ DEKLARERE ALLE BOARDDENE MED NULL HER!
     public DynamicRule () {
         this.currentBoard = new ArrayList<>();
+        expandNum = 50;
+
+        expandedDown = false;
+        expandedUp = false;
+
+        xOffSet = 0;
+        yOffSet = 0;
     }
 
 
@@ -50,7 +62,16 @@ public class DynamicRule extends Rule {
 
     ////CONWAYS GAME OF LIFE RULES
 
+    private boolean isExpandedAllWays() {
+        if (expandedDown && expandedRight) {
+            return true;
+        }
+        return false;
+    }
+
     public List<List<Byte>> conwaysBoardRules() {
+        expandedDown = false;
+        expandedRight = false;
 
         conwaysBoard = new ArrayList<List<Byte>>();
         for (int i = 0; i < currentBoard.size() ; i++) {
@@ -61,10 +82,16 @@ public class DynamicRule extends Rule {
             this.conwaysBoard.add(row);
         }
 
-        for (int y = 0; y < conwaysBoard.size(); y++) {
-            for (int x = 0; x < conwaysBoard.get(0).size(); x++) {
+
+        for (int y = 0; y < currentBoard.size(); y++) {
+            for (int x = 0; x < currentBoard.get(0).size(); x++) {
 
                 int cellState = currentBoard.get(y).get(x);
+
+                if (cellState == 1 && !isExpandedAllWays()) {
+                    expandBoardIfNeeded(y, x);
+                }
+
                 conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
 
             }
@@ -268,6 +295,18 @@ public class DynamicRule extends Rule {
                 byteLists.add((byte) 0);
             }
         }
+
+        for (int i = 0; i < numberOfCols; i++) {
+            for (List<Byte> byteLists : conwaysBoard) {
+                byteLists.add((byte) 0);
+            }
+        }
+
+        for (int i = 0; i < numberOfCols; i++) {
+            for (List<Byte> byteLists : boardOfActiveCells) {
+                byteLists.add((byte) 0);
+            }
+        }
     }
 
     public void addRows(int numberOfRows) {
@@ -278,21 +317,43 @@ public class DynamicRule extends Rule {
             }
             currentBoard.add(row);
         }
+
+        for (int i = 0; i < numberOfRows; i++) {
+            List<Byte> row = new ArrayList<Byte>();
+            for (int x = 0; x < conwaysBoard.get(0).size(); x++) {
+                row.add((byte) 0 );
+            }
+            conwaysBoard.add(row);
+        }
+
+        for (int i = 0; i < numberOfRows; i++) {
+            List<Byte> row = new ArrayList<Byte>();
+            for (int x = 0; x < boardOfActiveCells.get(0).size(); x++) {
+                row.add((byte) 0 );
+            }
+            boardOfActiveCells.add(row);
+        }
+
+
     }
 
-    @Override
+    // Method works but is not in place when first thing hits the curbs.
     public void expandBoardIfNeeded(int y, int x) {
 
-        if (y == rowCount && x == rowCount) {
-            if ((y == (rowCount)) && (x != (colCount))) {
-                addRows(1);
+        if (y >= (rowCount - 1) || x >= (colCount - 1)) {
+            if ((y == (rowCount)) && (x != (colCount)) && !expandedDown) {
+                addRows(expandNum);
+                expandedDown = true;
             }
-            else if ((x == (colCount)) && (y != (rowCount))) {
-                addCols(1);
+            else if ((x == (colCount)) && (y != (rowCount)) && !expandedRight) {
+                addCols(expandNum);
+                expandedRight = true;
             }
-            else if ((x == (colCount)) && (y == (rowCount))) {
-                addCols(1);
-                addRows(1);
+            else if ((x == (colCount)) && (y == (rowCount)) && !expandedDown && !expandedRight) {
+                addCols(expandNum);
+                addRows(expandNum);
+                expandedRight = true;
+                expandedDown = true;
             }
         }
 

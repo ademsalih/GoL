@@ -158,7 +158,6 @@ public class Controller implements Initializable {
         rule.calculateBoardOfActiveCells();
 
         double time = System.currentTimeMillis();
-
         List<List<Byte>> tempArr = rule.conwaysBoardRules();
 
         double timeTaken = System.currentTimeMillis() - time;
