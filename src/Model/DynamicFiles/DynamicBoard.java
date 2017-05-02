@@ -2,12 +2,9 @@ package Model.DynamicFiles;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import Model.Interfaces.Board;
+import Model.Abstract.Board;
 import Model.Point;
 
 /**
@@ -78,33 +75,35 @@ public class DynamicBoard extends Board {
         //automatisk utvides slik at brettet inneholder cellen (x,y).
 
         // Extends the gameboard with colums
+        int x = board.get(0).size();
+        int y = board.size();
 
-        if(colx > columcount && rowy < rowcount){
-            for(int i = 0; i < rowcount; i++){
-                for(int j = 0; j < colx-columcount; j++){
+        if(colx > x && rowy < y){
+            for(int i = 0; i < y; i++){
+                for(int j = 0; j < colx-x; j++){
                     this.board.get(i).add((byte) 0);
                 }
             }
         }
         // Extends the gameboard with rows
 
-        else if (rowy > rowcount && colx < columcount){
-            for(int i = 0; i < rowy-rowcount; i++){
+        else if (rowy > y && colx < x){
+            for(int i = 0; i < rowy-y; i++){
                 List<Byte> row = new ArrayList<Byte>();
-                for(int j = 0; j < columcount; j++){
+                for(int j = 0; j < x; j++){
                     row.add((byte) 0);
                 }
                 this.board.add(row);
             }
         }
         // Extends the gameboard with rows and colums
-        else if (colx >= columcount && rowy >= rowcount ){
-            for(int i = 0; i < rowcount; i++){
-                for(int j = 0; j < colx-columcount; j++){
+        else if (colx >= x && rowy >= y ){
+            for(int i = 0; i < y; i++){
+                for(int j = 0; j < colx-x; j++){
                     this.board.get(i).add((byte) 0);
                 }
             }
-            for(int i = 0; i < rowy-rowcount; i++){
+            for(int i = 0; i < rowy-y; i++){
                 List<Byte> row = new ArrayList<Byte>();
                 for(int j = 0; j < colx; j++){
                     row.add((byte) 0);
@@ -114,7 +113,7 @@ public class DynamicBoard extends Board {
             }
 
         }
-        this.board.get(rowy-1).set(colx-1, value);
+        this.board.get(rowy).set(colx, value);
     }
 
     public byte getCellState(int x, int y) {
@@ -172,16 +171,24 @@ public class DynamicBoard extends Board {
                     xCounter = 0;
                     yCounter += cellSize;
                 }
-
             }
-
         }
 
         yCounter = 0;
     }
 
     public void clearBoard(){
+
         board = new ArrayList<List<Byte>>();
+
+        for (int i = 0; i < 250; i++) {
+            List<Byte> row = new ArrayList<Byte>();
+            for (int j = 0; j < 350; j++) {
+                row.add((byte) 0);
+            }
+            this.board.add(row);
+        }
+
         drawBoard();
     }
 }

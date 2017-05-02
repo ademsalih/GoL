@@ -1,9 +1,7 @@
 package Controller;
 
 import Model.*;
-import Model.DynamicFiles.RLEParser_Dynamic;
-import Model.StaticFiles.RLEParser_Static;
-import Model.StaticFiles.StaticBoard;
+import Model.DynamicFiles.DynamicRLEParser;
 import Model.StaticFiles.StaticRule;
 import Model.DynamicFiles.DynamicBoard;
 import View.Main;
@@ -20,7 +18,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import java.io.File;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -49,11 +47,11 @@ public class Controller implements Initializable {
 
     public DynamicBoard boardObj;
     public DynamicRule rule;
-    public RLEParser_Dynamic rleParser;
+    public DynamicRLEParser rleParser;
 
     /*public StaticBoard boardObj;
     public StaticRule rule;
-    public RLEParser_Static rleParser;*/
+    public StaticRLEParser rleParser;*/
 
     private List<Point> plist;
     public Timeline timeline;
@@ -176,8 +174,8 @@ public class Controller implements Initializable {
 
     // Loads an RLE files and draws the file to the canvas.
     public void loadFileFromDisk() throws IOException {
-        //rleParser = new RLEParser_Static();
-        rleParser = new RLEParser_Dynamic();
+        //rleParser = new StaticRLEParser();
+        rleParser = new DynamicRLEParser();
         rleParser.importFromDisk();
         //byte[][] temp = rleParser.getBoard();
         List<List<Byte>> temp  = rleParser.getBoard();
@@ -288,8 +286,8 @@ public class Controller implements Initializable {
         String urlString;
         if ((urlString = url.getURL()) != null){
             System.out.println("It's not null");
-            RLEParser_Dynamic rle = new RLEParser_Dynamic();
-            //RLEParser_Static rle = new RLEParser_Static();
+            DynamicRLEParser rle = new DynamicRLEParser();
+            //StaticRLEParser rle = new StaticRLEParser();
             try {
                 rle.importFromURL(urlString);
                 boardObj.clearBoard();

@@ -2,7 +2,7 @@ package Model.StaticFiles;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import Model.Interfaces.Board;
+import Model.Abstract.Board;
 import Model.Point;
 
 /**

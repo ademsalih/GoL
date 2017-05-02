@@ -2,7 +2,7 @@ package Model.DynamicFiles;
 
 import java.util.ArrayList;
 import java.util.List;
-import Model.Interfaces.Rule;
+import Model.Abstract.Rule;
 
 public class DynamicRule extends Rule {
 

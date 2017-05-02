@@ -1,18 +1,15 @@
-package Model;
+package Model.Abstract;
 
 import javafx.scene.paint.Color;
 
-/**
- * Created by Narmatha on 29.04.2017.
- */
 public abstract class Board {
 
-    Color cellColor = Color.WHITE;
-    Color backgroundColor = Color.BLACK;
-    Color gridColor = Color.WHITE;
-    int cellSize = 2;
-    double xCounter = 0.0;
-    double yCounter = 0.0;
+    public Color cellColor = Color.WHITE;
+    public Color backgroundColor = Color.BLACK;
+    public Color gridColor = Color.WHITE;
+    public double cellSize = 0.4;
+    public double xCounter = 0.0;
+    public double yCounter = 0.0;
 
     public Board(){}
 
@@ -39,12 +36,5 @@ public abstract class Board {
     public abstract void mouseclickedordraggedonBoard(double x, double y);
 
     public void setCellSize(int a) { this.cellSize = a;}
-
-
-
-
-
-
-
 
     }
