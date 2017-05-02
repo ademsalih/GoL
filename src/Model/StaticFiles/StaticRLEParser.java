@@ -1,17 +1,23 @@
-package Model.DynamicFiles;
+package Model.StaticFiles;
 
+
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import Model.Abstract.RLEParser;
 
 /**
- * Created by patrikkvarmehansen on 29/04/17.
+ * A class that parses a .rle file and returns it as a 2D byte array through the importBoard method.
+ * It can also return the X and Y value if needed later on.
  */
-public class RLEParser_Dynamic extends RLEParser{
 
-    int count = 0;
-    private static ArrayList<List<Byte>> arrLi;
-    private List<Byte> line;
+public class StaticRLEParser extends RLEParser {
+
+    private byte[][] arr;
+
 
     @Override
     public void initiateBoardUpdate(int runCount, char cellType) {
@@ -25,24 +31,15 @@ public class RLEParser_Dynamic extends RLEParser{
                     if (xPlacement != 0) {
                         updateBoard((x - xPlacement), (byte)0);
                     }
-                    arrLi.add(line);
-                    line = new ArrayList<>();
                 } else {
                     updateBoard(x, (byte)0);
-                    arrLi.add(line);
-                    line = new ArrayList<>();
                 }
             }
-
         }
 
         // Makes sure that the end of the last line is filled with 0s according to width.
-        else if (cellType == '!') {
-            if (xPlacement != 0) {
-                updateBoard(x - xPlacement, (byte)0);
-            }
-            arrLi.add(line);
-            line = new ArrayList<>();
+        else if (cellType == '!' && xPlacement != 0) {
+            updateBoard(x - xPlacement, (byte)0);
         }
     }
 
@@ -50,34 +47,50 @@ public class RLEParser_Dynamic extends RLEParser{
     public void updateBoard(int r, byte b) {
         for (int i = 0; i < r; i++) {
             if (xPlacement != x) {
-                line.add(b);
+                arr[yPlacement][xPlacement] = b;
             }
             if ((xPlacement + 1) == x) {
                 xPlacement = -1;
-                count++;
                 if ((yPlacement + 1) != y) {
                     yPlacement++;
                 }
             }
             xPlacement++;
         }
-
     }
 
     @Override
     public void initBoard() {
-        arrLi = new ArrayList<>();
-        line = new ArrayList<>();
+        arr = new byte[y][x];
     }
-
 
     /**
      * Returns the board
      *
-     * @return - ArrayList containing the gameboard.
+     * @return - byte[][] containing the gameboard.
      */
-    public ArrayList<List<Byte>> getBoard() {
-        return arrLi;
+    public byte[][] getBoard() {
+        return arr;
     }
 
+
+
+    /**
+     * Prints the board to console
+     *
+     */
+    @Override
+    public String toString() {
+        String toString = "";
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                toString += arr[i][j];
+            }
+            toString += "\n";
+        }
+        return  toString;
+    }
 }
+
+
+

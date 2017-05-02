@@ -4,8 +4,8 @@ package Test;
  * Created by patrikkvarmehansen on 04/04/17.
  */
 
-import Model.DynamicFiles.RLEParser_Dynamic;
-import Model.StaticFiles.RLEParser_Static;
+import Model.DynamicFiles.DynamicRLEParser;
+import Model.StaticFiles.StaticRLEParser;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
@@ -28,7 +28,7 @@ public class RLEParsterTest {
         String rle1 = "x = 4, y = 5, rule = B3/S23\n2b2o$2b2o2$4o$o2bo!";
         StringReader sr = new StringReader(rle1);
         BufferedReader br = new BufferedReader(sr);
-        RLEParser_Static rle = new RLEParser_Static();
+        StaticRLEParser rle = new StaticRLEParser();
         rle.importBoard(br);
         byte[][] arr = rle.getBoard();
 
@@ -54,7 +54,7 @@ public class RLEParsterTest {
             testArrDyn.add(temp);
         }
 
-        RLEParser_Dynamic rle = new RLEParser_Dynamic();
+        DynamicRLEParser rle = new DynamicRLEParser();
         rle.importBoard(br);
         List<List<Byte>> arr = rle.getBoard();
 
@@ -185,16 +185,12 @@ public class RLEParsterTest {
     public void bigPattern() throws Exception {
         StringReader sr = new StringReader(rle2);
         BufferedReader br = new BufferedReader(sr);
-        RLEParser_Static rle = new RLEParser_Static();
+        StaticRLEParser rle = new StaticRLEParser();
         rle.importBoard(br);
-
         byte[][] arr = rle.getBoard();
 
         for (int y = 0; y < arr.length; y++) {
-            for (int x = 0; x < arr[y].length; x++) {
-                org.junit.Assert.assertEquals(testArr2[y][x], arr[y][x]);
-            }
-
+            org.junit.Assert.assertArrayEquals(testArr2[y], arr[y]);
         }
 
     }
@@ -214,7 +210,7 @@ public class RLEParsterTest {
             testArrDyn.add(temp);
         }
 
-        RLEParser_Dynamic rle = new RLEParser_Dynamic();
+        DynamicRLEParser rle = new DynamicRLEParser();
         rle.importBoard(br);
         List<List<Byte>> arr = rle.getBoard();
 
