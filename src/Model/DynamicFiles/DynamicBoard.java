@@ -114,7 +114,8 @@ public class DynamicBoard extends Board {
             }
 
         }
-        this.board.get(rowy).set(colx, value);
+        this.board.get(rowy-1).set(colx-1,value);
+        //this.board.get(rowy).set(colx, value);
     }
 
     public byte getCellState(int x, int y) {
@@ -139,11 +140,11 @@ public class DynamicBoard extends Board {
         //System.out.println(rowy + "   " + colx);
 
         if ((colx >= columcount) || (rowy >= rowcount)){
-            setCellState(rowy, colx, (byte)1);}
+            setCellState(rowy+1, colx+1, (byte)1);}
         else if (this.board.get(rowy).get(colx) == 0){
-            setCellState(rowy, colx, (byte)1);
+            setCellState(rowy+1, colx+1, (byte)1);
         }else if(this.board.get(rowy).get(colx) == 1) {
-            setCellState(rowy, colx, (byte) 0);
+            setCellState(rowy+1, colx+1, (byte) 0);
         }
         drawBoard();
 
