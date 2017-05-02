@@ -6,16 +6,19 @@ import Model.Abstract.Rule;
 
 public class DynamicRule extends Rule {
 
-
     ////INSTANCE VARIABLES
     public List<List<Byte>> currentBoard;
     public List<List<Byte>> conwaysBoard;
     public List<List<Byte>> boardOfActiveCells;
 
+    private int rowBorder;
+    private int colCount;
+    private int margin;
+
     ////CONSTRUCTOR
     // MÅ DEKLARERE ALLE BOARDDENE MED NULL HER!
-    public DynamicRule (List<List<Byte>> currentBoard) {
-        this.currentBoard = currentBoard;
+    public DynamicRule () {
+        this.margin = 10;
     }
 
 
@@ -27,8 +30,10 @@ public class DynamicRule extends Rule {
         return currentBoard;
     }
 
-    public void setCurrentBoard(ArrayList<List<Byte>> board) {
+    public void setCurrentBoard(List<List<Byte>> board) {
         this.currentBoard = board;
+        this.rowBorder = currentBoard.size() - margin;
+        this.colCount = currentBoard.get(0).size() - margin;
     }
 
     //Retunerer next generation verdier
@@ -255,4 +260,37 @@ public class DynamicRule extends Rule {
     }
     ////////////////////////////////////////////////////////////////
 
+    public void addCols(int numberOfCols) {
+        for (int i = 0; i < numberOfCols; i++) {
+            for (List<Byte> byteLists : currentBoard) {
+                byteLists.add((byte) 0);
+            }
+        }
+    }
+
+    public void addRows(int numberOfRows) {
+        for (int i = 0; i < numberOfRows; i++) {
+            List<Byte> row = new ArrayList<Byte>();
+            for (int x = 0; x < currentBoard.get(0).size(); x++) {
+                row.add((byte) 0 );
+            }
+            currentBoard.add(row);
+        }
+    }
+
+    @Override
+    public void expandBoardIfNeeded(int y, int x) {
+
+
+        if ((y >= (rowBorder - 1)) && (x <= (colCount - 1))) {
+            addRows(margin);
+        }
+        else if ((x >= (colCount - 1)) && (y <= (rowBorder - 1))) {
+            addCols(margin);
+        }
+        else if ((x >= (colCount - 1)) && (y <= (rowBorder - 1))) {
+            addCols(margin);
+            addRows(margin);
+        }
+    }
 }

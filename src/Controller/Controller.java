@@ -80,6 +80,7 @@ public class Controller implements Initializable {
         setID();
         initializeSliders();
         animate = new Animate();
+        rule = new DynamicRule();
 
         animate.setSpeed(10);
 
@@ -151,8 +152,8 @@ public class Controller implements Initializable {
     // Uses the StaticRule class to iterate to next generation and draws the game.
     public void nextGeneration() {
         //rule = new StaticRule(boardObj.board);
-        rule = new DynamicRule(boardObj.board);
         rule.calculateBoardOfActiveCells();
+        rule.setCurrentBoard(boardObj.board);
         boardObj.setBoard(rule.conwaysBoardRules());
         boardObj.drawBoard();
         counter++;

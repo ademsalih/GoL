@@ -215,6 +215,21 @@ public class StaticRule extends Rule {
         return false;
     }
 
+    @Override
+    public void expandBoardIfNeeded(int y, int x) {
+
+    }
+
+    @Override
+    public void addRows(int margin) {
+
+    }
+
+    @Override
+    public void addCols(int margin) {
+
+    }
+
     public boolean neighborBottomRight(int y, int x) {
 
         if ((y + 1 < currentBoard.length) && (x + 1 < currentBoard[0].length)) {

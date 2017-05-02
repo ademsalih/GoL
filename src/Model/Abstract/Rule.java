@@ -39,6 +39,8 @@ public abstract class Rule {
     // Counts the neighbor of a cell and returns antall
     public int countNeighbor( int y, int x){
 
+        //expandBoardIfNeeded(y, x);
+
         int neighborsCounter = 0;
 
         if (neighborTopLeft(y,x)) {
@@ -85,5 +87,10 @@ public abstract class Rule {
 
     public abstract boolean neighborBottomLeft(int y, int x);
 
+    public abstract void expandBoardIfNeeded(int y, int x);
+
+    public abstract void addRows(int margin);
+
+    public abstract void addCols(int margin);
 
 }

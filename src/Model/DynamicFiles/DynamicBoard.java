@@ -20,6 +20,7 @@ public class DynamicBoard extends Board {
     GraphicsContext gc;
     int rowcount;
     int columcount;
+    int margin;
 
     int generationCounter;
 
@@ -29,6 +30,7 @@ public class DynamicBoard extends Board {
         this.gc = canvas.getGraphicsContext2D();
         this.rowcount = y;
         this.columcount = x;
+        this.margin  = 10;
 
         for (int i = 0; i < rowcount; i++) {
             List<Byte> row = new ArrayList<Byte>();
@@ -71,49 +73,63 @@ public class DynamicBoard extends Board {
 
     }
 
+    private void addCols(int numberOfCols) {
+        for (int i = 0; i < numberOfCols; i++) {
+            for (List<Byte> byteLists : board) {
+                byteLists.add((byte) 0);
+            }
+        }
+    }
+
+    private void addRows(int numberOfRows) {
+        for (int i = 0; i < numberOfRows; i++) {
+            List<Byte> row = new ArrayList<Byte>();
+            for (int x = 0; x < board.get(0).size(); x++) {
+                row.add((byte) 0 );
+            }
+            board.add(row);
+        }
+    }
+
+    private void expandBoardIfNeeded(int rowy, int colx) {
+        int x = board.get(0).size();
+        int y = board.size();
+
+        if ((x - colx) < margin && (y - rowy) > margin) {
+            addCols(margin);
+        }
+
+        else if ((x - colx) > margin && (y - rowy) < margin) {
+            System.out.println("ExpandY");
+            addRows(margin);
+        }
+
+        else if ((x - colx) < margin && (y - rowy) < margin) {
+            addCols(margin);
+            addRows(margin);
+        }
+
+        if (x < colx && y > rowy) {
+            addCols(colx - x + margin);
+        }
+
+        else if (x > colx && y < rowy) {
+            addRows(rowy - y + margin);
+        }
+
+        else if (x < colx && y < rowy) {
+            addCols(colx - x + margin);
+            addRows(rowy - y + margin);
+        }
+    }
+
     public void setCellState(int rowy, int colx, byte value) {
         //Hvis cellen (x,y) er definert utenfor brettet, skal brettet
         //automatisk utvides slik at brettet inneholder cellen (x,y).
 
-        // Extends the gameboard with colums
-        int x = board.get(0).size();
-        int y = board.size();
+        // Checks if cell is outside the margin of the board. Updates the board if needed.
+        expandBoardIfNeeded(rowy, colx);
 
-        if(colx > x && rowy < y){
-            for(int i = 0; i < y; i++){
-                for(int j = 0; j < colx-x; j++){
-                    this.board.get(i).add((byte) 0);
-                }
-            }
-        }
-        // Extends the gameboard with rows
-
-        else if (rowy > y && colx < x){
-            for(int i = 0; i < rowy-y; i++){
-                List<Byte> row = new ArrayList<Byte>();
-                for(int j = 0; j < x; j++){
-                    row.add((byte) 0);
-                }
-                this.board.add(row);
-            }
-        }
-        // Extends the gameboard with rows and colums
-        else if (colx >= x && rowy >= y ){
-            for(int i = 0; i < y; i++){
-                for(int j = 0; j < colx-x; j++){
-                    this.board.get(i).add((byte) 0);
-                }
-            }
-            for(int i = 0; i < rowy-y; i++){
-                List<Byte> row = new ArrayList<Byte>();
-                for(int j = 0; j < colx; j++){
-                    row.add((byte) 0);
-                }
-                this.board.add(row);
-
-            }
-
-        }
         this.board.get(rowy).set(colx, value);
     }
 
