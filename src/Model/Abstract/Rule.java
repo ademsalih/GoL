@@ -11,6 +11,7 @@ public abstract class Rule {
     public Rule(){}
 
     public byte checkIfOnOrOff(int neighbors, int cellState) {
+
         if (cellState == 1) {
             for (int s : survivor) {
                 if (s == neighbors) {
@@ -39,7 +40,7 @@ public abstract class Rule {
     // Counts the neighbor of a cell and returns antall
     public int countNeighbor( int y, int x){
 
-        //expandBoardIfNeeded(y, x);
+        expandBoardIfNeeded(y, x);
 
         int neighborsCounter = 0;
 

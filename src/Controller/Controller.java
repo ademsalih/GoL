@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import Model.DynamicFiles.DynamicRule;
-import org.hibernate.annotations.SourceType;
 
 /**
  * Controller class that handles user inputs i.e. button click and slider
@@ -155,19 +154,18 @@ public class Controller implements Initializable {
 
     // Uses the StaticRule class to iterate to next generation and draws the game.
     public void nextGeneration() {
+        rule.setCurrentBoard(boardObj.getBoard());
+        rule.calculateBoardOfActiveCells();
 
-        long a = System.currentTimeMillis();
+        double time = System.currentTimeMillis();
 
-        //rule = new StaticRule(boardObj.board);
-        //rule.calculateBoardOfActiveCells();
-        rule.setCurrentBoard(boardObj.board);
-        boardObj.setBoard(rule.conwaysBoardRules());
+        List<List<Byte>> tempArr = rule.conwaysBoardRules();
+
+        double timeTaken = System.currentTimeMillis() - time;
+        System.out.println("conwaysBoardRules: " + timeTaken);
+
+        boardObj.setBoard(tempArr);
         boardObj.drawBoard();
-
-        long b = System.currentTimeMillis();
-
-        System.out.println(b-a);
-
         counter++;
         Main.getStage().setTitle(titleName + " (" + counter + ")");
     }
@@ -221,14 +219,14 @@ public class Controller implements Initializable {
         Point p = new Point();
         p.x = event.getX();
         p.y = event.getY();
-        boardObj.mouseclickedordraggedonBoard(p.x, p.y);
+        boardObj.mouseClickedOrDraggedOnBoard(p.x, p.y);
     }
 
     public void mouseDragged(MouseEvent event) {
         Point p = new Point();
         p.x = event.getX();
         p.y = event.getY();
-        boardObj.mouseclickedordraggedonBoard(p.x, p.y);
+        boardObj.mouseClickedOrDraggedOnBoard(p.x, p.y);
     }
 
     // Exits the application.

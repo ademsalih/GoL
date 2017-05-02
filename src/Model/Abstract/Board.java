@@ -33,7 +33,7 @@ public abstract class Board {
 
     public abstract byte getCellState(int x, int y);
 
-    public abstract void mouseclickedordraggedonBoard(double x, double y);
+    public abstract void mouseClickedOrDraggedOnBoard(double x, double y);
 
     public void setCellSize(int a) { this.cellSize = a;}
 

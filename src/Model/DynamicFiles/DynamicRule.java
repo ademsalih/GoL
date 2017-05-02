@@ -11,14 +11,13 @@ public class DynamicRule extends Rule {
     public List<List<Byte>> conwaysBoard;
     public List<List<Byte>> boardOfActiveCells;
 
-    private int rowBorder;
+    private int rowCount;
     private int colCount;
-    private int margin;
 
     ////CONSTRUCTOR
     // MÅ DEKLARERE ALLE BOARDDENE MED NULL HER!
     public DynamicRule () {
-        this.margin = 10;
+        this.currentBoard = new ArrayList<>();
     }
 
 
@@ -32,8 +31,8 @@ public class DynamicRule extends Rule {
 
     public void setCurrentBoard(List<List<Byte>> board) {
         this.currentBoard = board;
-        this.rowBorder = currentBoard.size() - margin;
-        this.colCount = currentBoard.get(0).size() - margin;
+        this.rowCount = currentBoard.size() - 1;
+        this.colCount = currentBoard.get(0).size() - 1;
     }
 
     //Retunerer next generation verdier
@@ -67,8 +66,11 @@ public class DynamicRule extends Rule {
 
                 int cellState = currentBoard.get(y).get(x);
                 conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
+
             }
+
         }
+
         return conwaysBoard;
     }
 
@@ -281,16 +283,18 @@ public class DynamicRule extends Rule {
     @Override
     public void expandBoardIfNeeded(int y, int x) {
 
+        if (y == rowCount && x == rowCount) {
+            if ((y == (rowCount)) && (x != (colCount))) {
+                addRows(1);
+            }
+            else if ((x == (colCount)) && (y != (rowCount))) {
+                addCols(1);
+            }
+            else if ((x == (colCount)) && (y == (rowCount))) {
+                addCols(1);
+                addRows(1);
+            }
+        }
 
-        if ((y >= (rowBorder - 1)) && (x <= (colCount - 1))) {
-            addRows(margin);
-        }
-        else if ((x >= (colCount - 1)) && (y <= (rowBorder - 1))) {
-            addCols(margin);
-        }
-        else if ((x >= (colCount - 1)) && (y <= (rowBorder - 1))) {
-            addCols(margin);
-            addRows(margin);
-        }
     }
 }
