@@ -225,15 +225,7 @@ public class StaticRule extends Rule {
 
     }
 
-    @Override
-    public void addRows(int margin) {
 
-    }
-
-    @Override
-    public void addCols(int margin) {
-
-    }
 
     public boolean neighborBottomRight(int y, int x) {
 

@@ -35,7 +35,12 @@ public class DynamicBoard extends Board {
         this.initialBoard = initBoard(x, y);
     }
 
+    /**
+     * Sets a given board as both the main board ("board") and also the initial board ("initialBoard")
+     * @param newBoard - 2D ArrayList that should be used by the DynamicBoard class
+     */
     public void addBoard(List<List<Byte>> newBoard) {
+
         this.board = newBoard;
         this.initialBoard = newBoard;
         this.board = centerBoard(this.board);

@@ -2,8 +2,6 @@ package Controller;
 
 import Model.*;
 import Model.DynamicFiles.DynamicRLEParser;
-import Model.StaticFiles.StaticBoard;
-import Model.StaticFiles.StaticRLEParser;
 import Model.StaticFiles.StaticRule;
 import Model.DynamicFiles.DynamicBoard;
 import View.Main;
@@ -159,9 +157,9 @@ public class Controller implements Initializable {
 
         rule.setCurrentBoard(boardObj.getBoard());
 
-        rule.calculateBoardOfActiveCells();
+        //rule.calculateBoardOfActiveCells();
 
-        List<List<Byte>> tempArr = rule.conwaysBoardRules();
+        List<List<Byte>> tempArr = rule.applyBoardRules();
 
         boardObj.setBoard(tempArr);
 
@@ -169,7 +167,7 @@ public class Controller implements Initializable {
         boardObj.drawBoard();
 
         double timeTaken = System.currentTimeMillis() - time;
-        System.out.println("conwaysBoardRules: " + timeTaken);
+        System.out.println("applyBoardRules: " + timeTaken);
 
         counter++;
         Main.getStage().setTitle(titleName + " (" + counter + ")");
@@ -199,7 +197,7 @@ public class Controller implements Initializable {
         //byte[][] temp = rleParser.getBoard();
         List<List<Byte>> temp  = rleParser.getBoard();
         if (temp != null) {
-            StaticRule.setRules(rleParser.getSurvive(), rleParser.getBorn());
+            DynamicRule.setRules(rleParser.getSurvive(), rleParser.getBorn());
             boardObj.clearBoard();
             boardObj.addBoard(temp);
             boardObj.drawBoard();
