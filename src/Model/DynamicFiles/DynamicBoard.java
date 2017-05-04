@@ -21,6 +21,8 @@ public class DynamicBoard extends Board {
     int rowcount;
     int columcount;
     int margin;
+    int rowy;
+    int colx;
 
     int generationCounter;
 
@@ -125,8 +127,10 @@ public class DynamicBoard extends Board {
     }
 
     public void setCellState(int rowy, int colx, byte value) {
-
         // Checks if cell is outside the margin of the board. Updates the board if needed.
+        if ((colx + margin) > columcount || (rowy + margin)> rowcount) {
+            expandBoard(rowy, colx, rowcount, columcount);
+        }
         this.board.get(rowy).set(colx, value);
     }
 
@@ -153,16 +157,8 @@ public class DynamicBoard extends Board {
     public void mouseClickedOrDraggedOnBoard(double x, double y){
         rowcount = board.size();
         columcount = board.get(0).size();
-        int colx = (int) ((x/cellSize));
-        int rowy = (int) ((y/cellSize));
-        if ((colx + margin) > columcount || (rowy + margin)> rowcount) {
-            expandBoard(rowy, colx, rowcount, columcount);
-        }
-        if (this.board.get(rowy).get(colx) == 0){
-            setCellState(rowy, colx, (byte)1);
-        }else if(this.board.get(rowy).get(colx) == 1) {
-            setCellState(rowy, colx, (byte) 0);
-        }
+        colx = (int) ((x/cellSize));
+        rowy = (int) ((y/cellSize));
         drawBoard();
 
     }
