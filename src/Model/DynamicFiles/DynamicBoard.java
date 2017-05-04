@@ -30,8 +30,6 @@ public class DynamicBoard extends Board {
         this.canvasWidth = canvas.getWidth();
         this.canvasHeight = canvas.getHeight();
         this.gc = canvas.getGraphicsContext2D();
-        this.rowcount = y;
-        this.columcount = x;
         this.margin  = 20;
         this.board = initBoard(x, y);
         this.initialBoard = initBoard(x, y);
@@ -130,14 +128,20 @@ public class DynamicBoard extends Board {
         // Checks if cell is outside the margin of the board. Updates the board if needed.
         rowcount = board.size();
         columcount = board.get(0).size();
-        if ((colx + margin) > columcount || (rowy + margin)> rowcount) {
+        if ((colx + margin) > columcount || (rowy + margin) > rowcount) {
             expandBoard(rowy, colx, rowcount, columcount);
         }
         this.board.get(rowy).set(colx, value);
     }
 
-    public byte getCellState(int y, int x) {
-        return this.board.get(y).get(x);
+    public byte getCellState(int y, int x) throws ArrayIndexOutOfBoundsException {
+        if (y < 0 || y >= board.get(0).size() || x < 0 || x >= board.size()) {
+            System.out.println("Heihei");
+            throw new ArrayIndexOutOfBoundsException("Cell does not exsist");
+        }
+        else {
+            return this.board.get(y).get(x);
+        }
     }
 
     public void setBoard(List<List<Byte>> board) {
