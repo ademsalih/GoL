@@ -35,6 +35,14 @@ public class DynamicBoard extends Board {
         this.initialBoard = initBoard(x, y);
     }
 
+    public DynamicBoard(int x, int y){
+        this.rowcount = y;
+        this.columcount = x;
+        this.margin  = 20;
+        this.board = initBoard(x, y);
+
+    }
+
     /**
      * Sets a given board as both the main board ("board") and also the initial board ("initialBoard")
      * @param newBoard - 2D ArrayList that should be used by the DynamicBoard class
@@ -136,7 +144,6 @@ public class DynamicBoard extends Board {
 
     public byte getCellState(int y, int x) throws ArrayIndexOutOfBoundsException {
         if (y < 0 || y >= board.get(0).size() || x < 0 || x >= board.size()) {
-            System.out.println("Heihei");
             throw new ArrayIndexOutOfBoundsException("Cell does not exsist");
         }
         else {
