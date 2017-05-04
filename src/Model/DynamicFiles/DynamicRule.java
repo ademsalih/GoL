@@ -2,13 +2,8 @@ package Model.DynamicFiles;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 import Model.Abstract.Rule;
-import javafx.concurrent.Task;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 public class DynamicRule extends Rule {
 
@@ -29,22 +24,30 @@ public class DynamicRule extends Rule {
     private int rowCount;
     private int colCount;
     private int expandNum;
+    private int shiftNum;
     private int xOffSet;
     private int yOffSet;
+    private int test;
 
-    private boolean expandedDown, expandedRight, expandedLeft, expandedUp;
+    private boolean expandedDown, expandedRight, expandedLeft, expandedUp, needsRightShift, needsDownShift;
+    private boolean boardHasBeenInit;
+    private boolean init;
+    private boolean notInit;
 
     ////CONSTRUCTOR
     // MÅ DEKLARERE ALLE BOARDDENE MED NULL HER!
     public DynamicRule () {
         this.currentBoard = new ArrayList<>();
         expandNum = 50;
+        shiftNum = 10;
 
         expandedDown = false;
         expandedUp = false;
 
         xOffSet = 0;
         yOffSet = 0;
+
+        notInit = true;
     }
 
 
@@ -78,21 +81,22 @@ public class DynamicRule extends Rule {
     ////CONWAYS GAME OF LIFE RULES
 
     private boolean isExpandedAllWays() {
-        if (expandedDown && expandedRight) {
+        if (expandedDown && expandedRight && expandedLeft && expandedUp) {
             return true;
         }
         return false;
     }
 
-    public void initiateBoard() {
-        conwaysBoard = new ArrayList<List<Byte>>();
+    private List<List<Byte>> initBoard() {
+        List<List<Byte>> newBoard = new ArrayList<>();
         for (int i = 0; i < currentBoard.size() ; i++) {
-            List<Byte> row = new ArrayList<Byte>();
+            List<Byte> row = new ArrayList<>();
             for (int j = 0; j < currentBoard.get(0).size(); j++) {
                 row.add((byte) 0);
             }
-            this.conwaysBoard.add(row);
+            newBoard.add(row);
         }
+        return newBoard;
     }
 
     /*
@@ -142,14 +146,24 @@ public class DynamicRule extends Rule {
     public List<List<Byte>> applyBoardRules() {
         expandedDown = false;
         expandedRight = false;
+        expandedLeft = false;
+        expandedUp = false;
 
-        conwaysBoard = new ArrayList<List<Byte>>();
-        for (int i = 0; i < currentBoard.size() ; i++) {
-            List<Byte> row = new ArrayList<Byte>();
-            for (int j = 0; j < currentBoard.get(0).size(); j++) {
-                row.add((byte) 0);
-            }
-            this.conwaysBoard.add(row);
+        conwaysBoard = initBoard();
+
+        if (needsDownShift && needsRightShift) {
+            shiftAllRight();
+            shiftAllDown();
+            needsRightShift = false;
+            needsDownShift = false;
+        }
+        else if (needsDownShift) {
+            shiftAllDown();
+            needsDownShift = false;
+        }
+        else if (needsRightShift) {
+            shiftAllRight();
+            needsRightShift = false;
         }
 
         start = 0;
@@ -217,8 +231,8 @@ public class DynamicRule extends Rule {
 
                 if (boardOfActiveCells.get(y).get(x) == 1) {
                     int cellState = currentBoard.get(y).get(x);
-                    if (cellState == 1 && !isExpandedAllWays()) {
-                        expandBoardIfNeeded(y, x);
+                    if (cellState == 1) {
+                        checkIfShiftIsNeeded(y, x);
                     }
                     conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
                 }
@@ -250,8 +264,8 @@ public class DynamicRule extends Rule {
 
                 if (boardOfActiveCells.get(y).get(x) == 1) {
                     int cellState = currentBoard.get(y).get(x);
-                    if (cellState == 1 && !isExpandedAllWays()) {
-                        expandBoardIfNeeded(y, x);
+                    if (cellState == 1) {
+                        checkIfShiftIsNeeded(y, x);
                     }
                     conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
                 }
@@ -267,8 +281,8 @@ public class DynamicRule extends Rule {
 
                 if (boardOfActiveCells.get(y).get(x) == 1) {
                     int cellState = currentBoard.get(y).get(x);
-                    if (cellState == 1 && !isExpandedAllWays()) {
-                        expandBoardIfNeeded(y, x);
+                    if (cellState == 1) {
+                        checkIfShiftIsNeeded(y, x);
                     }
                     conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
                 }
@@ -453,14 +467,7 @@ public class DynamicRule extends Rule {
 
     // Calculates the cells that are active. Active cell is either alive itself or has at least one neighbor.
     public void calculateBoardOfActiveCells() {
-        boardOfActiveCells = new ArrayList<List<Byte>>();
-        for (int i = 0; i < currentBoard.size() ; i++) {
-            List<Byte> row = new ArrayList<Byte>();
-            for (int j = 0; j < currentBoard.get(0).size(); j++) {
-                row.add((byte) 0);
-            }
-            this.boardOfActiveCells.add(row);
-        }
+        boardOfActiveCells = initBoard();
 
         for (int y = 0; y < boardOfActiveCells.size(); y++) {
             for (int x = 0; x < boardOfActiveCells.get(0).size(); x++) {
@@ -539,73 +546,146 @@ public class DynamicRule extends Rule {
     }
     ////////////////////////////////////////////////////////////////
 
-    public void addCols(int numberOfCols) {
+    public List<List<Byte>> addCols (List<List<Byte>> board, int numberOfCols) {
         for (int i = 0; i < numberOfCols; i++) {
-            for (List<Byte> byteLists : currentBoard) {
+            for (List<Byte> byteLists : board) {
                 byteLists.add((byte) 0);
             }
         }
+        return board;
+    }
 
-        for (int i = 0; i < numberOfCols; i++) {
-            for (List<Byte> byteLists : conwaysBoard) {
-                byteLists.add((byte) 0);
+    public List<List<Byte>> addRows(List<List<Byte>> board, int numberOfRows) {
+        for (int i = 0; i < numberOfRows; i++) {
+            List<Byte> row = new ArrayList<Byte>();
+            for (int x = 0; x < board.get(0).size(); x++) {
+                row.add((byte) 0 );
             }
-        }
+            board.add(row);
 
-        for (int i = 0; i < numberOfCols; i++) {
-            for (List<Byte> byteLists : boardOfActiveCells) {
-                byteLists.add((byte) 0);
+        }
+        return board;
+    }
+
+
+    private void checkIfShiftIsNeeded(int y, int x) {
+        if ((y <= 2)) {
+            needsDownShift = true;
+        }
+        if ((x <= 2)) {
+            needsRightShift = true;
+        }
+    }
+
+    protected void expandBoardIfNeeded(int y, int x) {
+
+        // Checks if a cell is close to the edge
+         {
+
+            // All if conditions checks if cell is at the edge
+            // and if an expansion of the board has allready been triggered this gen
+
+            if (y >= (rowCount - 1) || x >= (colCount - 1)) {
+                if ((y == (rowCount)) && (x != (colCount)) && !expandedDown) {
+                    expandedDown = true;
+                } else if ((x == (colCount)) && (y != (rowCount)) && !expandedRight) {
+                    addColsToAllBoards();
+                    expandedRight = true;
+                } else if ((x == (colCount)) && (y == (rowCount)) && !expandedDown && !expandedRight) {
+                    addColsToAllBoards();
+                    addRowsToAllBoards();
+                    expandedRight = true;
+                    expandedDown = true;
+                }
+            }
+            if ((y <= 1) || (x <= 1)) {
+                if ((x == 0) && (y != 0) && !expandedLeft) {
+                    shiftAllRight();
+                } else if ((y == 0) && (x != 0) && !expandedUp) {
+                    shiftAllDown();
+                } else if ((y == 0) && (x == 0) && !expandedUp && !expandedLeft) {
+                    shiftAllRight();
+                    shiftAllDown();
+                }
             }
         }
     }
 
-    public void addRows(int numberOfRows) {
-        for (int i = 0; i < numberOfRows; i++) {
-            List<Byte> row = new ArrayList<Byte>();
-            for (int x = 0; x < currentBoard.get(0).size(); x++) {
-                row.add((byte) 0 );
-            }
-            currentBoard.add(row);
-        }
+    private void shiftAllRight() {
+        addColsToAllBoards();
+        xOffSet += expandNum;
+        currentBoard = shiftBoardRight(currentBoard, shiftNum);
+        conwaysBoard = shiftBoardRight(conwaysBoard, shiftNum);
+        boardOfActiveCells = shiftBoardRight(boardOfActiveCells, shiftNum);
+        expandedLeft = true;
+    }
 
-        for (int i = 0; i < numberOfRows; i++) {
-            List<Byte> row = new ArrayList<Byte>();
-            for (int x = 0; x < conwaysBoard.get(0).size(); x++) {
-                row.add((byte) 0 );
-            }
-            conwaysBoard.add(row);
-        }
-
-        for (int i = 0; i < numberOfRows; i++) {
-            List<Byte> row = new ArrayList<Byte>();
-            for (int x = 0; x < boardOfActiveCells.get(0).size(); x++) {
-                row.add((byte) 0 );
-            }
-            boardOfActiveCells.add(row);
-        }
-
+    private void shiftAllDown() {
+        addRowsToAllBoards();
+        yOffSet += expandNum;
+        currentBoard = shifBoardDown(currentBoard, shiftNum);
+        conwaysBoard = shifBoardDown(conwaysBoard, shiftNum);
+        boardOfActiveCells = shifBoardDown(boardOfActiveCells, shiftNum);
+        expandedUp = true;
 
     }
 
-    // Method works but is not in place when first thing hits the curbs.
-    public void expandBoardIfNeeded(int y, int x) {
+    private void addColsToAllBoards() {
+        currentBoard = addCols(currentBoard, expandNum);
+        conwaysBoard = addCols(conwaysBoard, expandNum);
+        boardOfActiveCells = addCols(boardOfActiveCells, expandNum);
+    }
 
-        if (y >= (rowCount - 1) || x >= (colCount - 1)) {
-            if ((y == (rowCount)) && (x != (colCount)) && !expandedDown) {
-                addRows(expandNum);
-                expandedDown = true;
-            }
-            else if ((x == (colCount)) && (y != (rowCount)) && !expandedRight) {
-                addCols(expandNum);
-                expandedRight = true;
-            }
-            else if ((x == (colCount)) && (y == (rowCount)) && !expandedDown && !expandedRight) {
-                addCols(expandNum);
-                addRows(expandNum);
-                expandedRight = true;
-                expandedDown = true;
+    private void addRowsToAllBoards() {
+        currentBoard = addRows(currentBoard, expandNum);
+        conwaysBoard = addRows(conwaysBoard, expandNum);
+        boardOfActiveCells = addRows(boardOfActiveCells, expandNum);
+    }
+
+
+
+    private List<List<Byte>> shiftBoardRight(List<List<Byte>> board, int shiftNum) {
+        List<List<Byte>> newBoard = new ArrayList<>();
+
+        for (int y = 0; y < board.size(); y++) {
+            List<Byte> temp = new ArrayList<>();
+            newBoard.add(temp);
+        }
+
+        newBoard = addCols(newBoard, shiftNum + board.get(0).size());
+
+        System.out.println("shiftNum = " + shiftNum);
+        System.out.println("newBoard size: y = " + newBoard.size() + " x = " + newBoard.get(0).size());
+        System.out.println("board size: y = " + board.size() + " x = " + board.get(0).size());
+
+        for (int y = 0; y < board.size(); y++) {
+            for (int x = 0; x < board.get(y).size(); x++) {
+                newBoard.get(y).set(x + shiftNum, (board.get(y).get(x)));
             }
         }
 
+        return newBoard;
     }
+
+    private List<List<Byte>> shifBoardDown(List<List<Byte>> board, int shiftNum) {
+        List<List<Byte>> newBoard = new ArrayList<>();
+
+        for (int y = 0; y < board.size() + shiftNum; y++) {
+            List<Byte> temp = new ArrayList<>();
+            newBoard.add(temp);
+        }
+
+        newBoard = addCols(newBoard, board.get(0).size());
+
+        for (int y = 0; y < board.size(); y++) {
+            for(int x = 0; x < board.get(y).size(); x++) {
+                newBoard.get(y + shiftNum).set(x, (board.get(y).get(x)));
+            }
+        }
+
+        return newBoard;
+    }
+
+
+
 }
