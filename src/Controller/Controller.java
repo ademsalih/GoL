@@ -188,10 +188,10 @@ public class Controller implements Initializable {
         rule.calculateBoardOfActiveCells();
         tempArr = rule.conwaysBoardRules();
         boardObj.setBoard(tempArr);
-
         boardObj.drawBoard();
 
         double timeTaken = System.currentTimeMillis() - time;
+
         System.out.println("conwaysBoardRules: " + timeTaken);
 
         counter++;
