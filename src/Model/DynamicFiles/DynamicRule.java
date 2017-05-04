@@ -21,6 +21,10 @@ public class DynamicRule extends Rule {
     Thread thread2;
     Thread thread3;
     Thread thread4;
+    Thread thread5;
+    Thread thread6;
+    Thread thread7;
+    Thread thread8;
 
     private int rowCount;
     private int colCount;
@@ -127,6 +131,11 @@ public class DynamicRule extends Rule {
     private int sector2;
     private int sector3;
     private int sector4;
+    private int sector5;
+    private int sector6;
+    private int sector7;
+    private int sector8;
+
     private int length;
 
 
@@ -148,26 +157,42 @@ public class DynamicRule extends Rule {
 
         start = 0;
         length = conwaysBoard.size();
-        sectorSize = length/4;
+        sectorSize = length/8;
         sector2 = sectorSize;
         sector3 = sectorSize*2;
         sector4 = sectorSize*3;
+        sector5 = sectorSize*4;
+        sector6 = sectorSize*5;
+        sector7 = sectorSize*6;
+        sector8 = sectorSize*7;
 
         thread1 = new Thread(this::sector1);
         thread2 = new Thread(this::sector2);
         thread3 = new Thread(this::sector3);
         thread4 = new Thread(this::sector4);
+        thread5 = new Thread(this::sector5);
+        thread6 = new Thread(this::sector6);
+        thread7 = new Thread(this::sector7);
+        thread8 = new Thread(this::sector8);
 
         thread1.start();
         thread2.start();
         thread3.start();
         thread4.start();
+        thread5.start();
+        thread6.start();
+        thread7.start();
+        thread8.start();
 
         try {
             thread1.join();
             thread2.join();
             thread3.join();
             thread4.join();
+            thread5.join();
+            thread6.join();
+            thread7.join();
+            thread8.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -241,6 +266,74 @@ public class DynamicRule extends Rule {
     public void sector4() {
 
         for (int y = sector4; y < length; y++) {
+            for (int x = 0; x < currentBoard.get(0).size(); x++) {
+
+                if (boardOfActiveCells.get(y).get(x) == 1) {
+                    int cellState = currentBoard.get(y).get(x);
+                    if (cellState == 1 && !isExpandedAllWays()) {
+                        expandBoardIfNeeded(y, x);
+                    }
+                    conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
+                }
+            }
+        }
+
+    }
+
+    public void sector5() {
+
+        for (int y = sector5; y < length; y++) {
+            for (int x = 0; x < currentBoard.get(0).size(); x++) {
+
+                if (boardOfActiveCells.get(y).get(x) == 1) {
+                    int cellState = currentBoard.get(y).get(x);
+                    if (cellState == 1 && !isExpandedAllWays()) {
+                        expandBoardIfNeeded(y, x);
+                    }
+                    conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
+                }
+            }
+        }
+
+    }
+
+    public void sector6() {
+
+        for (int y = sector6; y < length; y++) {
+            for (int x = 0; x < currentBoard.get(0).size(); x++) {
+
+                if (boardOfActiveCells.get(y).get(x) == 1) {
+                    int cellState = currentBoard.get(y).get(x);
+                    if (cellState == 1 && !isExpandedAllWays()) {
+                        expandBoardIfNeeded(y, x);
+                    }
+                    conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
+                }
+            }
+        }
+
+    }
+
+    public void sector7() {
+
+        for (int y = sector7; y < length; y++) {
+            for (int x = 0; x < currentBoard.get(0).size(); x++) {
+
+                if (boardOfActiveCells.get(y).get(x) == 1) {
+                    int cellState = currentBoard.get(y).get(x);
+                    if (cellState == 1 && !isExpandedAllWays()) {
+                        expandBoardIfNeeded(y, x);
+                    }
+                    conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
+                }
+            }
+        }
+
+    }
+
+    public void sector8() {
+
+        for (int y = sector8; y < length; y++) {
             for (int x = 0; x < currentBoard.get(0).size(); x++) {
 
                 if (boardOfActiveCells.get(y).get(x) == 1) {
