@@ -70,31 +70,38 @@ public class DynamicRule extends Rule {
         return false;
     }
 
+    private List<List<Byte>> initBoard() {
+        List<List<Byte>> newBoard = new ArrayList<>();
+        for (int i = 0; i < currentBoard.size() ; i++) {
+            List<Byte> row = new ArrayList<>();
+            for (int j = 0; j < currentBoard.get(0).size(); j++) {
+                row.add((byte) 0);
+            }
+            newBoard.add(row);
+        }
+        return newBoard;
+    }
+
     public List<List<Byte>> applyBoardRules() {
         expandedDown = false;
         expandedRight = false;
         expandedLeft = false;
         expandedUp = false;
 
-        conwaysBoard = new ArrayList<List<Byte>>();
-        for (int i = 0; i < currentBoard.size() ; i++) {
-            List<Byte> row = new ArrayList<Byte>();
-            for (int j = 0; j < currentBoard.get(0).size(); j++) {
-                row.add((byte) 0);
-            }
-            this.conwaysBoard.add(row);
-        }
+        conwaysBoard = initBoard();
+        //boardOfActiveCells = initBoard();
 
 
         for (int y = 0; y < currentBoard.size(); y++) {
             for (int x = 0; x < currentBoard.get(0).size(); x++) {
 
-                if (boardOfActiveCells.get(y).get(x) == 1) {
-                    int cellState = currentBoard.get(y).get(x);
+                int cellState = currentBoard.get(y).get(x);
 
-                    if (cellState == 1 && !isExpandedAllWays()) {
-                        expandBoardIfNeeded(y, x);
-                    }
+                if (cellState == 1 && !isExpandedAllWays()) {
+                    expandBoardIfNeeded(y, x);
+                }
+                //conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
+                if (boardOfActiveCells.get(y).get(x) == 1) {
                     conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
                 }
 
@@ -208,13 +215,7 @@ public class DynamicRule extends Rule {
     // Calculates the cells that are active. Active cell is either alive itself or has at least one neighbor.
     public void calculateBoardOfActiveCells() {
         boardOfActiveCells = new ArrayList<List<Byte>>();
-        for (int i = 0; i < currentBoard.size() ; i++) {
-            List<Byte> row = new ArrayList<Byte>();
-            for (int j = 0; j < currentBoard.get(0).size(); j++) {
-                row.add((byte) 0);
-            }
-            this.boardOfActiveCells.add(row);
-        }
+        boardOfActiveCells = initBoard();
 
         for (int y = 0; y < boardOfActiveCells.size(); y++) {
             for (int x = 0; x < boardOfActiveCells.get(0).size(); x++) {
@@ -337,49 +338,48 @@ public class DynamicRule extends Rule {
         }
         if ((y <= 1) || (x <= 1)) {
             if ((x == 0) && (y != 0) && !expandedLeft) {
-                addColsToAllBoards();
-                xOffSet += expandNum;
-                currentBoard = shiftBoardRight(currentBoard, shiftNum);
-                conwaysBoard = shiftBoardRight(conwaysBoard, shiftNum);
-                //boardOfActiveCells = shiftBoardRight(boardOfActiveCells, shiftNum);
-                expandedLeft = true;
+                shiftAllRight();
             }
             else if ((y == 0) && (x != 0) && !expandedUp) {
-                addRowsToAllBoards();
-                yOffSet += expandNum;
-                currentBoard = shifBoardDown(currentBoard, shiftNum);
-                conwaysBoard = shifBoardDown(conwaysBoard, shiftNum);
-                //boardOfActiveCells = shifBoardDown(boardOfActiveCells, shiftNum);
-                expandedUp = true;
+                shiftAllDown();
             }
             else if ((y == 0) && (x == 0) && !expandedUp && !expandedLeft){
-                addColsToAllBoards();
-                xOffSet += expandNum;
-                currentBoard = shiftBoardRight(currentBoard, shiftNum);
-                conwaysBoard = shiftBoardRight(conwaysBoard, shiftNum);
-                //boardOfActiveCells = shiftBoardRight(boardOfActiveCells, shiftNum);
-                expandedLeft = true;
-                addRowsToAllBoards();
-                yOffSet += expandNum;
-                currentBoard = shifBoardDown(currentBoard, shiftNum);
-                conwaysBoard = shifBoardDown(conwaysBoard, shiftNum);
-                //boardOfActiveCells = shifBoardDown(boardOfActiveCells, shiftNum);
-                expandedUp = true;
+                shiftAllRight();
+                shiftAllDown();
             }
         }
+
+    }
+
+    private void shiftAllRight() {
+        addColsToAllBoards();
+        xOffSet += expandNum;
+        currentBoard = shiftBoardRight(currentBoard, shiftNum);
+        conwaysBoard = shiftBoardRight(conwaysBoard, shiftNum);
+        boardOfActiveCells = shiftBoardRight(boardOfActiveCells, shiftNum);
+        expandedLeft = true;
+    }
+
+    private void shiftAllDown() {
+        addRowsToAllBoards();
+        yOffSet += expandNum;
+        currentBoard = shifBoardDown(currentBoard, shiftNum);
+        conwaysBoard = shifBoardDown(conwaysBoard, shiftNum);
+        boardOfActiveCells = shifBoardDown(boardOfActiveCells, shiftNum);
+        expandedUp = true;
 
     }
 
     private void addColsToAllBoards() {
         currentBoard = addCols(currentBoard, expandNum);
         conwaysBoard = addCols(conwaysBoard, expandNum);
-        //boardOfActiveCells = addCols(boardOfActiveCells, expandNum);
+        boardOfActiveCells = addCols(boardOfActiveCells, expandNum);
     }
 
     private void addRowsToAllBoards() {
         currentBoard = addRows(currentBoard, expandNum);
         conwaysBoard = addRows(conwaysBoard, expandNum);
-        //boardOfActiveCells = addRows(boardOfActiveCells, expandNum);
+        boardOfActiveCells = addRows(boardOfActiveCells, expandNum);
     }
 
     private List<List<Byte>> shiftBoardRight(List<List<Byte>> board, int shiftNum) {
@@ -390,11 +390,15 @@ public class DynamicRule extends Rule {
             newBoard.add(temp);
         }
 
-        newBoard = addCols(newBoard, shiftNum + board.size());
+        newBoard = addCols(newBoard, shiftNum + board.get(0).size());
+
+        System.out.println("shiftNum = " + shiftNum);
+        System.out.println("newBoard size: y = " + newBoard.size() + " x = " + newBoard.get(0).size());
+        System.out.println("board size: y = " + board.size() + " x = " + board.get(0).size());
 
         for (int y = 0; y < board.size(); y++) {
-            for (int x = (shiftNum); x < newBoard.get(y).size(); x++) {
-                newBoard.get(y).set(x, (board.get(y).get(x - (shiftNum ))));
+            for (int x = 0; x < board.get(y).size(); x++) {
+                newBoard.get(y).set(x + shiftNum, (board.get(y).get(x)));
             }
         }
 
@@ -410,10 +414,6 @@ public class DynamicRule extends Rule {
         }
 
         newBoard = addCols(newBoard, board.get(0).size());
-
-        System.out.println("shitNum = " + shiftNum);
-        System.out.println("newBoard size: y = " + newBoard.size() + " x = " + newBoard.get(0).size());
-        System.out.println("board size: y = " + board.size() + " x = " + board.get(0).size());
 
         for (int y = 0; y < board.size(); y++) {
             for(int x = 0; x < board.get(y).size(); x++) {
