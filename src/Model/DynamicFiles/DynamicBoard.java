@@ -126,8 +126,6 @@ public class DynamicBoard extends Board {
 
     }
 
-
-
     public void setBoard(List<List<Byte>> board) {
         this.board = board;
 

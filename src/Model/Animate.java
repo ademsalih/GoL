@@ -6,6 +6,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
+import java.awt.event.ActionEvent;
+
 /**
  * This class handles everything with Animation and buttons that control the animation.
  */
@@ -16,16 +18,18 @@ public class Animate {
     public int generations;
     public Timeline timeline;
     public boolean status;
-    public KeyFrame keyFrame;
     public int animationRate;
+    public KeyFrame keyFrame;
 
-    public Animate() {
+    public Animate(KeyFrame keyFrame) {
         this.speed = 1000;
         this.animationRate = 1;
         this.generations = Animation.INDEFINITE;
-        this.timeline = new Timeline(new KeyFrame(Duration.millis(speed), ae -> Controller.instance.nextGeneration() ));
+        this.keyFrame = keyFrame;
+        this.timeline = new Timeline(this.keyFrame);
         this.status = false;
         timeline.setCycleCount(generations);
+        keyFrame.getTime().add(Duration.millis(speed));
     }
 
     public void setSpeed(int speed) {
@@ -62,6 +66,12 @@ public class Animate {
             stopAnimation();
         }
 
+    }
+
+    public String getState(){
+        if (timeline.getStatus() == Animation.Status.RUNNING)
+            return "Stop";
+        return "Start";
     }
 
     public void startAnimation() {

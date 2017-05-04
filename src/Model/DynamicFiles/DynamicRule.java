@@ -2,7 +2,13 @@ package Model.DynamicFiles;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
 import Model.Abstract.Rule;
+import javafx.concurrent.Task;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 public class DynamicRule extends Rule {
 
@@ -10,6 +16,12 @@ public class DynamicRule extends Rule {
     public List<List<Byte>> currentBoard;
     public List<List<Byte>> conwaysBoard;
     public List<List<Byte>> boardOfActiveCells;
+    public ExecutorService executorService = Executors.newFixedThreadPool(4);
+
+    Thread thread1;
+    Thread thread2;
+    Thread thread3;
+    Thread thread4;
 
     private int rowCount;
     private int colCount;
@@ -30,6 +42,11 @@ public class DynamicRule extends Rule {
 
         xOffSet = 0;
         yOffSet = 0;
+
+        //executorService.execute(sector1Calc);
+        //executorService.execute(sector2Calc);
+        //executorService.execute(sector3Calc);
+        //executorService.execute(sector4Calc);
     }
 
 
@@ -69,7 +86,58 @@ public class DynamicRule extends Rule {
         return false;
     }
 
+    public void initiateBoard() {
+        conwaysBoard = new ArrayList<List<Byte>>();
+        for (int i = 0; i < currentBoard.size() ; i++) {
+            List<Byte> row = new ArrayList<Byte>();
+            for (int j = 0; j < currentBoard.get(0).size(); j++) {
+                row.add((byte) 0);
+            }
+            this.conwaysBoard.add(row);
+        }
+    }
+
+
     public List<List<Byte>> conwaysBoardRules() {
+        expandedDown = false;
+        expandedRight = false;
+
+        long start = System.currentTimeMillis();
+
+        conwaysBoard = new ArrayList<List<Byte>>();
+
+        for (int y = 0; y < currentBoard.size(); y++) {
+            List<Byte> row = new ArrayList<Byte>();
+            for (int x = 0; x < currentBoard.get(0).size(); x++) {
+
+                if (boardOfActiveCells.get(y).get(x) == 1) {
+
+                    int cellState = currentBoard.get(y).get(x);
+                    if (cellState == 1 && !isExpandedAllWays()) {
+                        expandBoardIfNeeded(y, x);
+                    }
+                    conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
+                }
+            }
+        }
+        long stop = System.currentTimeMillis();
+
+        System.out.println("TID" + (stop - start));
+        return conwaysBoard;
+    }
+
+
+
+    private int start;
+    private int sectorSize;
+    private int sector2;
+    private int sector3;
+    private int sector4;
+    private int length;
+
+    /*
+    public List<List<Byte>> conwaysBoardRules() {
+
         expandedDown = false;
         expandedRight = false;
 
@@ -82,28 +150,167 @@ public class DynamicRule extends Rule {
             this.conwaysBoard.add(row);
         }
 
+        for (int i = 0; i < currentBoard.size() ; i++) {
+            List<Byte> row = new ArrayList<Byte>();
+            for (int j = 0; j < currentBoard.get(0).size(); j++) {
+                row.add((byte) 0);
+            }
+            this.conwaysBoard.add(row);
+        }
 
-        for (int y = 0; y < currentBoard.size(); y++) {
+        start = 0;
+        length = conwaysBoard.size();
+        sectorSize = length/4;
+        sector2 = sectorSize;
+        sector3 = sectorSize*2;
+        sector4 = sectorSize*3;
+
+
+        executorService.execute(sector1Calc);
+        executorService.execute(sector2Calc);
+        executorService.execute(sector3Calc);
+        executorService.execute(sector4Calc);
+
+
+        executorService.shutdown();
+        try {
+            executorService.awaitTermination(50, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        printAliveCells();
+        return conwaysBoard;
+    }
+    */
+
+
+    public void printAliveCells(){
+        int n=0;
+        for (int i = 0; i < currentBoard.size() ; i++) {
+            for (int j = 0; j < currentBoard.get(0).size(); j++) {
+                if (conwaysBoard.get(i).get(j) == 1) n++;
+            }
+        }
+        System.out.println("ALIVE CELLS: " + n);
+    }
+
+
+    Task sector1Calc = new Task() {
+        @Override
+        protected Object call() throws Exception {
+            sector1();
+            return null;
+        }
+    };
+
+
+    Task sector2Calc = new Task() {
+        @Override
+        protected Object call() throws Exception {
+            sector2();
+            return null;
+        }
+    };
+
+    Task sector3Calc = new Task() {
+        @Override
+        protected Object call() throws Exception {
+            sector3();
+            return null;
+        }
+    };
+
+    Task sector4Calc = new Task() {
+        @Override
+        protected Object call() throws Exception {
+            sector4();
+            return null;
+        }
+    };
+
+
+    public void sector1() {
+        for (int y = start; y < sector2; y++) {
             for (int x = 0; x < currentBoard.get(0).size(); x++) {
 
                 int cellState = currentBoard.get(y).get(x);
-
                 if (cellState == 1 && !isExpandedAllWays()) {
                     expandBoardIfNeeded(y, x);
                 }
-
                 conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
-                if (boardOfActiveCells.get(y).get(x) == 1) {
-                    conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
-                }
 
+                /*if (boardOfActiveCells.get(y).get(x) == 1) {
 
+                }*/
             }
-
         }
 
-        return conwaysBoard;
     }
+
+    public void sector2() {
+
+        for (int y = sector2; y < sector3; y++) {
+            for (int x = 0; x < currentBoard.get(0).size(); x++) {
+
+                int cellState = currentBoard.get(y).get(x);
+                if (cellState == 1 && !isExpandedAllWays()) {
+                    expandBoardIfNeeded(y, x);
+                }
+                conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
+
+                /*if (boardOfActiveCells.get(y).get(x) == 1) {
+
+                }*/
+            }
+        }
+
+    }
+
+    public void sector3() {
+
+        for (int y = sector3; y < sector4; y++) {
+            for (int x = 0; x < currentBoard.get(0).size(); x++) {
+
+                int cellState = currentBoard.get(y).get(x);
+                if (cellState == 1 && !isExpandedAllWays()) {
+                    expandBoardIfNeeded(y, x);
+                }
+                conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
+
+                /*if (boardOfActiveCells.get(y).get(x) == 1) {
+
+                }*/
+            }
+        }
+
+    }
+
+    public void sector4() {
+
+        for (int y = sector4; y < length; y++) {
+            for (int x = 0; x < currentBoard.get(0).size(); x++) {
+
+                int cellState = currentBoard.get(y).get(x);
+                if (cellState == 1 && !isExpandedAllWays()) {
+                    expandBoardIfNeeded(y, x);
+                }
+                conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
+                /*if (boardOfActiveCells.get(y).get(x) == 1) {
+
+                }*/
+            }
+        }
+
+    }
+
+
+
+
+
+
+
+
 
     public boolean neighborOver(int y, int x) {
 

@@ -7,7 +7,9 @@ import Model.StaticFiles.StaticRLEParser;
 import Model.StaticFiles.StaticRule;
 import Model.DynamicFiles.DynamicBoard;
 import View.Main;
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,12 +23,19 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import Model.DynamicFiles.DynamicRule;
+import javafx.util.Duration;
 
 /**
  * Controller class that handles user inputs i.e. button click and slider
@@ -71,23 +80,26 @@ public class Controller implements Initializable {
 
     public Stage urlStage;
 
+    List<List<Byte>> tempArr;
+
+    public KeyFrame keyFrame;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+
         instance = this;
         titleName = "Game of Life";
-
-        plist = new ArrayList<Point>();
-
         draw();
         setID();
         initializeSliders();
-        animate = new Animate();
+        plist = new ArrayList<Point>();
         rule = new DynamicRule();
 
+        keyFrame = new KeyFrame(Duration.millis(1000), ae -> nextGeneration());
+
+        animate = new Animate(keyFrame);
+
         animate.setSpeed(10);
-
-
     }
 
     // Sets the ID of the objects in this class for CSS styling.
@@ -152,19 +164,30 @@ public class Controller implements Initializable {
         boardObj.drawBoard();
     }
 
+
+    /*public void nextGenerationOptimized() {
+        double time = System.currentTimeMillis();
+
+        rule.setCurrentBoard(boardObj.board);
+        //rule.calculateBoardOfActiveCells();
+        tempArr = rule.conwaysBoardRules(); // this needs to go faster
+        boardObj.setBoard(tempArr);
+        boardObj.drawBoard();
+
+
+        double timeTaken = System.currentTimeMillis() - time;
+        System.out.println("conwaysBoardRules: " + timeTaken);
+    }*/
+
+
     // Uses the StaticRule class to iterate to next generation and draws the game.
     public void nextGeneration() {
-
         double time = System.currentTimeMillis();
 
         rule.setCurrentBoard(boardObj.getBoard());
-
         rule.calculateBoardOfActiveCells();
-
-        List<List<Byte>> tempArr = rule.conwaysBoardRules();
-
+        tempArr = rule.conwaysBoardRules();
         boardObj.setBoard(tempArr);
-
 
         boardObj.drawBoard();
 
@@ -173,8 +196,6 @@ public class Controller implements Initializable {
 
         counter++;
         Main.getStage().setTitle(titleName + " (" + counter + ")");
-
-
     }
 
     public void updateTitle(String newName) {
@@ -261,6 +282,7 @@ public class Controller implements Initializable {
     // Toggles the "Start/Stop" button.
     public void startStopButton() {
         animate.startStopButtonAction();
+        startStopButton.setText(animate.getState());
     }
 
     // Toggles the grid using boolean value in StaticBoard class.
