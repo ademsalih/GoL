@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane fx:id="gridPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="569.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/" fx:controller="Controller.Controller">
+<GridPane fx:id="gridPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="569.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Controller">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="700.0" minWidth="700.0" prefWidth="700.0" />
       <ColumnConstraints />
@@ -47,7 +47,19 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Rules">
               <items>
-                <MenuItem mnemonicParsing="false" text="Conway's Life (B3S23)" />
+                  <CheckMenuItem mnemonicParsing="false" onAction="#toggleGrid" selected="true" text="Conway's Life (B3S23)" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <CheckMenuItem mnemonicParsing="false" onAction="#toggleGrid" text="Seeds (B2/S0)" />
+                  <CheckMenuItem mnemonicParsing="false" onAction="#toggleGrid" text="Flock (B3/S12)" />
+                  <CheckMenuItem mnemonicParsing="false" onAction="#toggleGrid" text="2x2 (B36/S125)" />
+                  <CheckMenuItem mnemonicParsing="false" onAction="#toggleGrid" text="Maze (B3/S12345)" />
+                  <CheckMenuItem mnemonicParsing="false" onAction="#toggleGrid" text="Move (B368/S245)" />
+                  <CheckMenuItem mnemonicParsing="false" onAction="#toggleGrid" text="HighLife (B36/S23)" />
+                  <CheckMenuItem mnemonicParsing="false" onAction="#toggleGrid" text="Mazectric (B3/S1234)" />
+                  <CheckMenuItem mnemonicParsing="false" onAction="#toggleGrid" text="Franklin (B1357/S02468)" />
+                  <CheckMenuItem mnemonicParsing="false" onAction="#toggleGrid" text="Replicator (B1357/S1357)" />
+                  <CheckMenuItem mnemonicParsing="false" onAction="#toggleGrid" text="Day &amp; Night (B3678/S34678)" />
+                  <CheckMenuItem mnemonicParsing="false" onAction="#toggleGrid" text="Life without death (B3/S012345678)" />
               </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Help">

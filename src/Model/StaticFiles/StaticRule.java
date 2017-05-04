@@ -21,7 +21,6 @@ public class StaticRule extends Rule {
         this.currentBoard = currentBoard;
     }
 
-
     public byte[][] getCurrentBoard() {
         return this.currentBoard;
     }
@@ -41,11 +40,6 @@ public class StaticRule extends Rule {
             }
         }
         return output;
-    }
-
-    public static void setRules(int[] s, int[] b) {
-        survivor = s;
-        born = b;
     }
 
     public void checkRule (int[] arr) {
@@ -92,7 +86,6 @@ public class StaticRule extends Rule {
                     int cellState = currentBoard[y][x];
                     conwaysBoard[y][x] = checkIfOnOrOff(countNeighbor(y, x), cellState);
                 }
-
             }
         }
         return conwaysBoard;

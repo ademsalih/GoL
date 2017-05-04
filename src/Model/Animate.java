@@ -19,11 +19,12 @@ public class Animate {
     public KeyFrame keyFrame;
     public int animationRate;
 
-    public Animate() {
+    public Animate(KeyFrame keyFrame) {
+        this.keyFrame = keyFrame;
         this.speed = 1000;
         this.animationRate = 1;
         this.generations = Animation.INDEFINITE;
-        this.timeline = new Timeline(new KeyFrame(Duration.millis(speed), ae -> Controller.instance.nextGeneration() ));
+        this.timeline = new Timeline(keyFrame);
         this.status = false;
         timeline.setCycleCount(generations);
     }
@@ -49,38 +50,30 @@ public class Animate {
         this.status = status;
     }
 
-    public void getAnimationStatus() {
-        System.out.println(this.status);
+    public boolean getAnimationStatus() {
+        return this.status;
     }
 
     public void startStopButtonAction() {
 
         if ( timeline.getStatus() == Animation.Status.STOPPED ) {
             startAnimation();
+            status = false;
 
         } else if ( timeline.getStatus() == Animation.Status.RUNNING) {
             stopAnimation();
+            status = true;
         }
 
     }
 
     public void startAnimation() {
         timeline.play();
-        switchToStop();
     }
 
     public void stopAnimation() {
         timeline.stop();
-        switchToStart();
     }
 
-    public void switchToStop() {
-        Controller.instance.getStartStopButton().setText("Stop");
-        Controller.instance.getStartStopButton().setId("stopButton");
-    }
 
-    public void switchToStart() {
-        Controller.instance.getStartStopButton().setText("Start");
-        Controller.instance.getStartStopButton().setId("startButton");
-    }
 }

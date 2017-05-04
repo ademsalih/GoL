@@ -5,6 +5,8 @@ import Model.DynamicFiles.DynamicRLEParser;
 import Model.StaticFiles.StaticRule;
 import Model.DynamicFiles.DynamicBoard;
 import View.Main;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import Model.DynamicFiles.DynamicRule;
+import javafx.util.Duration;
 
 /**
  * Controller class that handles user inputs i.e. button click and slider
@@ -55,7 +58,7 @@ public class Controller implements Initializable {
     public StaticRLEParser rleParser;*/
 
     private List<Point> plist;
-    public Timeline timeline;
+    //public Timeline timeline;
     public GraphicsContext gc;
     public static Controller instance;
     public Stage stage;
@@ -80,7 +83,8 @@ public class Controller implements Initializable {
         draw();
         setID();
         initializeSliders();
-        animate = new Animate();
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(1000), actionEvent -> nextGeneration());
+        animate = new Animate(keyFrame);
         rule = new DynamicRule();
 
         animate.setSpeed(10);
@@ -136,11 +140,8 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
 
-
-        // Disse "sender" fargene på brettet over til fargevelger! Må justeres for dynamic board
-        //ColorStageController.instance.setCellColorPicker(boardObj.getcellColor());
-        //ColorStageController.instance.setBackgroundColorPicker(boardObj.getBackgroundColor());
-
+        ColorStageController.instance.setCellColorPicker(boardObj.getcellColor());
+        ColorStageController.instance.setBackgroundColorPicker(boardObj.getBackgroundColor());
     }
 
     // Method that uses the draw method of StaticBoard class for drawing the game to canvas.
@@ -162,7 +163,6 @@ public class Controller implements Initializable {
         List<List<Byte>> tempArr = rule.applyBoardRules();
 
         boardObj.setBoard(tempArr);
-
 
         boardObj.drawBoard();
 
@@ -252,14 +252,20 @@ public class Controller implements Initializable {
         return this.startStopButton;
     }
 
-    public Timeline getTimeline() {
-        return this.timeline;
-    }
-
     // Toggles the "Start/Stop" button.
     public void startStopButton() {
         animate.startStopButtonAction();
+        if ( animate.getAnimationStatus() == false ) {
+            startStopButton.setText("Stop");
+            startStopButton.setId("stopButton");
+
+
+        } else if ( animate.getAnimationStatus() == true) {
+            startStopButton.setText("Start");
+            startStopButton.setId("startButton");
+        }
     }
+
 
     // Toggles the grid using boolean value in StaticBoard class.
     public void toggleGrid() {
@@ -317,6 +323,10 @@ public class Controller implements Initializable {
             }
         }
 
+
+    }
+
+    public void unCheckAll() {
 
     }
 
