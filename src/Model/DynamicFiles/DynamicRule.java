@@ -139,7 +139,7 @@ public class DynamicRule extends Rule {
     private int length;
 
 
-    public List<List<Byte>> conwaysBoardRules() {
+    public List<List<Byte>> applyBoardRules() {
         expandedDown = false;
         expandedRight = false;
 
