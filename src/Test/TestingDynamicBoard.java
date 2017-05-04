@@ -1,5 +1,6 @@
 package Test;
 
+import Controller.Controller;
 import Model.DynamicFiles.DynamicBoard;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -11,7 +12,7 @@ import org.junit.jupiter.api.Test;
  */
 public class TestingDynamicBoard {
 
-    @FXML public Canvas canvas;
+    public Canvas canvas = new Canvas(700, 500);
     GraphicsContext gc;
 
     @Test

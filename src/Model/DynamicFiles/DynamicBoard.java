@@ -8,7 +8,7 @@ import Model.Abstract.Board;
 import Model.Point;
 
 /**
- * Created by Narmatha on 11.04.2017.
+ * Represents the Dynamic gameboard
  */
 public class DynamicBoard extends Board {
 
@@ -91,6 +91,12 @@ public class DynamicBoard extends Board {
         return board;
     }
 
+    /**
+     * Counts the number of neighbors surrounding the given cell
+     * @param numberOfRows - number of rows to add on the 2D list (board)
+     * @param board - The 2D list (the board) that is going be added with rows
+     * @return - A 2D list (board) with added rows
+     */
     private List<List<Byte>> addRows(int numberOfRows, List<List<Byte>> board) {
         for (int i = 0; i < numberOfRows; i++) {
             List<Byte> row = new ArrayList<Byte>();
@@ -119,8 +125,6 @@ public class DynamicBoard extends Board {
     }
 
     public void setCellState(int rowy, int colx, byte value) {
-        //Hvis cellen (x,y) er definert utenfor brettet, skal brettet
-        //automatisk utvides slik at brettet inneholder cellen (x,y).
 
         // Checks if cell is outside the margin of the board. Updates the board if needed.
         this.board.get(rowy).set(colx, value);
@@ -131,8 +135,6 @@ public class DynamicBoard extends Board {
 
     }
 
-
-
     public void setBoard(List<List<Byte>> board) {
         this.board = board;
 
@@ -142,7 +144,12 @@ public class DynamicBoard extends Board {
         return board;
     }
 
-    // Draw/undraw a cell depending on its state when we click on the board
+
+    /**
+     * Draws/undraws a cell depending on its state when we click/drag on the board
+     * @param y - y coordinate
+     * @param x - x coordinate
+     */
     public void mouseClickedOrDraggedOnBoard(double x, double y){
         rowcount = board.size();
         columcount = board.get(0).size();
@@ -159,6 +166,7 @@ public class DynamicBoard extends Board {
         drawBoard();
 
     }
+
 
     public void drawBoard() {
 

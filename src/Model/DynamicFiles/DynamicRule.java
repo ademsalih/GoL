@@ -89,15 +89,14 @@ public class DynamicRule extends Rule {
         for (int y = 0; y < currentBoard.size(); y++) {
             for (int x = 0; x < currentBoard.get(0).size(); x++) {
 
-                int cellState = currentBoard.get(y).get(x);
+                if (boardOfActiveCells.get(y).get(x) == 1) {
+                    int cellState = currentBoard.get(y).get(x);
 
-                if (cellState == 1 && !isExpandedAllWays()) {
-                    expandBoardIfNeeded(y, x);
-                }
-                conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
-                /*if (boardOfActiveCells.get(y).get(x) == 1) {
+                    if (cellState == 1 && !isExpandedAllWays()) {
+                        expandBoardIfNeeded(y, x);
+                    }
                     conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
-                }*/
+                }
 
 
             }

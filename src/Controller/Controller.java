@@ -157,7 +157,7 @@ public class Controller implements Initializable {
 
         rule.setCurrentBoard(boardObj.getBoard());
 
-        //rule.calculateBoardOfActiveCells();
+        rule.calculateBoardOfActiveCells();
 
         List<List<Byte>> tempArr = rule.applyBoardRules();
 
