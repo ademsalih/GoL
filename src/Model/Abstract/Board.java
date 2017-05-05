@@ -15,7 +15,7 @@ public abstract class Board {
     protected double xCounter = 0.0;
     protected double yCounter = 0.0;
 
-
+    //what should we write here?
     protected Board(){}
 
     public void setCellColor(Color cellColor) {this.cellColor = cellColor;}
