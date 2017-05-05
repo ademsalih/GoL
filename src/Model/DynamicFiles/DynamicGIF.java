@@ -9,9 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Dynamic GIF objects which can export dynamic boards that expand.
- * This class contains variables and a Progress Bar for visual representation
- * of the export process.
+ * <h1>DynamicGIF</h1>
+ * <h3>Dynamic GIF objects which can export dynamic boards that expand.</h3>
+ * <p>The Dynamic Board pattern from the main window is copied over to local Dynamic Board. That way when the pattern
+ * in this class is iterating it does not affect the main pattern in the background. The gif is written with the
+ * library GIFLib.jar which is provided for use in this class. The gif is written with a recursive method which iterates
+ * as long as the generation variable is not zero.
+ * This class contains variables and a Progress Bar for visual representation of the export process.</p>
  */
 
 public class DynamicGIF {
