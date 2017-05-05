@@ -155,8 +155,11 @@ public class DynamicBoard extends Board {
     }
 
     public byte getCellState(int y, int x) throws ArrayIndexOutOfBoundsException {
-        if (y < 0 || y >= board.get(0).size() || x < 0 || x >= board.size()) {
-            throw new ArrayIndexOutOfBoundsException("Cell does not exsist");
+        if (y >= board.size() || x >= board.get(0).size()) {
+            return 2;
+        }
+        else if (y < 0 || x < 0){
+            return 3;
         }
         else {
             return this.board.get(y).get(x);
@@ -182,20 +185,16 @@ public class DynamicBoard extends Board {
     public void mouseClickedOrDraggedOnBoard(double x, double y){
         colx = (int) ((x/cellSize));
         rowy = (int) ((y/cellSize));
-        boolean cellSet = false;
 
-        try {
-            if (getCellState(rowy, colx) == 1) {
-                setCellState(rowy, colx, (byte) 0);
-                cellSet = true;
-            } else {
-                setCellState(rowy, colx, (byte) 1);
-                System.out.println("else");
-            }
+        byte cellState = getCellState(rowy, colx);
+
+        if (cellState == 1) {
+            setCellState(rowy, colx, (byte) 0);
         }
-        catch (ArrayIndexOutOfBoundsException ae) {
+        else if (cellState == 0 || cellState == 2) {
             setCellState(rowy, colx, (byte) 1);
         }
+
 
         drawBoard();
     }
