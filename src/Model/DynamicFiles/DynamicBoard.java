@@ -10,8 +10,9 @@ import Model.Abstract.Board;
 import Model.Point;
 
 /**
- * Represents the Dynamic version of the game board.
- * We use an ArrayList within an ArrayList to represent the dynamic version of our board.
+ * <h1>DynamicBoard</h1>
+ * <h3>Represents the Dynamic version of the game board.</h3>
+ * <p>We use an ArrayList within an ArrayList (2D ArrayList) to represent the dynamic version of our board.</p>
  */
 public class DynamicBoard extends Board {
 
