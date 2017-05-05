@@ -124,6 +124,7 @@ public class GIFController implements Initializable {
 
     // Closes the GIF Export Stage when "Cancel" Button is clicked.
     public void cancelButtonAction() {
+        gif.stop();
         Controller.instance.gifStage.close();
     }
 

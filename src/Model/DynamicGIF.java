@@ -137,7 +137,6 @@ public class DynamicGIF {
 
 
     public void notifyIfExpanded() {
-
         int i = 0;
 
         while (i < generations) {
@@ -147,7 +146,6 @@ public class DynamicGIF {
 
         maxHeight = gifCheckSizeBoard.size();
         maxWidth = gifCheckSizeBoard.get(0).size();
-
     }
 
     // Method used for copying the current board in the game to this class.
@@ -305,6 +303,10 @@ public class DynamicGIF {
         alert.setHeaderText(null);
         alert.setContentText("Select export location!");
         alert.showAndWait();
+    }
+
+    public void stop() {
+        exportThread.stop();
     }
 
 }
