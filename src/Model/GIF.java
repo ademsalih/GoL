@@ -1,6 +1,5 @@
 package Model;
 
-import Model.Abstract.Board;
 import Model.StaticFiles.StaticBoard;
 import Model.StaticFiles.StaticRule;
 import javafx.scene.control.Alert;
@@ -39,7 +38,7 @@ public class GIF {
         this.filename = "/export.gif";
         this.milliseconds = 100;
         this.cellSize = 2;
-        this.cellColor = convertFXToAwtColor(importedStaticBoard.getcellColor());
+        this.cellColor = convertFXToAwtColor(importedStaticBoard.getCellColor());
         this.backgroundColor = convertFXToAwtColor(importedStaticBoard.getBackgroundColor());
     }
 

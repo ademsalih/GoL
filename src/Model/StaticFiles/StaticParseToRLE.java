@@ -2,6 +2,10 @@ package Model.StaticFiles;
 
 import Model.Abstract.ParseToRLE;
 
+/**
+ * Parsers the byte array to a String that can be written as part of a .rle file
+ */
+
 public class StaticParseToRLE extends ParseToRLE {
 
     byte[][] board;

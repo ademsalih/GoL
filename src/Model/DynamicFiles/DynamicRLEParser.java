@@ -5,7 +5,7 @@ import java.util.List;
 import Model.Abstract.RLEParser;
 
 /**
- * Created by patrikkvarmehansen on 29/04/17.
+ * Dynamic RLE Parser. Parses the pattern into a ArrayList.
  */
 public class DynamicRLEParser extends RLEParser{
 

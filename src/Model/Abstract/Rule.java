@@ -1,5 +1,15 @@
 package Model.Abstract;
 
+/**
+ * <h1>Rule</h1>
+ * <h3>The Rule class. Holds the base code for the different rule integrations.</h3>
+ *
+ * <p>The rules are held as 2 int arrays. This way we can run through the arrays with
+ * the neighbor count and check if anything mathces. It makes it easy to do a dynamic
+ * implementation of the rules since the arrays can be switch out with any number of
+ * different ints</p>
+ */
+
 public abstract class Rule {
 
     // The ruleset

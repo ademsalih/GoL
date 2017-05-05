@@ -6,20 +6,22 @@ import java.util.List;
 import Model.Abstract.Rule;
 
 /**
- * DynamicRule performs rules (default:Conway's rules) on the dynamic gameboard.
+ * <h1>Dynamic Rule</h1>
  *
- * We have implementet 4 threads to help with the processing in this case so that we can handle
- * bigger patterns.
+ * <h3>DynamicRule performs rules (default:Conway's rules) on the dynamic gameboard.<h3>
  *
- * To further optimize we have a extra list (boardOfActiveCells) which holds information of which
+ * <p>We have implementet 4 threads to help with the processing in this case so that we can handle
+ * bigger patterns.</p>
+ *
+ * <p>To further optimize we have a extra list (boardOfActiveCells) which holds information of which
  * cells that were affected or near an affected cell of the last generation. We use this to determine
- * which cells that we need to check for neighbors.
+ * which cells that we need to check for neighbors.</p>
  *
- * We chose to have dynamic rule be the one to expand the board while its running.
+ * <p>We chose to have dynamic rule be the one to expand the board while its running.
  * The reason for this is that it is allready going through the ArrayList and it would therefore
  * be easy to have it update booleans along the way if it encountered cells that were on the edge
  * of the board. Then we could easily expand or shift the board at the start of the method that applies
- * rules if a given boolean were true.
+ * rules if a given boolean were true.</p>
  */
 
 public class DynamicRule extends Rule {

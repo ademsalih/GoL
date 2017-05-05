@@ -4,6 +4,10 @@ import Model.Abstract.ParseToRLE;
 
 import java.util.List;
 
+/**
+ * Parses the ArrayList to a String that can then be written as part of a .rle file
+ */
+
 public class DynamicParseToRLE extends ParseToRLE {
 
     List<List<Byte>> board;

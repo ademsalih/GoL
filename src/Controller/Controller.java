@@ -144,7 +144,7 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
 
-        ColorStageController.instance.setCellColorPicker(boardObj.getcellColor());
+        ColorStageController.instance.setCellColorPicker(boardObj.getCellColor());
         ColorStageController.instance.setBackgroundColorPicker(boardObj.getBackgroundColor());
     }
 

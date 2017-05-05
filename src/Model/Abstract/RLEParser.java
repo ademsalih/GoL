@@ -13,10 +13,14 @@ import java.util.regex.Pattern;
 import Model.ReadFile;
 
 /**
- * Handles the parsing of the .rle file and returns both meta data and a game of life board.
+ * <h1>RLE Parser</h1>
+ * <h3>Handles the parsing of the .rle files and returns both meta data and a game of life board.</h3>
  *
- * Unfortunately only the name is used from the metadata, but for future use there are methods
- * for getting the author and comment.
+ * <p>Tried to do as much of the data processing without including the specific board type
+ * it was destinied to.</p>
+ *
+ * <p>Unfortunately only the name is used from the metadata, but for future use there are methods
+ * for getting the author and comment.</p>
  */
 public abstract class RLEParser {
 
@@ -261,7 +265,9 @@ public abstract class RLEParser {
         return null;
     }
 
-    //Runs through the rlePattern and updates the local variable boardInBitString using the updateBitString method.
+    /**
+     * Runs through the rlePattern and updates the local variable boardInBitString using the updateBitString method.
+     */
     public void findCountCellThenUpdate(String rlePattern) {
         for (int i = 0; i < rlePattern.length(); i++) {
 

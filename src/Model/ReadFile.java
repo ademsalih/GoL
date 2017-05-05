@@ -10,7 +10,7 @@ import javafx.stage.FileChooser;
 /**
  * Small help class that reads files into the project
  */
-public class ReadFile extends PopUps {
+public class ReadFile {
 
     /**
      * Method for reading file from URL
@@ -64,7 +64,7 @@ public class ReadFile extends PopUps {
             return selectedFile;
         } catch (Exception e) {
             e.printStackTrace();
-            alert("Error opening file", "There was an error while trying to open the file.");
+            PopUps.alert("Error opening file", "There was an error while trying to open the file.");
             return null;
         }
     }

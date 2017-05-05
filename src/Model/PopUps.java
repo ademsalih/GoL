@@ -2,6 +2,10 @@ package Model;
 
 import javafx.scene.control.Alert;
 
+/**
+ * Help class that holds static methods for creating different pop ups in the program
+ */
+
 public class PopUps {
 
     public static void alert (String title, String text) {

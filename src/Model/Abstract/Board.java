@@ -24,7 +24,7 @@ public abstract class Board {
         this.backgroundColor = backgroundColor;
     }
 
-    public Color getcellColor() {
+    public Color getCellColor() {
         return this.cellColor;
     }
 

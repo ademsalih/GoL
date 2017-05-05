@@ -12,7 +12,7 @@ import java.io.IOException;
  * Uses a single String to write to the fiel.
  */
 
-public class SaveFile extends PopUps {
+public class SaveFile {
 
     private BufferedWriter toFile = null;
 
@@ -40,14 +40,14 @@ public class SaveFile extends PopUps {
             toFile.write(txt);
         } catch (IOException e) {
             e.printStackTrace();
-            alert("Error writing to disk", "There was an error while trying to write to the disk");
+            PopUps.alert("Error writing to disk", "There was an error while trying to write to the disk");
         } finally {
             try {
                 if (toFile != null) {
                     toFile.close();
                 }
             } catch (IOException e2) {
-                alert("Error writing to disk", "There was an error while trying to write to the disk");
+                PopUps.alert("Error writing to disk", "There was an error while trying to write to the disk");
             }
         }
     }
