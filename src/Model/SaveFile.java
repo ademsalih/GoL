@@ -1,6 +1,5 @@
 package Model;
 
-import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 
 import java.io.BufferedWriter;
@@ -15,6 +14,22 @@ import java.io.IOException;
 public class SaveFile extends FileHandling {
 
     BufferedWriter toFile = null;
+    String name;
+    String author;
+    String comment;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
 
     public File createFilePath() {
         FileChooser fc = new FileChooser();
@@ -26,11 +41,10 @@ public class SaveFile extends FileHandling {
         return file;
     }
 
-    public void createFile(File file, byte[][] board) {
-        ParseToRLE ptr = new ParseToRLE();
+    public void createFile(File file, String txt) {
         try {
             toFile = new BufferedWriter(new FileWriter(file));
-            toFile.write(ptr.extractingRLE(board));
+            toFile.write(txt);
         } catch (IOException e) {
             e.printStackTrace();
             alert("Error writing to disk", "There was an error while trying to write to the disk");
@@ -45,8 +59,8 @@ public class SaveFile extends FileHandling {
         }
     }
 
-    public void saveFile(byte[][] board) {
-        createFile(createFilePath(), board);
+    public void saveFile(String txt) {
+        createFile(createFilePath(), txt);
     }
 
 

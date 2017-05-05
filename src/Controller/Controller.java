@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import Model.DynamicFiles.DynamicParseToRLE;
 import Model.DynamicFiles.DynamicRLEParser;
 import Model.StaticFiles.StaticRule;
 import Model.DynamicFiles.DynamicBoard;
@@ -68,6 +69,7 @@ public class Controller implements Initializable {
 
     public Animate animate;
     public URLDialog url;
+    public SaveRLEDialog save;
 
     public Stage urlStage;
 
@@ -87,6 +89,8 @@ public class Controller implements Initializable {
         rule = new DynamicRule();
 
         animate.setSpeed(10);
+
+
     }
 
     // Sets the ID of the objects in this class for CSS styling.
@@ -162,6 +166,7 @@ public class Controller implements Initializable {
 
         boardObj.setBoard(tempArr);
 
+
         boardObj.drawBoard();
 
         double timeTaken = System.currentTimeMillis() - time;
@@ -169,6 +174,8 @@ public class Controller implements Initializable {
 
         counter++;
         Main.getStage().setTitle(titleName + " (" + counter + ")");
+
+
     }
 
     public void updateTitle(String newName) {
@@ -208,11 +215,6 @@ public class Controller implements Initializable {
         }
     }
 
-    // Saves the current game as a RLE.file.
-    public void saveFile() {
-        SaveFile sf = new SaveFile();
-        //sf.saveFile(boardObj.getBoard());
-    }
 
     // Creates a new black board.
     public void newBlankAction() {
@@ -311,9 +313,7 @@ public class Controller implements Initializable {
         url.showStage();
         String urlString;
         if ((urlString = url.getURL()) != null){
-            System.out.println("It's not null");
             DynamicRLEParser rle = new DynamicRLEParser();
-            //StaticRLEParser rle = new StaticRLEParser();
             try {
                 rle.importFromURL(urlString);
                 boardObj.clearBoard();
@@ -366,6 +366,26 @@ public class Controller implements Initializable {
             menuItems.get(i).setSelected(false);
             i++;
         }
+
+
+    // Opens the save rle dialog and saves it as
+    public void saveRLE() {
+        save = new SaveRLEDialog();
+        save.showStage();
+        String name = save.getName();
+        String author = save.getAuthor();
+        String comment = save.getComment();
+
+        // Setting up the object that parses the pattern to RLE
+        DynamicParseToRLE drp = new DynamicParseToRLE(name, author, comment);
+        // Feeds in the rules
+        drp.setup(rule.getBorn(), rule.getSurvivor(), boardObj.getBoard());
+        String rleTxt = drp.extractingRLE();
+
+        SaveFile sf = new SaveFile();
+        sf.saveFile(rleTxt);
+
+
     }
 
     public void selectConwaysLife() {
@@ -494,3 +514,4 @@ public class Controller implements Initializable {
     }
 
 }
+

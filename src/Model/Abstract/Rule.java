@@ -38,7 +38,7 @@ public abstract class Rule {
      * Returns an array containing the conditions for survival
      * @return - 2D int array with the survive part of the rule set
      */
-    public static int[] getSurvivor() {
+    public int[] getSurvivor() {
         return survivor;
     }
 
@@ -46,7 +46,7 @@ public abstract class Rule {
      * Returns an array containing the conditions for being born
      * @return - 2D int array with the born part of the rule set
      */
-    public static int[] getBorn() {
+    public int[] getBorn() {
         return born;
     }
 

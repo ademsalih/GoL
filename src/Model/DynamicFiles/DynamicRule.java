@@ -16,18 +16,11 @@ public class DynamicRule extends Rule {
     Thread thread2;
     Thread thread3;
     Thread thread4;
-    Thread thread5;
-    Thread thread6;
-    Thread thread7;
-    Thread thread8;
 
     private int rowCount;
     private int colCount;
     private int expandNum;
     private int shiftNum;
-    private int xOffSet;
-    private int yOffSet;
-    private int test;
 
     private boolean expandedDown, expandedRight, expandedLeft, expandedUp, needsRightShift, needsDownShift;
     private boolean boardHasBeenInit;
@@ -44,8 +37,6 @@ public class DynamicRule extends Rule {
         expandedDown = false;
         expandedUp = false;
 
-        xOffSet = 0;
-        yOffSet = 0;
 
         notInit = true;
     }
@@ -197,9 +188,22 @@ public class DynamicRule extends Rule {
             e.printStackTrace();
         }
 
+
+        printAliveCells();
         return conwaysBoard;
     }
 
+
+
+    public void printAliveCells(){
+        int n=0;
+        for (int i = 0; i < currentBoard.size() ; i++) {
+            for (int j = 0; j < currentBoard.get(0).size(); j++) {
+                if (conwaysBoard.get(i).get(j) == 1) n++;
+            }
+        }
+        System.out.println("ALIVE CELLS: " + n);
+    }
 
     public void sector1() {
         for (int y = start; y < sector2; y++) {
@@ -553,6 +557,7 @@ public class DynamicRule extends Rule {
         }
     }
 
+
     protected void expandBoardIfNeeded(int y, int x) {
 
         // Checks if a cell is close to the edge
@@ -589,7 +594,6 @@ public class DynamicRule extends Rule {
 
     private void shiftAllRight() {
         addColsToAllBoards();
-        xOffSet += expandNum;
         currentBoard = shiftBoardRight(currentBoard, shiftNum);
         conwaysBoard = shiftBoardRight(conwaysBoard, shiftNum);
         boardOfActiveCells = shiftBoardRight(boardOfActiveCells, shiftNum);
@@ -598,7 +602,6 @@ public class DynamicRule extends Rule {
 
     private void shiftAllDown() {
         addRowsToAllBoards();
-        yOffSet += expandNum;
         currentBoard = shifBoardDown(currentBoard, shiftNum);
         conwaysBoard = shifBoardDown(conwaysBoard, shiftNum);
         boardOfActiveCells = shifBoardDown(boardOfActiveCells, shiftNum);
