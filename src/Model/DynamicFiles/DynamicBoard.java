@@ -12,21 +12,17 @@ import Model.Point;
  */
 public class DynamicBoard extends Board {
 
-    public List<List<Byte>> board = new ArrayList<List<Byte>>();
-    public List<List<Byte>> initialBoard = new ArrayList<List<Byte>>();
+    public List<List<Byte>> board = new ArrayList<>();
+    public List<List<Byte>> initialBoard = new ArrayList<>();
 
-    double canvasWidth;
-    double canvasHeight;
-    GraphicsContext gc;
-    int rowcount;
-    int columcount;
-    int margin;
-    int rowy;
-    int colx;
+    private double canvasWidth;
+    private double canvasHeight;
+    private GraphicsContext gc;
+    private int rowcount;
+    private int columcount;
+    private int margin;
 
-    public boolean grid;
-
-    int generationCounter;
+    private boolean grid;
 
     public DynamicBoard (Canvas canvas, int x, int y) {
         this.canvasWidth = canvas.getWidth();
@@ -75,7 +71,7 @@ public class DynamicBoard extends Board {
         List<List<Byte>> centeredBoard = new ArrayList<>();
 
         for (int y = 0; y < twoBigMargin + board.size(); y++) {
-            List<Byte> temp = new ArrayList<Byte>();
+            List<Byte> temp = new ArrayList<>();
             centeredBoard.add(temp);
         }
 
@@ -119,7 +115,7 @@ public class DynamicBoard extends Board {
      */
     private List<List<Byte>> addRows(int numberOfRows, List<List<Byte>> board) {
         for (int i = 0; i < numberOfRows; i++) {
-            List<Byte> row = new ArrayList<Byte>();
+            List<Byte> row = new ArrayList<>();
             for (int x = 0; x < board.get(0).size(); x++) {
                 row.add((byte) 0 );
             }
@@ -183,8 +179,8 @@ public class DynamicBoard extends Board {
      * @param x - x coordinate
      */
     public void mouseClickedOrDraggedOnBoard(double x, double y){
-        colx = (int) ((x/cellSize));
-        rowy = (int) ((y/cellSize));
+        int colx = (int) ((x / cellSize));
+        int rowy = (int) ((y / cellSize));
 
         byte cellState = getCellState(rowy, colx);
 
@@ -205,14 +201,13 @@ public class DynamicBoard extends Board {
         gc.fillRect(0,0,canvasWidth,canvasHeight);
         Point p = new Point();
 
-        for (int y = 0; y < board.size(); y++ ) {
+        for (List<Byte> aBoard : board)
+            for (int x = 0; x < aBoard.size(); x++) {
 
-            for (int x = 0; x < board.get(y).size(); x++) {
-
-                if (board.get(y).get(x) == 1) {
+                if (aBoard.get(x) == 1) {
                     p.x = xCounter;
                     p.y = yCounter;
-                    p.draw(gc, cellColor, (double)cellSize);
+                    p.draw(gc, cellColor, cellSize);
 
                     xCounter += cellSize;
 
@@ -220,12 +215,11 @@ public class DynamicBoard extends Board {
                     xCounter += cellSize;
                 }
 
-                if (x == (board.get(0).size() - 1 )) {
+                if (x == (board.get(0).size() - 1)) {
                     xCounter = 0;
                     yCounter += cellSize;
                 }
             }
-        }
 
         yCounter = 0;
 
@@ -236,7 +230,7 @@ public class DynamicBoard extends Board {
         yCounter = 0;
     }
 
-    public void drawGrid() {
+    private void drawGrid() {
 
         double gridSize = cellSize * 0.05;
         gc.setStroke(gridColor);
@@ -258,10 +252,10 @@ public class DynamicBoard extends Board {
 
     public void clearBoard() {
 
-        board = new ArrayList<List<Byte>>();
+        board = new ArrayList<>();
 
         for (int i = 0; i < 250; i++) {
-            List<Byte> row = new ArrayList<Byte>();
+            List<Byte> row = new ArrayList<>();
             for (int j = 0; j < 350; j++) {
                 row.add((byte) 0);
             }
@@ -273,10 +267,10 @@ public class DynamicBoard extends Board {
 
     public void clearInitialBoard() {
 
-        initialBoard = new ArrayList<List<Byte>>();
+        initialBoard = new ArrayList<>();
 
         for (int i = 0; i < 250; i++) {
-            List<Byte> row = new ArrayList<Byte>();
+            List<Byte> row = new ArrayList<>();
             for (int j = 0; j < 350; j++) {
                 row.add((byte) 0);
             }
