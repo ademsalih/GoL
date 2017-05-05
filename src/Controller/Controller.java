@@ -273,14 +273,11 @@ public class Controller implements Initializable {
 
         if (boardObj.getGrid()) {
             boardObj.setGrid(false);
-
         } else {
             boardObj.setGrid(true);
-
         }
 
         boardObj.drawBoard();
-
     }
 
     // Creates the "GIF Export" Stage and shows the Stage.
@@ -295,6 +292,10 @@ public class Controller implements Initializable {
             gifStage.setTitle("Export as GIF");
             gifStage.setResizable(false);
             gifStage.show();
+
+            gifStage.setOnCloseRequest( ae -> {
+                GIFController.instance.cancelButtonAction();
+            });
 
         } catch (Exception e) {
             System.out.println("Cannot open GIF Export Menu");

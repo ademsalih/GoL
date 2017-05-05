@@ -7,15 +7,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ProgressBar;
 import lieng.GIFWriter;
 import java.awt.Color;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
 
-import Controller.Controller;
-
-/**
- * Created by ademsalih on 01.05.2017.
- */
 public class DynamicGIF {
 
     private int width;
@@ -69,7 +64,12 @@ public class DynamicGIF {
         return this.cellSize;
     }
 
-    // Takes in JavaFX Color Object and returns it as Java Awt Color object.
+    /**
+     * Converts JavaFX Color (javafx.scene.paint.Color) to AWT Color (java.awt.Color).
+     *
+     * @param fxColor
+     * @return new AWT Color (java.awt.Color).
+     */
     public Color convertFXToAwtColor(javafx.scene.paint.Color fxColor) {
 
         return new Color(
@@ -79,11 +79,17 @@ public class DynamicGIF {
         );
     }
 
+    /**
+     * Sets the new filename if default value has been changed in GUI.
+     * Adds "/" before and ".gif" after the filename so the export
+     * URL is: locationSelectHere/filename.gif
+     * @param filename
+     */
     public void setFileName(String filename) {
         this.filename = "/" + filename + ".gif";
     }
 
-    public String getName() {
+    public String getFilename() {
         return this.filename;
     }
 
@@ -103,7 +109,11 @@ public class DynamicGIF {
         return this.milliseconds;
     }
 
-    // Method that copies the values from the board, and creates gif object and exports it.
+    /**
+     * Main method for exporting the pattern as a GIF file. Export only occurs if the path is selected.
+     * If the path is not selected and Alert is sent to the user.
+     * @throws Exception
+     */
     public void createGIF() throws Exception {
 
         copyImportedBoardToGIFBoard();
@@ -120,20 +130,22 @@ public class DynamicGIF {
                     gwriter = new GIFWriter(width, height, path, milliseconds);
                     writeGoLSequenceToGIF(gwriter, gifBoard, generations);
                 } catch (Exception e) {
-
+                    e.printStackTrace();
                 }
             });
 
             exportThread.start();
 
         } else {
-            noLocationSelectedAlert();
+            FileHandling.warning("GIF Export","Select export location!");
         }
-
     }
 
-
-    public void notifyIfExpanded() {
+    /**
+     * Checks if the pattern has evolved out of current dimensions
+     * and resizes the GIF size accordingly.
+     */
+    public void checkIfExpanded() {
         int i = 0;
 
         while (i < generations) {
@@ -145,7 +157,9 @@ public class DynamicGIF {
         maxWidth = gifCheckSizeBoard.get(0).size();
     }
 
-    // Method used for copying the current board in the game to this class.
+    /**
+     * Creates two 2D Lists which hold the pattern from the main window.
+     */
     private void copyImportedBoardToGIFBoard() {
 
         gifCheckSizeBoard = new ArrayList<>();
@@ -189,11 +203,12 @@ public class DynamicGIF {
             }
         }
 
-        notifyIfExpanded();
+        checkIfExpanded();
     }
 
-    // Method that draws the current state of the game to the gif sequence.
-
+    /**
+     * Draws an image to the gif file by looping through the gifBoard.
+     */
     public void drawFrame() {
 
         gwriter.fillRect(0,width-1,0,height-1,backgroundColor);
@@ -220,19 +235,28 @@ public class DynamicGIF {
         yCounter = 0;
     }
 
-    // Iterates the game using the Model.StaticRule class.
+    /**
+     * Calculates the next generation of the pattern which is being exported as a GIF file.
+     */
     public void next() {
         gifDynamicRule.setCurrentBoard(this.gifBoard);
         gifDynamicRule.calculateBoardOfActiveCells();
         gifBoard = gifDynamicRule.applyBoardRules();
     }
 
+    /**
+     * Calculates the next generation of the pattern which is checks if the pattern exceeds the initial dimensions.
+     */
     public void nextCheckSize() {
         gifDynamicRule.setCurrentBoard(this.gifCheckSizeBoard);
         gifDynamicRule.calculateBoardOfActiveCells();
         gifCheckSizeBoard = gifDynamicRule.applyBoardRules();
     }
 
+    /**
+     * Updates the progress double value with the exported percentage as a decimal value.
+     * @param currentGen
+     */
     public void updateProgress(int currentGen) {
         this.progress =  (double) currentGen / (double) generations;
     }
@@ -241,28 +265,50 @@ public class DynamicGIF {
         this.currentGeneration = newGen;
     }
 
+    /**
+     * Sets the value of the Progress Bar in the GIF Export Menu.
+     * @param pBarVal
+     */
     public void updatePBar(double pBarVal) {
         this.pbar.setProgress(pBarVal);
     }
 
-    // Adds the states of the game to the gif object using rail recursion until base case is fulfilled.
+
+    private boolean stopRunning = false;
+
+
+    /**
+     * Recursively writes the pattern to the GIFWriter and updates the export progress by updating the Progress Bar.
+     * Alerts user when the exporting process has finished.
+     * @param writer
+     * @param board
+     * @param counter
+     * @throws Exception
+     */
     public void writeGoLSequenceToGIF(GIFWriter writer, List<List<Byte>> board, int counter) throws Exception {
 
         // Base case (i.e. stop condition)
         if (counter == 0) {
             gwriter.close();
-
+            gwriter = null;
             Platform.runLater(() -> {
-                exportFinishedAlert();
+                FileHandling.info("GIF Export","The GIF was succesfully exported.");
                 pbar.setProgress(0.0);
             });
             return;
         }
 
+        if (stopRunning) {
+            return;
+        }
+
+        // Updates the current generation being written.
         setCurrentGeneration(generations - counter + 1);
 
+        //Updates the progress decimal value.
         updateProgress(currentGeneration);
 
+        // Updates the progressbar.
         updatePBar(progress);
 
         // Draws the current board using "gwriter" method of GIFWriter class.
@@ -276,29 +322,17 @@ public class DynamicGIF {
 
         // Recursive call to writeGoLSwquenceToGIF.
         writeGoLSequenceToGIF(gwriter, gifBoard, counter - 1);
-
     }
 
-    // Alerts the user that the gif has finished exporting.
-    public void exportFinishedAlert() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("GIF Export");
-        alert.setHeaderText(null);
-        alert.setContentText("The GIF was succesfully exported.");
-        alert.showAndWait();
-    }
 
-    // Alerts the user if theres no export location selected.
-    public void noLocationSelectedAlert() {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("GIF Export");
-        alert.setHeaderText(null);
-        alert.setContentText("Select export location!");
-        alert.showAndWait();
-    }
 
     public void stop() {
-        exportThread.stop();
+
+        if (gwriter != null) {
+            stopRunning = true;
+        }
+
     }
+
 
 }

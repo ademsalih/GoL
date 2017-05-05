@@ -2,9 +2,6 @@ package Model;
 
 import javafx.scene.control.Alert;
 
-/**
- * Created by patrikkvarmehansen on 28/03/17.
- */
 public class FileHandling {
 
     public static void alert (String title, String text) {
@@ -31,5 +28,19 @@ public class FileHandling {
     public static void info (String text) {
         info("Info", text);
     }
+
+    public static void warning (String title, String text) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(text);
+        alert.showAndWait();
+
+    }
+
+    public static void warning (String text) {
+        info("Warning", text);
+    }
+
 
 }

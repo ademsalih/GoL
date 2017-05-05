@@ -3,11 +3,14 @@ package Controller;
 import Model.DynamicGIF;
 import Model.GIF;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
+
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -124,7 +127,11 @@ public class GIFController implements Initializable {
 
     // Closes the GIF Export Stage when "Cancel" Button is clicked.
     public void cancelButtonAction() {
-        gif.stop();
+
+        if (gif != null) {
+            gif.stop();
+        }
+
         Controller.instance.gifStage.close();
     }
 
