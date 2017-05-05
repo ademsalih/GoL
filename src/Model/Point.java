@@ -10,16 +10,8 @@ import javafx.scene.paint.Color;
 public class Point {
     public double x,y;
 
-    public double xOffset;
-    public double yOffset;
-
-    public void setXOffset(int x) {
-        this.xOffset = x;
-    }
-
-    public void setYOffset(int y) {
-        this.yOffset = y;
-    }
+    private double xOffset;
+    private double yOffset;
 
     public void setX(double x) {
         this.x = x;
