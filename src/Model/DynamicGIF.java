@@ -35,17 +35,14 @@ public class DynamicGIF {
     private DynamicBoard importedDynamicBoard;
     private DynamicRule gifDynamicRule = new DynamicRule();
     private Thread exportThread;
-
     private ProgressBar pbar;
     private double progress;
     private int currentGeneration;
-
-    private int genCount = 0;
     private int maxHeight;
     private int maxWidth;
 
-    public DynamicGIF (int width, int height, int generations, String path, double cellSize, ProgressBar progressBar) throws Exception {
-        this.importedDynamicBoard = Controller.instance.boardObj;
+    public DynamicGIF (int width, int height, int generations, String path, double cellSize, ProgressBar progressBar, DynamicBoard board) throws Exception {
+        this.importedDynamicBoard = board;
         this.width = width;
         this.height = height;
         this.generations = generations;
@@ -238,11 +235,6 @@ public class DynamicGIF {
 
     public void updateProgress(int currentGen) {
         this.progress =  (double) currentGen / (double) generations;
-
-        //System.out.println(progress);
-
-        System.out.println(genCount);
-        genCount++;
     }
 
     public void setCurrentGeneration (int newGen) {

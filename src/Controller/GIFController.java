@@ -111,7 +111,7 @@ public class GIFController implements Initializable {
     public void exportButtonAction() throws Exception {
 
         //gif = new GIF(700,500, 20, path);
-        gif = new DynamicGIF(700,500,15, path, Controller.instance.boardObj.getCellSize(), progressBar);
+        gif = new DynamicGIF(700,500,15, path, Controller.instance.boardObj.getCellSize(), progressBar, Controller.instance.boardObj);
 
         checkIfDefaultValuesHaveChanged();
 

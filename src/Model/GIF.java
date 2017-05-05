@@ -1,6 +1,6 @@
 package Model;
 
-
+import Model.Abstract.Board;
 import Model.StaticFiles.StaticBoard;
 import Model.StaticFiles.StaticRule;
 import javafx.scene.control.Alert;
@@ -31,9 +31,7 @@ public class GIF {
     private Color backgroundColor;
     private StaticBoard importedStaticBoard;
 
-    // Class constructor which creates object.
     public GIF (int width, int height, int generations, String path) throws Exception {
-        //this.importedStaticBoard = Controller.instance.boardObj;
         this.width = width;
         this.height = height;
         this.generations = generations;
