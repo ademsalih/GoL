@@ -1,8 +1,5 @@
 package Model.Abstract;
 
-/**
- * Created by Narmatha on 29.04.2017.
- */
 public abstract class Rule {
 
     // The ruleset

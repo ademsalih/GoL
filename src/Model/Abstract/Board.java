@@ -4,14 +4,14 @@ import javafx.scene.paint.Color;
 
 public abstract class Board {
 
-    public Color cellColor = Color.WHITE;
-    public Color backgroundColor = Color.BLACK;
-    public Color gridColor = Color.WHITE;
-    public double cellSize = 2;
-    public double xCounter = 0.0;
-    public double yCounter = 0.0;
+    protected Color cellColor = Color.WHITE;
+    protected Color backgroundColor = Color.BLACK;
+    protected Color gridColor = Color.WHITE;
+    protected double cellSize = 2;
+    protected double xCounter = 0.0;
+    protected double yCounter = 0.0;
 
-    public Board(){}
+    protected Board(){}
 
     public void setCellColor(Color cellColor) {this.cellColor = cellColor;}
 
