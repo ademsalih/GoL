@@ -15,13 +15,12 @@ import java.util.regex.Pattern;
 import Model.ReadFile;
 
 /**
- * Handels the parsing of the .rle file
+ * Handels the parsing of the .rle file and returns both meta data and a game of life board.
+ *
+ * Unfortunatley only the name is used from the metadata, but for future use there are methods
+ * for getting the author and comment.
  */
 public abstract class RLEParser {
-
-    //TODO Add function that checks all new lines for zeroes and has a runcount for empty lines.
-    //TODO - Separate data from logic?
-    //TODO - Read metadata
 
     // Board & Rule variables
     protected int x, y, xPlacement, yPlacement;
@@ -345,8 +344,6 @@ public abstract class RLEParser {
         }
         return rule;
     }
-
-
 
     /**
      * Converts the input 2D byte array to a 2D ArrayList of Byte objects.

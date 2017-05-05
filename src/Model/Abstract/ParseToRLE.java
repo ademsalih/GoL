@@ -1,8 +1,11 @@
 package Model.Abstract;
 
 /**
- *
  * A class that parses the current board into a string that is passed to the SaveFile class for writing to file.
+ *
+ * Uses a help method (findHighLowValues) to determine how big the board that actually contains alive cells.
+ * This helps to slim down the pattern thats written to the .rle. This should make the file smaller and will also
+ * prevent a lot of bloat in the patterns that are stored.
  */
 
 public abstract class ParseToRLE {
