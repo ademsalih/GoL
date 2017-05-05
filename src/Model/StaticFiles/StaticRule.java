@@ -2,9 +2,9 @@ package Model.StaticFiles;
 
 import Model.Abstract.Rule;
 
-/* This class handles the rules for the application. A board object is
+/**
+ * This class handles the rules for the application. A board object is
  * imported, manipulated and returned to the calling method.
- *
  */
 
 public class StaticRule extends Rule {
@@ -16,7 +16,10 @@ public class StaticRule extends Rule {
 
     public byte[][] boardOfActiveCells;
 
-
+    /**
+     * Constructs a StaticRule object
+     * @param currentBoard
+     */
     public StaticRule(byte[][] currentBoard) {
         this.currentBoard = currentBoard;
     }
@@ -29,7 +32,10 @@ public class StaticRule extends Rule {
         this.currentBoard = board;
     }
 
-    // Returns next generation values
+    /**
+     * Returns the next generation cells as a string
+     * @return String containing next generation cells
+     */
     @Override
     public String toString(){
         String output = "";
@@ -73,7 +79,10 @@ public class StaticRule extends Rule {
         return 0;
     }
 
-    // Conways Game of life Rules (B3S23)
+    /**
+     * Returns a ruled 2D list
+     * @return 2D List with elements of type byte
+     */
     public byte[][] conwaysBoardRules() {
 
         conwaysBoard = new byte[currentBoard.length][currentBoard[0].length];
@@ -91,8 +100,12 @@ public class StaticRule extends Rule {
         return conwaysBoard;
     }
 
-
-    // Counts the neighbor of a cell and returns value
+    /**
+     * Counts the neighbors of a cell and returns the number of neighbors
+     * @param y position
+     * @param x position
+     * @return number of neighbors
+     */
     public int countNeighbor(int y, int x){
 
         int neighborsCounter = 0;
@@ -126,7 +139,12 @@ public class StaticRule extends Rule {
 
     }
 
-
+    /**
+     * Checks if the cell in the specified position has an alive cell over that position
+     * @param y position
+     * @param x position
+     * @return boolean value
+     */
     public boolean neighborOver(int y, int x) {
 
         if (y - 1 != - 1) {
@@ -140,6 +158,12 @@ public class StaticRule extends Rule {
 
     }
 
+    /**
+     * Checks if the cell in the specified position has an alive cell under that position
+     * @param y position
+     * @param x position
+     * @return boolean value
+     */
     public boolean neighborUnder(int y, int x) {
 
         if (y + 1 < currentBoard.length) {
@@ -152,6 +176,12 @@ public class StaticRule extends Rule {
         return false;
     }
 
+    /**
+     * Checks if the cell in the specified position has an alive cell to the left of that position
+     * @param y position
+     * @param x position
+     * @return boolean value
+     */
     public boolean neighborLeft(int y, int x) {
 
         if (x - 1 != - 1) {
@@ -164,6 +194,12 @@ public class StaticRule extends Rule {
         return false;
     }
 
+    /**
+     * Checks if the cell in the specified position has an alive cell to the right of that position
+     * @param y position
+     * @param x position
+     * @return boolean value
+     */
     public boolean neighborRight(int y, int x) {
 
         if (x + 1 < currentBoard[0].length) {
@@ -176,6 +212,12 @@ public class StaticRule extends Rule {
         return false;
     }
 
+    /**
+     * Checks if the cell in the specified position has an alive cell to top left of that position
+     * @param y position
+     * @param x position
+     * @return boolean value
+     */
     public boolean neighborTopLeft(int y, int x) {
 
         if ((y - 1 != - 1) && (x - 1 != - 1)) {
@@ -188,7 +230,12 @@ public class StaticRule extends Rule {
         return false;
     }
 
-
+    /**
+     * Checks if the cell in the specified position has an alive cell to top right of that position
+     * @param y position
+     * @param x position
+     * @return boolean value
+     */
     public boolean neighborTopRight(int y, int x) {
 
         if ((y - 1 != - 1) && (x + 1 < currentBoard[0].length)) {
@@ -201,6 +248,12 @@ public class StaticRule extends Rule {
         return false;
     }
 
+    /**
+     * Checks if the cell in the specified position has an alive cell to bottom left of that position
+     * @param y position
+     * @param x position
+     * @return boolean value
+     */
     public boolean neighborBottomLeft(int y, int x) {
 
         if ((y + 1 < currentBoard.length) && (x - 1 != - 1)) {
@@ -219,7 +272,12 @@ public class StaticRule extends Rule {
     }
 
 
-
+    /**
+     * Checks if the cell in the specified position has an alive cell to bottom right of that position
+     * @param y position
+     * @param x position
+     * @return boolean value
+     */
     public boolean neighborBottomRight(int y, int x) {
 
         if ((y + 1 < currentBoard.length) && (x + 1 < currentBoard[0].length)) {
@@ -232,6 +290,9 @@ public class StaticRule extends Rule {
         return false;
     }
 
+    /**
+     * Calculates the cells that are active. Active cell is either alive itself or has at least one neighbor
+     */
     public void calculateBoardOfActiveCells() {
         boardOfActiveCells = new byte[currentBoard.length][currentBoard[0].length];
 
@@ -253,6 +314,11 @@ public class StaticRule extends Rule {
         }
     }
 
+    /**
+     * Marks the top left cell of the specified position
+     * @param y y-position
+     * @param x x-position
+     */
     public void markTopLeft(int y, int x) {
 
         if ((y - 1 != - 1) && (x - 1 != - 1) && currentBoard[y-1][x-1] == 0) {
@@ -261,6 +327,11 @@ public class StaticRule extends Rule {
 
     }
 
+    /**
+     * Marks the top cell of the specified position
+     * @param y y-position
+     * @param x x-position
+     */
     public void markTop(int y, int x) {
 
         if (y - 1 != - 1 && currentBoard[y-1][x] == 0) {
@@ -268,6 +339,11 @@ public class StaticRule extends Rule {
         }
     }
 
+    /**
+     * Marks the top right cell of the specified position
+     * @param y y-position
+     * @param x x-position
+     */
     public void markTopRight(int y, int x) {
 
         if ((y - 1 != - 1) && (x + 1 < currentBoard[0].length) && (currentBoard[y-1][x+1] == 0) ) {
@@ -275,6 +351,11 @@ public class StaticRule extends Rule {
         }
     }
 
+    /**
+     * Marks the left cell of the specified position
+     * @param y y-position
+     * @param x x-position
+     */
     public void markLeft(int y, int x) {
 
         if (x - 1 != - 1 && (currentBoard[y][x-1] == 0)) {
@@ -282,6 +363,11 @@ public class StaticRule extends Rule {
         }
     }
 
+    /**
+     * Marks the right cell of the specified position
+     * @param y y-position
+     * @param x x-position
+     */
     public void markRight(int y, int x) {
 
         if (x + 1 < currentBoard[0].length && currentBoard[y][x+1] == 0) {
@@ -289,6 +375,11 @@ public class StaticRule extends Rule {
         }
     }
 
+    /**
+     * Marks the bottom left cell of the specified position
+     * @param y y-position
+     * @param x x-position
+     */
     public void markBottomLeft(int y, int x) {
 
         if ((y + 1 < currentBoard.length) && (x - 1 != - 1) && (currentBoard[y+1][x-1] == 0) ) {
@@ -297,6 +388,11 @@ public class StaticRule extends Rule {
 
     }
 
+    /**
+     * Marks the bottom cell of the specified position
+     * @param y y-position
+     * @param x x-position
+     */
     public void markBottom(int y, int x) {
 
         if (y + 1 < currentBoard.length && currentBoard[y+1][x] == 0) {
@@ -304,6 +400,11 @@ public class StaticRule extends Rule {
         }
     }
 
+    /**
+     * Marks the bottom right cell of the specified position
+     * @param y y-position
+     * @param x x-position
+     */
     public void markBottomRight(int y, int x) {
 
         if ((y + 1 < currentBoard.length) && (x + 1 < currentBoard[0].length) && (currentBoard[y+1][x+1] == 0) ) {

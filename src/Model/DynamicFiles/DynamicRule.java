@@ -31,7 +31,7 @@ public class DynamicRule extends Rule {
     private boolean expandDown, expandRight, needsRightShift, needsDownShift;
 
     /**
-     * Constructs a rule object
+     * Constructs a DynamicRule object
      */
     public DynamicRule () {
         this.currentBoard = new ArrayList<>();
