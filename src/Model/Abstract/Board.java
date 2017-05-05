@@ -37,4 +37,8 @@ public abstract class Board {
 
     public void setCellSize(double a) { this.cellSize = a;}
 
+    public double getCellSize() {
+        return this.cellSize;
+    }
+
     }

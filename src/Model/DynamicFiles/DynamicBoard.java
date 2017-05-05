@@ -209,7 +209,7 @@ public class DynamicBoard extends Board {
         yCounter = 0;
     }
 
-    public void clearBoard(){
+    public void clearBoard() {
 
         board = new ArrayList<List<Byte>>();
 
@@ -223,4 +223,19 @@ public class DynamicBoard extends Board {
 
         drawBoard();
     }
+
+    public void clearInitialBoard() {
+
+        initialBoard = new ArrayList<List<Byte>>();
+
+        for (int i = 0; i < 250; i++) {
+            List<Byte> row = new ArrayList<Byte>();
+            for (int j = 0; j < 350; j++) {
+                row.add((byte) 0);
+            }
+            this.board.add(row);
+        }
+    }
+
+
 }

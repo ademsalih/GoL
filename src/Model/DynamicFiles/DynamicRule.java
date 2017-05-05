@@ -197,22 +197,9 @@ public class DynamicRule extends Rule {
             e.printStackTrace();
         }
 
-
-        printAliveCells();
         return conwaysBoard;
     }
 
-
-
-    public void printAliveCells(){
-        int n=0;
-        for (int i = 0; i < currentBoard.size() ; i++) {
-            for (int j = 0; j < currentBoard.get(0).size(); j++) {
-                if (conwaysBoard.get(i).get(j) == 1) n++;
-            }
-        }
-        System.out.println("ALIVE CELLS: " + n);
-    }
 
     public void sector1() {
         for (int y = start; y < sector2; y++) {

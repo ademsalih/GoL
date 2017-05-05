@@ -128,6 +128,8 @@ public class GIF {
 
     }
 
+
+
     // Method that draws the current state of the game to the gif sequence.
     public void drawFrame() {
 

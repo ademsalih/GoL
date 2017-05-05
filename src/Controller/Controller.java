@@ -23,9 +23,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
+
 import Model.DynamicFiles.DynamicRule;
 import javafx.util.Duration;
 
@@ -88,8 +87,6 @@ public class Controller implements Initializable {
         rule = new DynamicRule();
 
         animate.setSpeed(10);
-
-
     }
 
     // Sets the ID of the objects in this class for CSS styling.
@@ -118,6 +115,7 @@ public class Controller implements Initializable {
 
         scaleSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             boardObj.setCellSize(newValue.doubleValue());
+            System.out.println(newValue.doubleValue());
             boardObj.drawBoard();
         });
     }
@@ -171,8 +169,6 @@ public class Controller implements Initializable {
 
         counter++;
         Main.getStage().setTitle(titleName + " (" + counter + ")");
-
-
     }
 
     public void updateTitle(String newName) {
@@ -185,8 +181,14 @@ public class Controller implements Initializable {
         boardObj.setBoard(boardObj.initialBoard);
         boardObj.drawBoard();
         counter = 0;
-        animate.stopAnimation();
+        stopAnimationIfRunning();
         updateTitle(titleName);
+    }
+
+    public void stopAnimationIfRunning() {
+        animate.stopAnimation();
+        startStopButton.setText("Start");
+        startStopButton.setId("startButton");
     }
 
     // Loads an RLE files and draws the file to the canvas.
@@ -215,6 +217,7 @@ public class Controller implements Initializable {
     // Creates a new black board.
     public void newBlankAction() {
         boardObj.clearBoard();
+        boardObj.clearInitialBoard();
         counter = 0;
         updateTitle("Game of Life");
     }
@@ -322,13 +325,172 @@ public class Controller implements Initializable {
                 FileHandling.alert("Unable to find or read from url");
             }
         }
-
-
     }
+
+    @FXML private CheckMenuItem conwaysLife;
+    @FXML private CheckMenuItem seeds;
+    @FXML private CheckMenuItem flock;
+    @FXML private CheckMenuItem twoByTwo;
+    @FXML private CheckMenuItem maze;
+    @FXML private CheckMenuItem move;
+    @FXML private CheckMenuItem highLife;
+    @FXML private CheckMenuItem mazectric;
+    @FXML private CheckMenuItem fredkin;
+    @FXML private CheckMenuItem replicator;
+    @FXML private CheckMenuItem dayAndNight;
+    @FXML private CheckMenuItem lifeWithoutDeath;
+
+    // Manuell metode som skrur av alle "CheckMenuItems"
+    /*public void unCheckAll() {
+        conwaysLife.setSelected(false);
+        seeds.setSelected(false);
+        flock.setSelected(false);
+        twoByTwo.setSelected(false);
+        maze.setSelected(false);
+        move.setSelected(false);
+        highLife.setSelected(false);
+        mazectric.setSelected(false);
+        fredkin.setSelected(false);
+        replicator.setSelected(false);
+        dayAndNight.setSelected(false);
+        lifeWithoutDeath.setSelected(false);
+    }*/
 
     public void unCheckAll() {
+        ArrayList<CheckMenuItem> menuItems = new ArrayList<CheckMenuItem>(12);
+        menuItems.addAll(Arrays.asList(conwaysLife,seeds,flock,twoByTwo,maze,move,highLife,
+                mazectric,fredkin,replicator,dayAndNight,lifeWithoutDeath));
+
+        int i = 0;
+        while (i < 12) {
+            menuItems.get(i).setSelected(false);
+            i++;
+        }
+    }
+
+    public void selectConwaysLife() {
+        unCheckAll();
+        conwaysLife.setSelected(true);
+
+        int[] b = {3};
+        int[] s = {2,3};
+
+        rule.setRules(s,b);
+    }
+
+    public void test() {
+        unCheckAll();
 
     }
 
+    public void selectSeeds() {
+        unCheckAll();
+        seeds.setSelected(true);
+
+        int[] b = {2};
+        int[] s = {};
+
+        rule.setRules(s,b);
+    }
+
+    public void selectFlock() {
+        unCheckAll();
+        flock.setSelected(true);
+
+        int[] b = {3};
+        int[] s = {1,2};
+
+        rule.setRules(s,b);
+    }
+
+    public void selectTwoBytwo() {
+        unCheckAll();
+        twoByTwo.setSelected(true);
+
+        int[] b = {3,6};
+        int[] s = {1,2,5};
+
+        rule.setRules(s,b);
+    }
+
+    public void selectMaze() {
+        unCheckAll();
+        maze.setSelected(true);
+
+        int[] b = {3};
+        int[] s = {1,2,3,4,5};
+
+        rule.setRules(s,b);
+    }
+
+    public void selectMove() {
+        unCheckAll();
+        move.setSelected(true);
+
+        int[] b = {3,6,8};
+        int[] s = {2,4,5};
+
+        rule.setRules(s,b);
+    }
+
+    public void selectHighLife() {
+        unCheckAll();
+        highLife.setSelected(true);
+
+        int[] b = {3,6};
+        int[] s = {2,3};
+
+        rule.setRules(s,b);
+    }
+
+    public void selectMazctric() {
+        unCheckAll();
+        mazectric.setSelected(true);
+
+        int[] b = {3};
+        int[] s = {1,2,3,4};
+
+        rule.setRules(s,b);
+    }
+
+    public void selectFredkin() {
+        unCheckAll();
+        fredkin.setSelected(true);
+
+        int[] b = {1,3,5,7};
+        int[] s = {0,2,4,6,8};
+
+        rule.setRules(s,b);
+    }
+
+    public void selectReplicator() {
+        unCheckAll();
+        replicator.setSelected(true);
+
+        int[] b = {1,3,5,7};
+        int[] s = {1,3,5,7};
+
+        rule.setRules(s,b);
+    }
+
+    public void selectDayAndNight() {
+        unCheckAll();
+        dayAndNight.setSelected(true);
+
+        int[] b = {3,6,7,8};
+        int[] s = {3,4,6,7,8};
+
+        rule.setRules(s,b);
+    }
+
+    public void selectLifeWithoutDeath() {
+        unCheckAll();
+        lifeWithoutDeath.setSelected(true);
+
+        int[] b = {3};
+        int[] s = {0,1,2,3,4,5,6,7,8};
+
+        rule.setRules(s,b);
+    }
 
 }

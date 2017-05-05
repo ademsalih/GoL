@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.DynamicGIF;
 import Model.GIF;
 import javafx.application.Platform;
 import javafx.event.Event;
@@ -18,7 +19,8 @@ import java.util.ResourceBundle;
 
 public class GIFController implements Initializable {
 
-    public GIF gif;
+    //public GIF gif;
+    public DynamicGIF gif;
     public String path;
     public Thread exportThread;
     public static GIFController instance;
@@ -109,18 +111,17 @@ public class GIFController implements Initializable {
     // Method for "Export" Button. Instantiates GIF-object.
     public void exportButtonAction() throws Exception {
 
-        gif = new GIF(700,500, 20, path);
+        //gif = new GIF(700,500, 20, path);
+        gif = new DynamicGIF(700,500,15, path, Controller.instance.boardObj.getCellSize());
 
         checkIfDefaultValuesHaveChanged();
+
+        //gif.setCellColor(Controller.instance.boardObj.getcellColor());
+        //gif.setBackgroundColor(Controller.instance.boardObj.getBackgroundColor());
 
         gif.createGIF();
     }
 
-    public void updateProgressBar() {
-        progressBar.progressProperty().addListener((obs, oldProgress, newProgress) -> {
-
-        });
-    }
 
     // Closes the GIF Export Stage when "Cancel" Button is clicked.
     public void cancelButtonAction() {
