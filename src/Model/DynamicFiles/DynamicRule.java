@@ -9,13 +9,8 @@ public class DynamicRule extends Rule {
 
     ////INSTANCE VARIABLES
     public List<List<Byte>> currentBoard;
-    public List<List<Byte>> conwaysBoard;
-    public List<List<Byte>> boardOfActiveCells;
-
-    Thread thread1;
-    Thread thread2;
-    Thread thread3;
-    Thread thread4;
+    private List<List<Byte>> conwaysBoard;
+    private List<List<Byte>> boardOfActiveCells;
 
     private int rowCount;
     private int colCount;
@@ -23,12 +18,9 @@ public class DynamicRule extends Rule {
     private int shiftNum;
 
     private boolean expandedDown, expandedRight, expandedLeft, expandedUp, needsRightShift, needsDownShift;
-    private boolean boardHasBeenInit;
-    private boolean init;
-    private boolean notInit;
+    //private boolean boardHasBeenInit;
+    //private boolean init;
 
-    ////CONSTRUCTOR
-    // MÅ DEKLARERE ALLE BOARDDENE MED NULL HER!
     public DynamicRule () {
         this.currentBoard = new ArrayList<>();
         expandNum = 50;
@@ -38,13 +30,8 @@ public class DynamicRule extends Rule {
         expandedUp = false;
 
 
-        notInit = true;
+        //boolean notInit = true;
     }
-
-
-    //bare for å sjekke push
-
-    ////CLASS METHODS
 
     public List<List<Byte>> getCurrentBoard() {
         return currentBoard;
@@ -59,23 +46,19 @@ public class DynamicRule extends Rule {
     //Retunerer next generation verdier
     @Override
     public String toString(){
-        String output = "";
+        StringBuilder output = new StringBuilder();
 
-        for (int row = 0; row < currentBoard.size(); row++) {
-            for (int col = 0; col < currentBoard.get(0).size(); col++){
-                output = output + currentBoard.get(row).get(col);
+        for (List<Byte> aCurrentBoard : currentBoard)
+            for (int col = 0; col < currentBoard.get(0).size(); col++) {
+                output.append(aCurrentBoard.get(col));
             }
-        }
-        return output;
+        return output.toString();
     }
 
     ////CONWAYS GAME OF LIFE RULES
 
     private boolean isExpandedAllWays() {
-        if (expandedDown && expandedRight && expandedLeft && expandedUp) {
-            return true;
-        }
-        return false;
+        return expandedDown && expandedRight && expandedLeft && expandedUp;
     }
 
     private List<List<Byte>> initBoard() {
@@ -90,46 +73,10 @@ public class DynamicRule extends Rule {
         return newBoard;
     }
 
-    /*
-    public List<List<Byte>> conwaysBoardRules() {
-        expandedDown = false;
-        expandedRight = false;
-
-        long start = System.currentTimeMillis();
-
-        conwaysBoard = new ArrayList<List<Byte>>();
-
-        for (int y = 0; y < currentBoard.size(); y++) {
-            List<Byte> row = new ArrayList<Byte>();
-            for (int x = 0; x < currentBoard.get(0).size(); x++) {
-
-                if (boardOfActiveCells.get(y).get(x) == 1) {
-
-                    int cellState = currentBoard.get(y).get(x);
-                    if (cellState == 1 && !isExpandedAllWays()) {
-                        expandBoardIfNeeded(y, x);
-                    }
-                    conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
-                }
-            }
-        }
-        long stop = System.currentTimeMillis();
-
-        System.out.println("TID" + (stop - start));
-        return conwaysBoard;
-    }
-    */
-
-
     private int start;
-    private int sectorSize;
     private int sector2;
     private int sector3;
     private int sector4;
-    private int sector5;
-    private int sector6;
-    private int sector7;
-    private int sector8;
 
     private int length;
 
@@ -159,19 +106,15 @@ public class DynamicRule extends Rule {
 
         start = 0;
         length = conwaysBoard.size();
-        sectorSize = length/8;
+        int sectorSize = length / 8;
         sector2 = sectorSize;
-        sector3 = sectorSize*2;
-        sector4 = sectorSize*3;
-        sector5 = sectorSize*4;
-        sector6 = sectorSize*5;
-        sector7 = sectorSize*6;
-        sector8 = sectorSize*7;
+        sector3 = sectorSize *2;
+        sector4 = sectorSize *3;
 
-        thread1 = new Thread(this::sector1);
-        thread2 = new Thread(this::sector2);
-        thread3 = new Thread(this::sector3);
-        thread4 = new Thread(this::sector4);
+        Thread thread1 = new Thread(this::sector1);
+        Thread thread2 = new Thread(this::sector2);
+        Thread thread3 = new Thread(this::sector3);
+        Thread thread4 = new Thread(this::sector4);
 
         thread1.start();
         thread2.start();
@@ -188,24 +131,11 @@ public class DynamicRule extends Rule {
             e.printStackTrace();
         }
 
-
-        printAliveCells();
         return conwaysBoard;
     }
 
 
-
-    public void printAliveCells(){
-        int n=0;
-        for (int i = 0; i < currentBoard.size() ; i++) {
-            for (int j = 0; j < currentBoard.get(0).size(); j++) {
-                if (conwaysBoard.get(i).get(j) == 1) n++;
-            }
-        }
-        System.out.println("ALIVE CELLS: " + n);
-    }
-
-    public void sector1() {
+    private void sector1() {
         for (int y = start; y < sector2; y++) {
             for (int x = 0; x < currentBoard.get(0).size(); x++) {
 
@@ -220,7 +150,7 @@ public class DynamicRule extends Rule {
         }
     }
 
-    public void sector2() {
+    private void sector2() {
 
         for (int y = sector2; y < sector3; y++) {
             for (int x = 0; x < currentBoard.get(0).size(); x++) {
@@ -237,7 +167,7 @@ public class DynamicRule extends Rule {
 
     }
 
-    public void sector3() {
+    private void sector3() {
 
         for (int y = sector3; y < sector4; y++) {
             for (int x = 0; x < currentBoard.get(0).size(); x++) {
@@ -254,7 +184,7 @@ public class DynamicRule extends Rule {
 
     }
 
-    public void sector4() {
+    private void sector4() {
 
         for (int y = sector4; y < length; y++) {
             for (int x = 0; x < currentBoard.get(0).size(); x++) {
@@ -270,80 +200,6 @@ public class DynamicRule extends Rule {
         }
 
     }
-
-    public void sector5() {
-
-        for (int y = sector5; y < length; y++) {
-            for (int x = 0; x < currentBoard.get(0).size(); x++) {
-
-                if (boardOfActiveCells.get(y).get(x) == 1) {
-                    int cellState = currentBoard.get(y).get(x);
-                    if (cellState == 1 && !isExpandedAllWays()) {
-                        expandBoardIfNeeded(y, x);
-                    }
-                    conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
-                }
-            }
-        }
-
-    }
-
-    public void sector6() {
-
-        for (int y = sector6; y < length; y++) {
-            for (int x = 0; x < currentBoard.get(0).size(); x++) {
-
-                if (boardOfActiveCells.get(y).get(x) == 1) {
-                    int cellState = currentBoard.get(y).get(x);
-                    if (cellState == 1 && !isExpandedAllWays()) {
-                        expandBoardIfNeeded(y, x);
-                    }
-                    conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
-                }
-            }
-        }
-
-    }
-
-    public void sector7() {
-
-        for (int y = sector7; y < length; y++) {
-            for (int x = 0; x < currentBoard.get(0).size(); x++) {
-
-                if (boardOfActiveCells.get(y).get(x) == 1) {
-                    int cellState = currentBoard.get(y).get(x);
-                    if (cellState == 1 && !isExpandedAllWays()) {
-                        expandBoardIfNeeded(y, x);
-                    }
-                    conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
-                }
-            }
-        }
-
-    }
-
-    public void sector8() {
-
-        for (int y = sector8; y < length; y++) {
-            for (int x = 0; x < currentBoard.get(0).size(); x++) {
-
-                if (boardOfActiveCells.get(y).get(x) == 1) {
-                    int cellState = currentBoard.get(y).get(x);
-                    if (cellState == 1 && !isExpandedAllWays()) {
-                        expandBoardIfNeeded(y, x);
-                    }
-                    conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
-                }
-            }
-        }
-
-    }
-
-
-
-
-
-
 
     public boolean neighborOver(int y, int x) {
 
@@ -443,7 +299,7 @@ public class DynamicRule extends Rule {
         return false;
     }
 
-    ////////////////////////////////////////////////////////////////
+
 
     // Calculates the cells that are active. Active cell is either alive itself or has at least one neighbor.
     public void calculateBoardOfActiveCells() {
@@ -524,9 +380,9 @@ public class DynamicRule extends Rule {
             boardOfActiveCells.get(y+1).set(x+1, (byte) 1);
         }
     }
-    ////////////////////////////////////////////////////////////////
 
-    public List<List<Byte>> addCols (List<List<Byte>> board, int numberOfCols) {
+
+    private List<List<Byte>> addCols (List<List<Byte>> board, int numberOfCols) {
         for (int i = 0; i < numberOfCols; i++) {
             for (List<Byte> byteLists : board) {
                 byteLists.add((byte) 0);
@@ -535,9 +391,9 @@ public class DynamicRule extends Rule {
         return board;
     }
 
-    public List<List<Byte>> addRows(List<List<Byte>> board, int numberOfRows) {
+    private List<List<Byte>> addRows(List<List<Byte>> board, int numberOfRows) {
         for (int i = 0; i < numberOfRows; i++) {
-            List<Byte> row = new ArrayList<Byte>();
+            List<Byte> row = new ArrayList<>();
             for (int x = 0; x < board.get(0).size(); x++) {
                 row.add((byte) 0 );
             }

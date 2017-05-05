@@ -1,9 +1,5 @@
 package Test;
 
-/**
- * Created by patrikkvarmehansen on 04/04/17.
- */
-
 import Model.StaticFiles.StaticRLEParser;
 import org.junit.jupiter.api.Test;
 import java.io.BufferedReader;
