@@ -86,10 +86,7 @@ public class Controller implements Initializable {
         KeyFrame keyFrame = new KeyFrame(Duration.millis(1000), actionEvent -> nextGeneration());
         animate = new Animate(keyFrame);
         rule = new DynamicRule();
-
         animate.setSpeed(10);
-
-
     }
 
     /**
@@ -120,7 +117,6 @@ public class Controller implements Initializable {
 
         scaleSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             boardObj.setCellSize(newValue.doubleValue());
-            System.out.println(newValue.doubleValue());
             boardObj.drawBoard();
         });
     }
@@ -141,7 +137,6 @@ public class Controller implements Initializable {
             stage.setResizable(false);
             stage.show();
         } catch (Exception e) {
-            System.out.println("feil");
             e.printStackTrace();
         }
 

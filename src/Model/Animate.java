@@ -7,17 +7,19 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 
 /**
- * This class handles everything with Animation and buttons that control the animation.
+ * Animation class for handling animation of the pattern. Main method for
+ * stopping and starting the animation is "startStopButtonAction()" which
+ * should be assigned to the Start/Stop Button in GUI.
  */
 
 public class Animate {
 
-    public int speed;
-    public int generations;
-    public Timeline timeline;
-    public boolean status;
-    public KeyFrame keyFrame;
-    public int animationRate;
+    private int speed;
+    private boolean status;
+    private int generations;
+    private KeyFrame keyFrame;
+    private int animationRate;
+    private Timeline timeline;
 
     public Animate(KeyFrame keyFrame) {
         this.keyFrame = keyFrame;
@@ -37,6 +39,10 @@ public class Animate {
         return this.speed;
     }
 
+    /**
+     * Sets the new animation rate and the rate of the Timeline.
+     * @param newRate
+     */
     public void setAnimationRate(int newRate) {
         this.animationRate = newRate;
         timeline.setRate(newRate);
@@ -55,7 +61,8 @@ public class Animate {
     }
 
     /**
-     * ADEM SKAL SKRIVE HER
+     * Stops the animation if its running or starts the animation if its stopped.
+     * Updates the status boolean value accordingly.
      */
     public void startStopButtonAction() {
 
@@ -71,14 +78,14 @@ public class Animate {
     }
 
     /**
-     * HEI ADEEEM, SKRIV NOE HER
+     * Starts the timeline animation.
      */
     public void startAnimation() {
         timeline.play();
     }
 
     /**
-     * HER OGSÅ ADEM
+     * Stops the timeline animation.
      */
     public void stopAnimation() {
         timeline.stop();
