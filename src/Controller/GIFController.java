@@ -33,7 +33,6 @@ public class GIFController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         instance = this;
         genTextFieldRestrictions();
         speedFieldRestrictions();
@@ -49,7 +48,7 @@ public class GIFController implements Initializable {
                 generationsField.setText(newVal.replaceAll("[^\\d]", ""));
             }
 
-            if (!(newVal.length() < 3)) {
+            if (!(newVal.length() < 4)) {
                 generationsField.setText(oldV);
             }
         });
@@ -112,12 +111,12 @@ public class GIFController implements Initializable {
     public void exportButtonAction() throws Exception {
 
         //gif = new GIF(700,500, 20, path);
-        gif = new DynamicGIF(700,500,15, path, Controller.instance.boardObj.getCellSize());
+        gif = new DynamicGIF(700,500,15, path, Controller.instance.boardObj.getCellSize(), progressBar);
 
         checkIfDefaultValuesHaveChanged();
 
-        //gif.setCellColor(Controller.instance.boardObj.getcellColor());
-        //gif.setBackgroundColor(Controller.instance.boardObj.getBackgroundColor());
+        gif.setCellColor(Controller.instance.boardObj.getcellColor());
+        gif.setBackgroundColor(Controller.instance.boardObj.getBackgroundColor());
 
         gif.createGIF();
     }

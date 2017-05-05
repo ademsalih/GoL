@@ -2,13 +2,15 @@ package Model;
 
 import Model.DynamicFiles.DynamicBoard;
 import Model.DynamicFiles.DynamicRule;
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
-import javafx.scene.paint.*;
+import javafx.scene.control.ProgressBar;
 import lieng.GIFWriter;
-import java.awt.*;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+
 import Controller.Controller;
 
 /**
@@ -29,11 +31,20 @@ public class DynamicGIF {
     private GIFWriter gwriter;
     private Color backgroundColor;
     private List<List<Byte>> gifBoard;
+    private List<List<Byte>> gifCheckSizeBoard;
     private DynamicBoard importedDynamicBoard;
     private DynamicRule gifDynamicRule = new DynamicRule();
     private Thread exportThread;
 
-    public DynamicGIF (int width, int height, int generations, String path, double cellSize) throws Exception {
+    private ProgressBar pbar;
+    private double progress;
+    private int currentGeneration;
+
+    private int genCount = 0;
+    private int maxHeight;
+    private int maxWidth;
+
+    public DynamicGIF (int width, int height, int generations, String path, double cellSize, ProgressBar progressBar) throws Exception {
         this.importedDynamicBoard = Controller.instance.boardObj;
         this.width = width;
         this.height = height;
@@ -44,6 +55,9 @@ public class DynamicGIF {
         this.cellSize = (int) Math.ceil(cellSize);
         this.cellColor = Color.WHITE;
         this.backgroundColor = Color.BLACK;
+        this.pbar = progressBar;
+        this.progress = 0.0;
+        this.currentGeneration = 0;
     }
 
     public void setCellColor(javafx.scene.paint.Color color) {
@@ -51,7 +65,7 @@ public class DynamicGIF {
     }
 
     public void setBackgroundColor(javafx.scene.paint.Color color) {
-        this.cellColor = convertFXToAwtColor(color);
+        this.backgroundColor = convertFXToAwtColor(color);
     }
 
     public int getCellSize() {
@@ -66,18 +80,7 @@ public class DynamicGIF {
                 (float) fxColor.getGreen(),
                 (float) fxColor.getBlue()
         );
-
     }
-
-    /*public boolean boardIsTooBig(List<List<Byte>> list) {
-
-        System.out.println("Board size: " + list.get(0).size());
-
-        if (list.get(0).size() > width/cellSize) {
-            return true;
-        }
-        return false;
-    }*/
 
     public void setFileName(String filename) {
         this.filename = "/" + filename + ".gif";
@@ -106,23 +109,25 @@ public class DynamicGIF {
     // Method that copies the values from the board, and creates gif object and exports it.
     public void createGIF() throws Exception {
 
-        /*this.exportThread = new Thread(() -> {
-
-        });*/
-
         copyImportedBoardToGIFBoard();
 
-        System.out.println("Width: " + gifBoard.get(0).size());
-        System.out.println("Height: " + gifBoard.size());
-        System.out.println("Cellsize: " + cellSize);
-
-        System.out.println("Writing cap: " + width/cellSize);
-        System.out.println("Writing cap: " + height/cellSize);
-
         if (path != null) {
-            path+=filename;
-            gwriter = new GIFWriter(width, height, path, milliseconds);
-            writeGoLSequenceToGIF(gwriter, gifBoard, generations);
+
+            exportThread = new Thread(() -> {
+
+                this.width = cellSize * maxWidth;
+                this.height = cellSize * maxHeight;
+                path+=filename;
+
+                try {
+                    gwriter = new GIFWriter(width, height, path, milliseconds);
+                    writeGoLSequenceToGIF(gwriter, gifBoard, generations);
+                } catch (Exception e) {
+
+                }
+            });
+
+            exportThread.start();
 
         } else {
             noLocationSelectedAlert();
@@ -130,10 +135,26 @@ public class DynamicGIF {
 
     }
 
+
+    public void notifyIfExpanded() {
+
+        int i = 0;
+
+        while (i < generations) {
+            nextCheckSize();
+            i++;
+        }
+
+        maxHeight = gifCheckSizeBoard.size();
+        maxWidth = gifCheckSizeBoard.get(0).size();
+
+    }
+
     // Method used for copying the current board in the game to this class.
     private void copyImportedBoardToGIFBoard() {
 
-        gifBoard = new ArrayList<List<Byte>>();
+        gifCheckSizeBoard = new ArrayList<>();
+        gifBoard = new ArrayList<>();
 
         for (int i = 0; i <  importedDynamicBoard.board.size(); i++) {
             List<Byte> row = new ArrayList<Byte>();
@@ -154,22 +175,36 @@ public class DynamicGIF {
             }
         }
 
+        for (int i = 0; i <  importedDynamicBoard.board.size(); i++) {
+            List<Byte> row = new ArrayList<Byte>();
+            for (int j = 0; j < importedDynamicBoard.board.get(0).size(); j++) {
+                row.add((byte) 0);
+            }
+            this.gifCheckSizeBoard.add(row);
+        }
+
+        for (int y = 0; y < gifCheckSizeBoard.size(); y++) {
+            for (int x = 0; x < gifCheckSizeBoard.get(0).size(); x++) {
+
+                if (importedDynamicBoard.board.get(y).get(x) == 1) {
+                    gifCheckSizeBoard.get(y).set(x, (byte) 1);
+                } else {
+                    gifCheckSizeBoard.get(y).set(x, (byte) 0);
+                }
+            }
+        }
+
+        notifyIfExpanded();
     }
 
     // Method that draws the current state of the game to the gif sequence.
+
     public void drawFrame() {
 
-        //gwriter.fillRect(0,width-1,0,height-1, backgroundColor);
-
-
-        if (width/cellSize > gifBoard.get(0).size()) {
-            System.out.println("Stort nok");
-        } else {
-            System.out.println("ikke stort nok");
-        }
+        gwriter.fillRect(0,width-1,0,height-1,backgroundColor);
 
         for (int y = 0; y < gifBoard.size(); y++) {
-            for (int x = 0; x <= gifBoard.get(0).size(); x++) {
+            for (int x = 0; x < gifBoard.get(0).size(); x++) {
 
                 if (gifBoard.get(y).get(x) == 1) {
 
@@ -190,12 +225,34 @@ public class DynamicGIF {
         yCounter = 0;
     }
 
-
     // Iterates the game using the Model.StaticRule class.
     public void next() {
         gifDynamicRule.setCurrentBoard(this.gifBoard);
         gifDynamicRule.calculateBoardOfActiveCells();
         gifBoard = gifDynamicRule.applyBoardRules();
+    }
+
+    public void nextCheckSize() {
+        gifDynamicRule.setCurrentBoard(this.gifCheckSizeBoard);
+        gifDynamicRule.calculateBoardOfActiveCells();
+        gifCheckSizeBoard = gifDynamicRule.applyBoardRules();
+    }
+
+    public void updateProgress(int currentGen) {
+        this.progress =  (double) currentGen / (double) generations;
+
+        //System.out.println(progress);
+
+        System.out.println(genCount);
+        genCount++;
+    }
+
+    public void setCurrentGeneration (int newGen) {
+        this.currentGeneration = newGen;
+    }
+
+    public void updatePBar(double pBarVal) {
+        this.pbar.setProgress(pBarVal);
     }
 
     // Adds the states of the game to the gif object using rail recursion until base case is fulfilled.
@@ -204,9 +261,19 @@ public class DynamicGIF {
         // Base case (i.e. stop condition)
         if (counter == 0) {
             gwriter.close();
-            exportFinishedAlert();
+
+            Platform.runLater(() -> {
+                exportFinishedAlert();
+                pbar.setProgress(0.0);
+            });
             return;
         }
+
+        setCurrentGeneration(generations - counter + 1);
+
+        updateProgress(currentGeneration);
+
+        updatePBar(progress);
 
         // Draws the current board using "gwriter" method of GIFWriter class.
         drawFrame();
@@ -219,6 +286,7 @@ public class DynamicGIF {
 
         // Recursive call to writeGoLSwquenceToGIF.
         writeGoLSequenceToGIF(gwriter, gifBoard, counter - 1);
+
     }
 
     // Alerts the user that the gif has finished exporting.
@@ -239,11 +307,4 @@ public class DynamicGIF {
         alert.showAndWait();
     }
 
-    public void boardTooBigAlert() {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("GIF Export");
-        alert.setHeaderText(null);
-        alert.setContentText("This pattern is too big for exporting!");
-        alert.showAndWait();
-    }
 }
