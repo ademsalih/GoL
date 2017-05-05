@@ -33,7 +33,9 @@ import javafx.util.Duration;
 
 public class Controller implements Initializable {
 
-    // Connection between FXML objects and this controller class.
+    /**
+     * FXML GUI elements.
+     */
     @FXML public Canvas canvas;
     @FXML private Button nextGenButton;
     @FXML private Button startStopButton;
@@ -43,7 +45,9 @@ public class Controller implements Initializable {
     @FXML private MenuBar menuBar;
     @FXML private Button resetButton;
 
-    // Check menu items
+    /**
+     * CheckMenuItems from FXML.
+     */
     @FXML private CheckMenuItem conwaysLife;
     @FXML private CheckMenuItem seeds;
     @FXML private CheckMenuItem flock;
@@ -57,20 +61,20 @@ public class Controller implements Initializable {
     @FXML private CheckMenuItem dayAndNight;
     @FXML private CheckMenuItem lifeWithoutDeath;
 
-    public DynamicBoard boardObj;
-    DynamicRule rule;
-    DynamicRLEParser rleParser;
-
-    public static Controller instance;
+    /**
+     * Declarations of the objects needed for the program.
+     */
     Stage stage;
     Stage gifStage;
-
+    DynamicRule rule;
     private int counter;
-    private String titleName;
-
-    private Animate animate;
     private URLDialog url;
+    private String titleName;
+    private Animate animate;
     private SaveRLEDialog save;
+    DynamicRLEParser rleParser;
+    public DynamicBoard boardObj;
+    public static Controller instance;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -386,10 +390,11 @@ public class Controller implements Initializable {
         PopUps.info("Game of Life", "A game made by: \nNarmatha Siva\nAdem Salih\nPatrik Hansen\n05.05.2017");
     }
 
+    // Methods that apply the different rules and deals with the checking of the Rule menu.
 
-
-
-    // Methods that applys the different rules and deals with the checking of the Rule menu
+    /**
+     * Unchecks all of the CheckMenuItems by adding them to an ArrayList and iterating through the list.
+     */
     private void unCheckAll() {
         ArrayList<CheckMenuItem> menuItems = new ArrayList<>(12);
         menuItems.addAll(Arrays.asList(conwaysLife, seeds, flock, twoByTwo, maze, move, highLife,
@@ -402,6 +407,9 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * Sets the game rule to to Conways Rule.
+     */
     public void selectConwaysLife() {
         unCheckAll();
         conwaysLife.setSelected(true);
@@ -412,6 +420,9 @@ public class Controller implements Initializable {
         Rule.setRules(s,b);
     }
 
+    /**
+     * Sets the game rule to Seeds.
+     */
     public void selectSeeds() {
         unCheckAll();
         seeds.setSelected(true);
@@ -422,6 +433,9 @@ public class Controller implements Initializable {
         Rule.setRules(s,b);
     }
 
+    /**
+     * Sets the game rule to Flock.
+     */
     public void selectFlock() {
         unCheckAll();
         flock.setSelected(true);
@@ -432,6 +446,9 @@ public class Controller implements Initializable {
         Rule.setRules(s,b);
     }
 
+    /**
+     * Sets the game rule to 2x2.
+     */
     public void selectTwoBytwo() {
         unCheckAll();
         twoByTwo.setSelected(true);
@@ -442,6 +459,9 @@ public class Controller implements Initializable {
         Rule.setRules(s,b);
     }
 
+    /**
+     * Sets the game rule to Maze.
+     */
     public void selectMaze() {
         unCheckAll();
         maze.setSelected(true);
@@ -452,6 +472,9 @@ public class Controller implements Initializable {
         Rule.setRules(s,b);
     }
 
+    /**
+     * Sets the game rule to Move.
+     */
     public void selectMove() {
         unCheckAll();
         move.setSelected(true);
@@ -462,6 +485,9 @@ public class Controller implements Initializable {
         Rule.setRules(s,b);
     }
 
+    /**
+     * Sets the game rule to HighLife.
+     */
     public void selectHighLife() {
         unCheckAll();
         highLife.setSelected(true);
@@ -472,7 +498,10 @@ public class Controller implements Initializable {
         Rule.setRules(s,b);
     }
 
-    public void selectMazctric() {
+    /**
+     * Sets the game rule to Mazectric.
+     */
+    public void selectMazectric() {
         unCheckAll();
         mazectric.setSelected(true);
 
@@ -482,6 +511,9 @@ public class Controller implements Initializable {
         Rule.setRules(s,b);
     }
 
+    /**
+     * Sets the game rule to Fredkin.
+     */
     public void selectFredkin() {
         unCheckAll();
         fredkin.setSelected(true);
@@ -492,6 +524,9 @@ public class Controller implements Initializable {
         Rule.setRules(s,b);
     }
 
+    /**
+     * Sets the game rule to Replicator.
+     */
     public void selectReplicator() {
         unCheckAll();
         replicator.setSelected(true);
@@ -502,6 +537,9 @@ public class Controller implements Initializable {
         Rule.setRules(s,b);
     }
 
+    /**
+     * Sets the game rule to Day & Night.
+     */
     public void selectDayAndNight() {
         unCheckAll();
         dayAndNight.setSelected(true);
@@ -512,6 +550,9 @@ public class Controller implements Initializable {
         Rule.setRules(s,b);
     }
 
+    /**
+     * Sets the game rule to Life without Death.
+     */
     public void selectLifeWithoutDeath() {
         unCheckAll();
         lifeWithoutDeath.setSelected(true);

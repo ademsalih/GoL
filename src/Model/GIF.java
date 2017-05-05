@@ -41,7 +41,6 @@ public class GIF {
         this.cellSize = 2;
         this.cellColor = convertFXToAwtColor(importedStaticBoard.getcellColor());
         this.backgroundColor = convertFXToAwtColor(importedStaticBoard.getBackgroundColor());
-
     }
 
     // Takes in JavaFX Color Object and returns it as Java Awt Color object.

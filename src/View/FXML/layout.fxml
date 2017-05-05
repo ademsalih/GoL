@@ -55,7 +55,7 @@
                   <CheckMenuItem fx:id="maze" mnemonicParsing="false" onAction="#selectMaze" text="Maze (B3/S12345)" />
                   <CheckMenuItem fx:id="move" mnemonicParsing="false" onAction="#selectMove" text="Move (B368/S245)" />
                   <CheckMenuItem fx:id="highLife" mnemonicParsing="false" onAction="#selectHighLife" text="HighLife (B36/S23)" />
-                  <CheckMenuItem fx:id="mazectric" mnemonicParsing="false" onAction="#selectMazctric" text="Mazectric (B3/S1234)" />
+                  <CheckMenuItem fx:id="mazectric" mnemonicParsing="false" onAction="#selectMazectric" text="Mazectric (B3/S1234)" />
                   <CheckMenuItem fx:id="fredkin" mnemonicParsing="false" onAction="#selectFredkin" text="Franklin (B1357/S02468)" />
                   <CheckMenuItem fx:id="replicator" mnemonicParsing="false" onAction="#selectReplicator" text="Replicator (B1357/S1357)" />
                   <CheckMenuItem fx:id="dayAndNight" mnemonicParsing="false" onAction="#selectDayAndNight" text="Day &amp; Night (B3678/S34678)" />
