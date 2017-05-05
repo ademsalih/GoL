@@ -7,6 +7,13 @@ import Model.Abstract.Rule;
 
 /**
  * DynamicRule performs rules (default:Conway's rules) on the dynamic gameboard.
+ *
+ * We have implementet 4 threads to help with the processing in this case so that we can handle
+ * bigger patterns.
+ *
+ * To further optimize we have a extra list (boardOfActiveCells) which holds information of which
+ * cells that were affected or near an affected cell of the last generation. We use this to determine
+ * which cells that we need to check for neighbors.
  */
 
 public class DynamicRule extends Rule {

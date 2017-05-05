@@ -3,7 +3,8 @@ package Model.Abstract;
 import javafx.scene.paint.Color;
 
 /**
- * The Board interface represents the gameboard
+ * Class that holds the game board, and functions for drawing the game board to the canvas.
+ * It also has some support functions for manipulating both the game board and its representation.
  */
 
 public abstract class Board {
@@ -15,7 +16,6 @@ public abstract class Board {
     protected double xCounter = 0.0;
     protected double yCounter = 0.0;
 
-    //what should we write here?
     protected Board(){}
 
     public void setCellColor(Color cellColor) {this.cellColor = cellColor;}
@@ -30,6 +30,12 @@ public abstract class Board {
 
     public Color getBackgroundColor() {return this.backgroundColor;}
 
+    /**
+     * Sets the state of a cell within the board
+     * @param x X coordinate of the cell
+     * @param y Y coordinate of the cell
+     * @param value State of the cell
+     */
     public abstract void setCellState(int x, int y, byte value);
 
     /**

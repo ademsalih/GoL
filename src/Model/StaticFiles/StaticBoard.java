@@ -6,8 +6,8 @@ import Model.Abstract.Board;
 import Model.Point;
 
 /**
- * This class draws the board and fills the cells depending on the cells' state
- *
+ * This class holds and draws the board and fills the cells depending on the cells' state
+ * The static version of board uses a 2D byte array to hold its information
  */
 
 public class StaticBoard extends Board {
@@ -60,7 +60,6 @@ public class StaticBoard extends Board {
 
     public void setBoard(byte[][] board) {this.board = board;}
 
-
     public void setCellState(int x, int y, byte value) {
         if(x > 250 || y > 350){
             throw new IndexOutOfBoundsException("THE POINT IS NOT LOCATED ON THE GAMEBOARD");
@@ -82,7 +81,6 @@ public class StaticBoard extends Board {
     public byte[][] getBoard() {
         return board;
     }
-
 
     /**
      * Draws/undraws a cell depending on its state when we click/drag on the board
@@ -147,7 +145,6 @@ public class StaticBoard extends Board {
         yCounter = 0;
     }
 
-
     /**
      * Draws the grid on the gameboard
      */
@@ -170,7 +167,6 @@ public class StaticBoard extends Board {
             i += cellSize;
         }
     }
-
 
     /**
      * Clears the cells on the gameboard

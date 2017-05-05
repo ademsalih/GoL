@@ -8,7 +8,8 @@ import Model.Abstract.Board;
 import Model.Point;
 
 /**
- * Represents the Dynamic gameboard
+ * Represents the Dynamic version of the game board.
+ * We use an ArrayList within an ArrayList to represent the dynamic version of our board.
  */
 public class DynamicBoard extends Board {
 
@@ -171,6 +172,12 @@ public class DynamicBoard extends Board {
         }
     }
 
+    /**
+     * Sets the state of the cell
+     * @param rowy Y coordinate of cell
+     * @param colx X coordinate of cell
+     * @param value State of the cell
+     */
     public void setCellState(int rowy, int colx, byte value) {
         // Checks if cell is outside the margin of the board. Updates the board if needed.
         rowcount = board.size();
@@ -181,6 +188,13 @@ public class DynamicBoard extends Board {
         this.board.get(rowy).set(colx, value);
     }
 
+    /**
+     * Sets the state of a cell within the List (board)
+     * @param y Y coordinate of the cell
+     * @param x X coordinate of the cell
+     * @return State of the cell at given coordinate. 0 and 1 represents actual value. 2 and 3 is if its outside of the board
+     * @throws ArrayIndexOutOfBoundsException
+     */
     public byte getCellState(int y, int x) throws ArrayIndexOutOfBoundsException {
         if (y >= board.size() || x >= board.get(0).size()) {
             return 2;
@@ -193,6 +207,7 @@ public class DynamicBoard extends Board {
         }
     }
 
+
     public void setBoard(List<List<Byte>> board) {
         this.board = board;
 
@@ -201,8 +216,6 @@ public class DynamicBoard extends Board {
     public List<List<Byte>> getBoard() {
         return board;
     }
-
-
 
     /**
      * Draws/undraws a cell depending on its state when we click/drag on the board
