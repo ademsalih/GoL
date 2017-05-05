@@ -16,18 +16,11 @@ public class DynamicRule extends Rule {
     Thread thread2;
     Thread thread3;
     Thread thread4;
-    Thread thread5;
-    Thread thread6;
-    Thread thread7;
-    Thread thread8;
 
     private int rowCount;
     private int colCount;
     private int expandNum;
     private int shiftNum;
-    private int xOffSet;
-    private int yOffSet;
-    private int test;
 
     private boolean expandedDown, expandedRight, expandedLeft, expandedUp, needsRightShift, needsDownShift;
     private boolean boardHasBeenInit;
@@ -44,8 +37,6 @@ public class DynamicRule extends Rule {
         expandedDown = false;
         expandedUp = false;
 
-        xOffSet = 0;
-        yOffSet = 0;
 
         notInit = true;
     }
@@ -181,39 +172,25 @@ public class DynamicRule extends Rule {
         thread2 = new Thread(this::sector2);
         thread3 = new Thread(this::sector3);
         thread4 = new Thread(this::sector4);
-        /*thread5 = new Thread(this::sector5);
-        thread6 = new Thread(this::sector6);
-        thread7 = new Thread(this::sector7);
-        thread8 = new Thread(this::sector8);*/
 
         thread1.start();
         thread2.start();
         thread3.start();
         thread4.start();
-        /*thread5.start();
-        thread6.start();
-        thread7.start();
-        thread8.start();*/
 
         try {
             thread1.join();
             thread2.join();
             thread3.join();
             thread4.join();
-            /*thread5.join();
-            thread6.join();
-            thread7.join();
-            thread8.join();*/
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-
         printAliveCells();
         return conwaysBoard;
     }
-
-
 
     public void printAliveCells(){
         int n=0;
@@ -290,79 +267,6 @@ public class DynamicRule extends Rule {
         }
 
     }
-
-    public void sector5() {
-
-        for (int y = sector5; y < length; y++) {
-            for (int x = 0; x < currentBoard.get(0).size(); x++) {
-
-                if (boardOfActiveCells.get(y).get(x) == 1) {
-                    int cellState = currentBoard.get(y).get(x);
-                    if (cellState == 1 && !isExpandedAllWays()) {
-                        expandBoardIfNeeded(y, x);
-                    }
-                    conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
-                }
-            }
-        }
-
-    }
-
-    public void sector6() {
-
-        for (int y = sector6; y < length; y++) {
-            for (int x = 0; x < currentBoard.get(0).size(); x++) {
-
-                if (boardOfActiveCells.get(y).get(x) == 1) {
-                    int cellState = currentBoard.get(y).get(x);
-                    if (cellState == 1 && !isExpandedAllWays()) {
-                        expandBoardIfNeeded(y, x);
-                    }
-                    conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
-                }
-            }
-        }
-
-    }
-
-    public void sector7() {
-
-        for (int y = sector7; y < length; y++) {
-            for (int x = 0; x < currentBoard.get(0).size(); x++) {
-
-                if (boardOfActiveCells.get(y).get(x) == 1) {
-                    int cellState = currentBoard.get(y).get(x);
-                    if (cellState == 1 && !isExpandedAllWays()) {
-                        expandBoardIfNeeded(y, x);
-                    }
-                    conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
-                }
-            }
-        }
-
-    }
-
-    public void sector8() {
-
-        for (int y = sector8; y < length; y++) {
-            for (int x = 0; x < currentBoard.get(0).size(); x++) {
-
-                if (boardOfActiveCells.get(y).get(x) == 1) {
-                    int cellState = currentBoard.get(y).get(x);
-                    if (cellState == 1 && !isExpandedAllWays()) {
-                        expandBoardIfNeeded(y, x);
-                    }
-                    conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
-                }
-            }
-        }
-
-    }
-
-
-
-
-
 
 
     public boolean neighborOver(int y, int x) {
@@ -577,6 +481,7 @@ public class DynamicRule extends Rule {
         }
     }
 
+
     protected void expandBoardIfNeeded(int y, int x) {
 
         // Checks if a cell is close to the edge
@@ -613,7 +518,6 @@ public class DynamicRule extends Rule {
 
     private void shiftAllRight() {
         addColsToAllBoards();
-        xOffSet += expandNum;
         currentBoard = shiftBoardRight(currentBoard, shiftNum);
         conwaysBoard = shiftBoardRight(conwaysBoard, shiftNum);
         boardOfActiveCells = shiftBoardRight(boardOfActiveCells, shiftNum);
@@ -622,7 +526,6 @@ public class DynamicRule extends Rule {
 
     private void shiftAllDown() {
         addRowsToAllBoards();
-        yOffSet += expandNum;
         currentBoard = shifBoardDown(currentBoard, shiftNum);
         conwaysBoard = shifBoardDown(conwaysBoard, shiftNum);
         boardOfActiveCells = shifBoardDown(boardOfActiveCells, shiftNum);

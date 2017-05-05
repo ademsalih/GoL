@@ -30,10 +30,11 @@ public class DynamicBoard extends Board {
         this.canvasWidth = canvas.getWidth();
         this.canvasHeight = canvas.getHeight();
         this.gc = canvas.getGraphicsContext2D();
-        this.margin  = 20;
+        this.margin  = 10;
         this.board = initBoard(x, y);
         this.initialBoard = initBoard(x, y);
     }
+
 
     /**
      * Sets a given board as both the main board ("board") and also the initial board ("initialBoard")
@@ -136,7 +137,6 @@ public class DynamicBoard extends Board {
 
     public byte getCellState(int y, int x) throws ArrayIndexOutOfBoundsException {
         if (y < 0 || y >= board.get(0).size() || x < 0 || x >= board.size()) {
-            System.out.println("Heihei");
             throw new ArrayIndexOutOfBoundsException("Cell does not exsist");
         }
         else {
@@ -154,6 +154,7 @@ public class DynamicBoard extends Board {
     }
 
 
+
     /**
      * Draws/undraws a cell depending on its state when we click/drag on the board
      * @param y - y coordinate
@@ -162,12 +163,21 @@ public class DynamicBoard extends Board {
     public void mouseClickedOrDraggedOnBoard(double x, double y){
         colx = (int) ((x/cellSize));
         rowy = (int) ((y/cellSize));
-        if (getCellState(rowy, colx) == 1) {
-            setCellState(rowy, colx, (byte)0);
+        boolean cellSet = false;
+
+        try {
+            if (getCellState(rowy, colx) == 1) {
+                setCellState(rowy, colx, (byte) 0);
+                cellSet = true;
+            } else {
+                setCellState(rowy, colx, (byte) 1);
+                System.out.println("else");
+            }
         }
-        else {
-            setCellState(rowy, colx, (byte)1);
+        catch (ArrayIndexOutOfBoundsException ae) {
+            setCellState(rowy, colx, (byte) 1);
         }
+
         drawBoard();
     }
 
