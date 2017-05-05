@@ -1,0 +1,29 @@
+.root {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+#nextGenButton {
+    -fx-base: #201e19;
+    -fx-text-fill: #a2a2a2;
+}
+
+#resetButton {
+    -fx-base: #201e19;
+    -fx-text-fill: #a2a2a2;
+}
+
+#startButton {
+    -fx-base: #05b82b;
+    -fx-text-fill: #024911;
+}
+
+#stopButton {
+    -fx-base: #d52002;
+    -fx-text-fill: #691002;
+}
+
+#gridPane {
+    -fx-base: #171717;
+}
+

@@ -1,41 +1,43 @@
 package Model.DynamicFiles;
 
-import Model.DynamicFiles.DynamicBoard;
-import Model.DynamicFiles.DynamicRule;
 import Model.PopUps;
 import javafx.application.Platform;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ProgressBar;
 import lieng.GIFWriter;
 import java.awt.Color;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * Dynamic GIF objects which can export dynamic boards that expand.
+ * This class contains variables and a Progress Bar for visual representation
+ * of the export process.
+ */
 
 public class DynamicGIF {
 
     private int width;
     private int height;
+    private String path;
+    private int maxWidth;
     private int cellSize;
     private int xCounter;
     private int yCounter;
-    private int generations;
-    private int milliseconds;
-    private String path;
+    private int maxHeight;
     private String filename;
     private Color cellColor;
+    private int generations;
+    private double progress;
+    private int milliseconds;
+    private ProgressBar pbar;
     private GIFWriter gwriter;
+    private Thread exportThread;
     private Color backgroundColor;
+    private int currentGeneration;
     private List<List<Byte>> gifBoard;
     private List<List<Byte>> gifCheckSizeBoard;
     private DynamicBoard importedDynamicBoard;
     private DynamicRule gifDynamicRule = new DynamicRule();
-    private Thread exportThread;
-    private ProgressBar pbar;
-    private double progress;
-    private int currentGeneration;
-    private int maxHeight;
-    private int maxWidth;
 
     public DynamicGIF (int width, int height, int generations, String path, double cellSize, ProgressBar progressBar, DynamicBoard board) throws Exception {
         this.importedDynamicBoard = board;

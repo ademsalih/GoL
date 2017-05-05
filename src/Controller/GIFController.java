@@ -1,13 +1,13 @@
 package Controller;
 
-import Model.DynamicGIF;
-import Model.GIF;
+import Model.DynamicFiles.DynamicGIF;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
@@ -22,11 +22,11 @@ import java.util.ResourceBundle;
 
 public class GIFController implements Initializable {
 
-    //public GIF gif;
     public DynamicGIF gif;
     public String path;
     public Thread exportThread;
     public static GIFController instance;
+    @FXML private GridPane gridPane;
     @FXML private Label url;
     @FXML private TextField fileNameField;
     @FXML private TextField generationsField;
@@ -41,8 +41,9 @@ public class GIFController implements Initializable {
         speedFieldRestrictions();
     }
 
-    // Method that restricts the user from typing letters or numbers above 99
-    // in the generations TextField using RegEx.
+    /**
+     * Method that restricts the user from typing letters or numbers above 99 in the generations TextField using RegEx.
+     */
     public void genTextFieldRestrictions() {
 
         generationsField.textProperty().addListener((obs, oldV, newVal) -> {
@@ -57,6 +58,9 @@ public class GIFController implements Initializable {
         });
     }
 
+    /**
+     * Method that restricts the user from typing higher values or letters in speed TextField using RegEx.
+     */
     public void speedFieldRestrictions() {
 
         speedField.textProperty().addListener((obs, oldV, newVal) -> {
@@ -72,8 +76,10 @@ public class GIFController implements Initializable {
         });
     }
 
-    // Method for "Choose..." Button. Creates DirectoryChooser object and sets the new path.
-    // Alerts the user if there is no path selected.
+    /**
+     * Method for "Choose..." Button. Creates DirectoryChooser object and sets the new path.
+     * Alerts the user if there is no path selected.
+     */
     public void chooseLocationAction() {
 
         DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -94,7 +100,9 @@ public class GIFController implements Initializable {
 
     }
 
-    // Checks whether filename, generations or speed have been specified.
+    /**
+     * Checks whether filename, generations or speed have been specified.
+     */
     public void checkIfDefaultValuesHaveChanged() {
 
         if (!fileNameField.getText().isEmpty()) {
@@ -110,7 +118,10 @@ public class GIFController implements Initializable {
         }
     }
 
-    // Method for "Export" Button. Instantiates GIF-object.
+    /**
+     * Method for "Export" Button. Instantiates GIF-object.
+     * @throws Exception
+     */
     public void exportButtonAction() throws Exception {
 
         //gif = new GIF(700,500, 20, path);
@@ -124,8 +135,9 @@ public class GIFController implements Initializable {
         gif.createGIF();
     }
 
-
-    // Closes the GIF Export Stage when "Cancel" Button is clicked.
+    /**
+     * Closes the GIF Export Stage when "Cancel" Button is clicked.
+     */
     public void cancelButtonAction() {
 
         if (gif != null) {

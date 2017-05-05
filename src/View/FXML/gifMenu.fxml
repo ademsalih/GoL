@@ -73,7 +73,7 @@
                   <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="152.0">
                      <children>
                         <Label prefHeight="17.0" prefWidth="77.0" text="Generations" />
-                        <TextField fx:id="generationsField" alignment="CENTER" prefHeight="27.0" prefWidth="37.0" promptText="15">
+                        <TextField fx:id="generationsField" alignment="CENTER" prefHeight="27.0" prefWidth="42.0" promptText="15">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>

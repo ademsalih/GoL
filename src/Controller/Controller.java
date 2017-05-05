@@ -316,7 +316,7 @@ public class Controller implements Initializable {
         try {
             Pane root = FXMLLoader.load(getClass().getResource("/View/FXML/gifMenu.fxml"));
             gifStage = new Stage();
-            Scene scene = new Scene(root, 517, 283  );
+            Scene scene = new Scene(root, 517, 283);
 
             gifStage.setScene(scene);
             gifStage.setTitle("Export as GIF");

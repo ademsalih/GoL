@@ -9,9 +9,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-/**
- * Created by patrikkvarmehansen on 04/05/17.
- */
 public class SaveRLEDialog {
 
     private String name;

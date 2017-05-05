@@ -3,18 +3,16 @@ package Controller;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-/**
- * Created by patrikkvarmehansen on 01/05/17.
- */
 public class URLDialog {
 
     private String url;
 
     /**
-     * Sets up the dialogbox
+     * Sets up the dialogbox.
      */
     public void showStage() {
         Stage stage = new Stage();
@@ -34,7 +32,6 @@ public class URLDialog {
             url = urlField.getText();
             stage.close();
         });
-
 
         stage.showAndWait();
     }

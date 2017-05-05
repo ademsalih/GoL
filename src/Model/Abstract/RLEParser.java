@@ -13,9 +13,9 @@ import java.util.regex.Pattern;
 import Model.ReadFile;
 
 /**
- * Handels the parsing of the .rle file and returns both meta data and a game of life board.
+ * Handles the parsing of the .rle file and returns both meta data and a game of life board.
  *
- * Unfortunatley only the name is used from the metadata, but for future use there are methods
+ * Unfortunately only the name is used from the metadata, but for future use there are methods
  * for getting the author and comment.
  */
 public abstract class RLEParser {

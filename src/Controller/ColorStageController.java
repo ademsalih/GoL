@@ -11,9 +11,6 @@ import javafx.scene.paint.Color;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-/**
- * Created by ademsalih on 17.03.2017.
- */
 public class ColorStageController implements Initializable {
 
     @FXML private ColorPicker cellColorPicker;
@@ -22,7 +19,6 @@ public class ColorStageController implements Initializable {
     @FXML private Label cellColorLabel;
     @FXML private Label backgroundColorLabel;
     @FXML private Button closeButton;
-
     public static ColorStageController instance;
 
     @Override
