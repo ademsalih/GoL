@@ -5,7 +5,7 @@ import Model.Abstract.Rule;
 import Model.DynamicFiles.DynamicParseToRLE;
 import Model.DynamicFiles.DynamicRLEParser;
 import Model.DynamicFiles.DynamicBoard;
-import View.Main;
+import Main.Main;
 import javafx.animation.KeyFrame;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
