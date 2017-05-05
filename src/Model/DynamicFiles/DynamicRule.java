@@ -5,9 +5,13 @@ import java.util.List;
 
 import Model.Abstract.Rule;
 
+/**
+ * DynamicRule performs rules (default:Conway's rules) on the dynamic gameboard
+ */
+
 public class DynamicRule extends Rule {
 
-    ////INSTANCE VARIABLES
+
     public List<List<Byte>> currentBoard;
     private List<List<Byte>> conwaysBoard;
     private List<List<Byte>> boardOfActiveCells;
@@ -16,11 +20,20 @@ public class DynamicRule extends Rule {
     private int colCount;
     private int expandNum;
     private int shiftNum;
+    private int start;
+    private int sector2;
+    private int sector3;
+    private int sector4;
+
+    private int length;
 
     private boolean expandDown, expandRight, needsRightShift, needsDownShift;
     //private boolean boardHasBeenInit;
     //private boolean init;
 
+    /**
+     * Constructs a rule object
+     */
     public DynamicRule () {
         this.currentBoard = new ArrayList<>();
         expandNum = 50;
@@ -28,6 +41,10 @@ public class DynamicRule extends Rule {
 
     }
 
+    /**
+     * Returns the current board DynamicBoard bject
+     * @return The current DynamicBoard object
+     */
     public List<List<Byte>> getCurrentBoard() {
         return currentBoard;
     }
@@ -38,7 +55,10 @@ public class DynamicRule extends Rule {
         this.colCount = currentBoard.get(0).size() - 1;
     }
 
-    //Retunerer next generation verdier
+    /**
+     * Returns the next generation cells as a string
+     * @return String containing next generation cells
+     */
     @Override
     public String toString(){
         StringBuilder output = new StringBuilder();
@@ -52,10 +72,18 @@ public class DynamicRule extends Rule {
 
     ////CONWAYS GAME OF LIFE RULES
 
+    /**
+     * Checks if the gameboard is expanded in four direction
+     * @return boolean value
+     */
     private boolean isExpandedAllWays() {
         return expandDown && expandRight && needsRightShift && needsDownShift;
     }
 
+    /**
+     * Returns a 2D Arraylist with the size of the gameboard
+     * @return 2D List with elements of type byte
+     */
     private List<List<Byte>> initBoard() {
         List<List<Byte>> newBoard = new ArrayList<>();
         for (int i = 0; i < currentBoard.size() ; i++) {
@@ -68,14 +96,10 @@ public class DynamicRule extends Rule {
         return newBoard;
     }
 
-    private int start;
-    private int sector2;
-    private int sector3;
-    private int sector4;
-
-    private int length;
-
-
+    /**
+     * Returns a ruled 2D list
+     * @return 2D List with elements of type byte
+     */
     public List<List<Byte>> applyBoardRules() {
 
 
@@ -136,6 +160,9 @@ public class DynamicRule extends Rule {
         return conwaysBoard;
     }
 
+    /**
+     * Sets false if expanad in one of the direction is not true
+     */
     private void setBooleansFalse() {
         expandDown = false;
         expandRight = false;
@@ -144,7 +171,9 @@ public class DynamicRule extends Rule {
 
     }
 
-
+    /**
+     * Performs the rules on first 1/4 of the gameboard
+     */
     private void sector1() {
         for (int y = start; y < sector2; y++) {
             for (int x = 0; x < currentBoard.get(0).size(); x++) {
@@ -161,6 +190,9 @@ public class DynamicRule extends Rule {
         }
     }
 
+    /**
+     * Performs the rules on second 1/4 of the gameboard
+     */
     private void sector2() {
 
         for (int y = sector2; y < sector3; y++) {
@@ -180,6 +212,9 @@ public class DynamicRule extends Rule {
 
     }
 
+    /**
+     * Performs the rules on third 1/4 of the gameboard
+     */
     private void sector3() {
 
         for (int y = sector3; y < sector4; y++) {
@@ -198,6 +233,9 @@ public class DynamicRule extends Rule {
 
     }
 
+    /**
+     * Performs the rules on fourth 1/4 of the gameboard
+     */
     private void sector4() {
 
         for (int y = sector4; y < length; y++) {
@@ -216,6 +254,12 @@ public class DynamicRule extends Rule {
 
     }
 
+    /**
+     * Checks if the cell in the specified position has an alive cell over that position
+     * @param y position
+     * @param x position
+     * @return boolean value
+     */
     public boolean neighborOver(int y, int x) {
 
         if (y - 1 != - 1) {
@@ -229,7 +273,12 @@ public class DynamicRule extends Rule {
 
     }
 
-
+    /**
+     * Checks if the cell in the specified position has an alive cell under that position
+     * @param y position
+     * @param x position
+     * @return boolean value
+     */
     public boolean neighborUnder(int y, int x) {
 
         if (y + 1 < currentBoard.size()) {
@@ -242,6 +291,12 @@ public class DynamicRule extends Rule {
         return false;
     }
 
+    /**
+     * Checks if the cell in the specified position has an alive cell to the left of that position
+     * @param y position
+     * @param x position
+     * @return boolean value
+     */
     public boolean neighborLeft(int y, int x) {
 
         if (x - 1 != - 1) {
@@ -254,6 +309,12 @@ public class DynamicRule extends Rule {
         return false;
     }
 
+    /**
+     * Checks if the cell in the specified position has an alive cell to the right of that position
+     * @param y position
+     * @param x position
+     * @return boolean value
+     */
     public boolean neighborRight(int y, int x) {
 
         if (x + 1 < currentBoard.get(0).size()) {
@@ -266,6 +327,12 @@ public class DynamicRule extends Rule {
         return false;
     }
 
+    /**
+     * Checks if the cell in the specified position has an alive cell to top left of that position
+     * @param y position
+     * @param x position
+     * @return boolean value
+     */
     public boolean neighborTopLeft(int y, int x) {
 
         if ((y - 1 != - 1) && (x - 1 != - 1)) {
@@ -278,6 +345,12 @@ public class DynamicRule extends Rule {
         return false;
     }
 
+    /**
+     * Checks if the cell in the specified position has an alive cell to top right of that position
+     * @param y position
+     * @param x position
+     * @return boolean value
+     */
     public boolean neighborTopRight(int y, int x) {
 
         if ((y - 1 != - 1) && (x + 1 < currentBoard.get(0).size())) {
@@ -290,6 +363,12 @@ public class DynamicRule extends Rule {
         return false;
     }
 
+    /**
+     * Checks if the cell in the specified position has an alive cell to bottom left of that position
+     * @param y position
+     * @param x position
+     * @return boolean value
+     */
     public boolean neighborBottomLeft(int y, int x) {
 
         if ((y + 1 < currentBoard.size()) && (x - 1 != - 1)) {
@@ -302,6 +381,12 @@ public class DynamicRule extends Rule {
         return false;
     }
 
+    /**
+     * Checks if the cell in the specified position has an alive cell to bottom right of that position
+     * @param y position
+     * @param x position
+     * @return boolean value
+     */
     public boolean neighborBottomRight(int y, int x) {
 
         if ((y + 1 < currentBoard.size()) && (x + 1 < currentBoard.get(0).size())) {
@@ -315,8 +400,9 @@ public class DynamicRule extends Rule {
     }
 
 
-
-    // Calculates the cells that are active. Active cell is either alive itself or has at least one neighbor.
+    /**
+     * Calculates the cells that are active. Active cell is either alive itself or has at least one neighbor
+     */
     public void calculateBoardOfActiveCells() {
         boardOfActiveCells = initBoard();
 
@@ -338,6 +424,11 @@ public class DynamicRule extends Rule {
         }
     }
 
+    /**
+     * Marks the top left cell of the specified position
+     * @param y y-position
+     * @param x x-position
+     */
     public void markTopLeft(int y, int x) {
 
         if ((y - 1 != - 1) && (x - 1 != - 1) && currentBoard.get(y-1).get(x-1) == 0) {
@@ -346,6 +437,11 @@ public class DynamicRule extends Rule {
 
     }
 
+    /**
+     * Marks the top cell of the specified position
+     * @param y y-position
+     * @param x x-position
+     */
     public void markTop(int y, int x) {
 
         if (y - 1 != - 1 && currentBoard.get(y-1).get(x) == 0) {
@@ -353,6 +449,11 @@ public class DynamicRule extends Rule {
         }
     }
 
+    /**
+     * Marks the top right cell of the specified position
+     * @param y y-position
+     * @param x x-position
+     */
     public void markTopRight(int y, int x) {
 
         if ((y - 1 != - 1) && (x + 1 < currentBoard.get(0).size()) && (currentBoard.get(y-1).get(x+1) == 0) ) {
@@ -360,6 +461,11 @@ public class DynamicRule extends Rule {
         }
     }
 
+    /**
+     * Marks the left cell of the specified position
+     * @param y y-position
+     * @param x x-position
+     */
     public void markLeft(int y, int x) {
 
         if (x - 1 != - 1 && (currentBoard.get(y).get(x-1) == 0)) {
@@ -367,6 +473,11 @@ public class DynamicRule extends Rule {
         }
     }
 
+    /**
+     * Marks the right cell of the specified position
+     * @param y y-position
+     * @param x x-position
+     */
     public void markRight(int y, int x) {
 
         if (x + 1 < currentBoard.get(0).size() && currentBoard.get(y).get(x+1) == 0) {
@@ -374,6 +485,11 @@ public class DynamicRule extends Rule {
         }
     }
 
+    /**
+     * Marks the bottom left cell of the specified position
+     * @param y y-position
+     * @param x x-position
+     */
     public void markBottomLeft(int y, int x) {
 
         if ((y + 1 < currentBoard.size()) && (x - 1 != - 1) && (currentBoard.get(y+1).get(x-1) == 0) ) {
@@ -382,6 +498,11 @@ public class DynamicRule extends Rule {
 
     }
 
+    /**
+     * Marks the bottom cell of the specified position
+     * @param y y-position
+     * @param x x-position
+     */
     public void markBottom(int y, int x) {
 
         if (y + 1 < currentBoard.size() && currentBoard.get(y+1).get(x) == 0) {
@@ -389,6 +510,11 @@ public class DynamicRule extends Rule {
         }
     }
 
+    /**
+     * Marks the bottom right cell of the specified position
+     * @param y y-position
+     * @param x x-position
+     */
     public void markBottomRight(int y, int x) {
 
         if ((y + 1 < currentBoard.size()) && (x + 1 < currentBoard.get(0).size()) && (currentBoard.get(y+1).get(x+1) == 0) ) {
@@ -396,7 +522,12 @@ public class DynamicRule extends Rule {
         }
     }
 
-
+    /**
+     * Adds columns to the specified 2D List
+     * @param board The 2D list that is going to be added on
+     * @param numberOfCols Number of columns
+     * @return 2D List with added columns
+     */
     private List<List<Byte>> addCols (List<List<Byte>> board, int numberOfCols) {
         for (int i = 0; i < numberOfCols; i++) {
             for (List<Byte> byteLists : board) {
@@ -406,6 +537,12 @@ public class DynamicRule extends Rule {
         return board;
     }
 
+    /**
+     * Adds rows to the specified 2D List
+     * @param board The 2D list that is going to be added on
+     * @param numberOfRows Number of rows
+     * @return 2D List with added rows
+     */
     private List<List<Byte>> addRows(List<List<Byte>> board, int numberOfRows) {
         for (int i = 0; i < numberOfRows; i++) {
             List<Byte> row = new ArrayList<>();
@@ -418,7 +555,7 @@ public class DynamicRule extends Rule {
         return board;
     }
 
-
+    // PATRICK SKAL JAVADOCCCEE DETTE
     private void checkIfShiftIsNeeded(int y, int x) {
         if ((y <= 2)) {
             needsDownShift = true;
@@ -428,7 +565,7 @@ public class DynamicRule extends Rule {
         }
     }
 
-
+    // PATRICK SKAL JAVADOCCCEE DETTE
     protected void checkIfExpansionIsNedded(int y, int x) {
 
     // Checks if a cell is close to the edge
@@ -444,6 +581,7 @@ public class DynamicRule extends Rule {
         }
     }
 
+    // PATRICK SKAL JAVADOCCCEE DETTE
     private void shiftAllRight() {
         addColsToAllBoards();
         currentBoard = shiftBoardRight(currentBoard, shiftNum);
@@ -451,6 +589,7 @@ public class DynamicRule extends Rule {
         boardOfActiveCells = shiftBoardRight(boardOfActiveCells, shiftNum);
     }
 
+    // PATRICK SKAL JAVADOCCCEE DETTE
     private void shiftAllDown() {
         addRowsToAllBoards();
         currentBoard = shifBoardDown(currentBoard, shiftNum);
@@ -458,12 +597,14 @@ public class DynamicRule extends Rule {
         boardOfActiveCells = shifBoardDown(boardOfActiveCells, shiftNum);
     }
 
+    // PATRICK SKAL JAVADOCCCEE DETTE
     private void addColsToAllBoards() {
         currentBoard = addCols(currentBoard, expandNum);
         conwaysBoard = addCols(conwaysBoard, expandNum);
         boardOfActiveCells = addCols(boardOfActiveCells, expandNum);
     }
 
+    // PATRICK SKAL JAVADOCCCEE DETTE
     private void addRowsToAllBoards() {
         currentBoard = addRows(currentBoard, expandNum);
         conwaysBoard = addRows(conwaysBoard, expandNum);
@@ -471,7 +612,7 @@ public class DynamicRule extends Rule {
     }
 
 
-
+    // PATRICK SKAL JAVADOCCCEE DETTE
     private List<List<Byte>> shiftBoardRight(List<List<Byte>> board, int shiftNum) {
         List<List<Byte>> newBoard = new ArrayList<>();
 
@@ -495,6 +636,7 @@ public class DynamicRule extends Rule {
         return newBoard;
     }
 
+    // PATRICK SKAL JAVADOCCCEE DETTE
     private List<List<Byte>> shifBoardDown(List<List<Byte>> board, int shiftNum) {
         List<List<Byte>> newBoard = new ArrayList<>();
 
