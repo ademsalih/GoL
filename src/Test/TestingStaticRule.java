@@ -62,6 +62,7 @@ public class TestingStaticRule {
         };
 
         StaticRule staticRule = new StaticRule(board);
+        staticRule.calculateBoardOfActiveCells();
         staticRule.setCurrentBoard(staticRule.conwaysBoardRules());
         org.junit.Assert.assertEquals(staticRule.toString(),"0000011001100000");
 
@@ -77,6 +78,7 @@ public class TestingStaticRule {
         };
 
         StaticRule staticRule1 = new StaticRule(board1);
+        staticRule1.calculateBoardOfActiveCells();
         staticRule1.setCurrentBoard(staticRule1.conwaysBoardRules());
         org.junit.Assert.assertEquals(staticRule1.toString(),"111101111");
     }
@@ -93,6 +95,7 @@ public class TestingStaticRule {
         };
 
         StaticRule staticRule2 = new StaticRule(board2);
+        staticRule2.calculateBoardOfActiveCells();
         staticRule2.setCurrentBoard(staticRule2.conwaysBoardRules());
         org.junit.Assert.assertEquals(staticRule2.toString(),"0111010001100011000101110");
     }

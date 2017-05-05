@@ -44,7 +44,10 @@ public class URLDialog {
      * @return - String representing what should be an url leading to a RLE-pattern.
      */
     public String getURL() {
-        if (!url.contains("http")) {
+        if(url == null){
+            //Do nothing, just close by yourself :P
+        }
+        else if (!url.contains("http")) {
             return "http://"+url;
         }
         return url;
