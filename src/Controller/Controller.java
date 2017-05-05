@@ -4,18 +4,14 @@ import Model.*;
 import Model.Abstract.Rule;
 import Model.DynamicFiles.DynamicParseToRLE;
 import Model.DynamicFiles.DynamicRLEParser;
-import Model.StaticFiles.StaticRule;
 import Model.DynamicFiles.DynamicBoard;
 import View.Main;
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -46,6 +42,20 @@ public class Controller implements Initializable {
     @FXML private Slider speedSlider;
     @FXML private MenuBar menuBar;
     @FXML private Button resetButton;
+
+    // Check menu items
+    @FXML private CheckMenuItem conwaysLife;
+    @FXML private CheckMenuItem seeds;
+    @FXML private CheckMenuItem flock;
+    @FXML private CheckMenuItem twoByTwo;
+    @FXML private CheckMenuItem maze;
+    @FXML private CheckMenuItem move;
+    @FXML private CheckMenuItem highLife;
+    @FXML private CheckMenuItem mazectric;
+    @FXML private CheckMenuItem fredkin;
+    @FXML private CheckMenuItem replicator;
+    @FXML private CheckMenuItem dayAndNight;
+    @FXML private CheckMenuItem lifeWithoutDeath;
 
     public DynamicBoard boardObj;
     DynamicRule rule;
@@ -196,10 +206,9 @@ public class Controller implements Initializable {
 
     // Loads an RLE files and draws the file to the canvas.
     public void loadFileFromDisk() throws IOException {
-        //rleParser = new StaticRLEParser();
+        stopAnimationIfRunning();
         rleParser = new DynamicRLEParser();
         rleParser.importFromDisk();
-        //byte[][] temp = rleParser.getBoard();
         List<List<Byte>> temp  = rleParser.getBoard();
         if (temp != null) {
             DynamicRule.setRules(rleParser.getSurvive(), rleParser.getBorn());
@@ -282,7 +291,7 @@ public class Controller implements Initializable {
 
     // Creates the "GIF Export" Stage and shows the Stage.
     public void openExportMenu() {
-
+        stopAnimationIfRunning();
         try {
             Pane root = FXMLLoader.load(getClass().getResource("/View/FXML/gifMenu.fxml"));
             gifStage = new Stage();
@@ -304,8 +313,11 @@ public class Controller implements Initializable {
 
     }
 
-    // Creates the "URL Import" Stage and shows the Stage.
+    /**
+     * Creates the "URL Import" Stage and shows the Stage.
+     */
     public void openURLMenu() {
+        stopAnimationIfRunning();
         url = new URLDialog();
         url.showStage();
         String urlString;
@@ -317,9 +329,9 @@ public class Controller implements Initializable {
                 boardObj.addBoard(rle.getBoard());
                 boardObj.drawBoard();
                 counter = 0;
-                updateTitle("Pattern from URL");
+                updateTitle(rle.getPatternName());
             } catch (IOException e) {
-                FileHandling.alert("Unable to find or read from url");
+                PopUps.alert("Unable to find or read from url");
             }
         }
     }
@@ -328,6 +340,7 @@ public class Controller implements Initializable {
      * Saves the current board as a .rle file
      */
     public void saveRLE() {
+        stopAnimationIfRunning();
         save = new SaveRLEDialog();
         save.showStage();
 
@@ -345,24 +358,21 @@ public class Controller implements Initializable {
 
             SaveFile sf = new SaveFile();
             sf.saveFile(rleTxt);
-            FileHandling.info("Save successful");
+            PopUps.info("Save successful");
         }
     }
 
-    @FXML private CheckMenuItem conwaysLife;
-    @FXML private CheckMenuItem seeds;
-    @FXML private CheckMenuItem flock;
-    @FXML private CheckMenuItem twoByTwo;
-    @FXML private CheckMenuItem maze;
-    @FXML private CheckMenuItem move;
-    @FXML private CheckMenuItem highLife;
-    @FXML private CheckMenuItem mazectric;
-    @FXML private CheckMenuItem fredkin;
-    @FXML private CheckMenuItem replicator;
-    @FXML private CheckMenuItem dayAndNight;
-    @FXML private CheckMenuItem lifeWithoutDeath;
+    /**
+     * Opens up an about information dioalog window
+     */
+    public void about() {
+        PopUps.info("Game of Life", "A game made by: \nNarmatha Siva\nAdem Salih\nPatrik Hansen\n05.05.2017");
+    }
 
 
+
+
+    // Methods that applys the different rules and deals with the checking of the Rule menu
     private void unCheckAll() {
         ArrayList<CheckMenuItem> menuItems = new ArrayList<>(12);
         menuItems.addAll(Arrays.asList(conwaysLife, seeds, flock, twoByTwo, maze, move, highLife,
@@ -374,10 +384,6 @@ public class Controller implements Initializable {
             i++;
         }
     }
-
-
-
-
 
     public void selectConwaysLife() {
         unCheckAll();

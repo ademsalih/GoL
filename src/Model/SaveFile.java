@@ -12,7 +12,7 @@ import java.io.IOException;
  * Uses a single String to write to the fiel.
  */
 
-public class SaveFile extends FileHandling {
+public class SaveFile extends PopUps {
 
     private BufferedWriter toFile = null;
 

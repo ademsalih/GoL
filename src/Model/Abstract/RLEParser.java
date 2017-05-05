@@ -1,13 +1,11 @@
 package Model.Abstract;
 
 
-import Model.FileHandling;
+import Model.PopUps;
 import Model.PatternFormatException;
-import javafx.scene.control.TextField;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -138,7 +136,7 @@ public abstract class RLEParser {
                         findCountCellThenUpdate(line);
                     }
                 } catch (PatternFormatException e) {
-                    FileHandling.alert("An error occured while reading the .rle file");
+                    PopUps.alert("An error occured while reading the .rle file");
 
                 }
 
@@ -184,7 +182,7 @@ public abstract class RLEParser {
             return metaData;
         }
         catch (IOException e) {
-            FileHandling.alert("Error trying to locate metadata");
+            PopUps.alert("Error trying to locate metadata");
         }
         return null;
     }

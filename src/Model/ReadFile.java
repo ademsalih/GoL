@@ -10,7 +10,7 @@ import javafx.stage.FileChooser;
 /**
  * Small help class that reads files into the project
  */
-public class ReadFile extends FileHandling{
+public class ReadFile extends PopUps {
 
     /**
      * Method for reading file from URL

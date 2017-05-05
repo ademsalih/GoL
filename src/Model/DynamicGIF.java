@@ -3,11 +3,9 @@ package Model;
 import Model.DynamicFiles.DynamicBoard;
 import Model.DynamicFiles.DynamicRule;
 import javafx.application.Platform;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ProgressBar;
 import lieng.GIFWriter;
 import java.awt.Color;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -137,7 +135,7 @@ public class DynamicGIF {
             exportThread.start();
 
         } else {
-            FileHandling.warning("GIF Export","Select export location!");
+            PopUps.warning("GIF Export","Select export location!");
         }
     }
 
@@ -292,7 +290,7 @@ public class DynamicGIF {
             gwriter.close();
             gwriter = null;
             Platform.runLater(() -> {
-                FileHandling.info("GIF Export","The GIF was succesfully exported.");
+                PopUps.info("GIF Export","The GIF was succesfully exported.");
                 pbar.setProgress(0.0);
             });
             return;

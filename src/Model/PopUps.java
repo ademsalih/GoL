@@ -2,7 +2,7 @@ package Model;
 
 import javafx.scene.control.Alert;
 
-public class FileHandling {
+public class PopUps {
 
     public static void alert (String title, String text) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
