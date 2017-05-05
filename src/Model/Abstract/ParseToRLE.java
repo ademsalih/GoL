@@ -1,7 +1,5 @@
 package Model.Abstract;
 
-import java.util.List;
-
 /**
  *
  * A class that parses the current board into a string that is passed to the SaveFile class for writing to file.
@@ -9,12 +7,6 @@ import java.util.List;
 
 public abstract class ParseToRLE {
 
-    /**
-     * Creates a RLE compatible String with meta and board data.
-     *
-     * @param board - the current board at the time of the function call as a 2D array.
-     * @return a String containing a RLE pattern, x and y values, and ruleset.
-     */
     protected int lowestX;
     protected int biggestX;
     protected int lowestY;
@@ -46,24 +38,41 @@ public abstract class ParseToRLE {
         this.board = board;
     }
 
+    /**
+     * Adds #C to every new line of the comment String
+     * @param c The current comment String
+     * @return Parsed comment that has a #C for every new line
+     */
     protected String parseComment(String c) {
         c = "#C " + c;
         return c.replace("\n", "\n#C ");
     }
 
+    /**
+     * Uses other methods to get different parts of the complete RLE Strings
+     * @return Finished RLE String with all the info needed for a complete .rle file
+     */
     public String extractingRLE () {
         findHighLowValues();
-        String extractedString = head + extractingXYValue() + addingRules() + convertBoardToRlePattern();
+        String extractedString = head + getXYString() + getRulesString() + convertBoardToRlePattern();
         return extractedString;
     }
 
-    protected String extractingXYValue() {
+    /**
+     * Gives a String representation of the X and Y of the board
+     * @return String containing X and Y in the correct format according to .rle convetions.
+     */
+    protected String getXYString() {
         int x = biggestX - lowestX + 1;
         int y = biggestY - lowestY + 1;
         return "x = " + x + ", y = " + y + ", ";
     }
 
-    protected String addingRules () {
+    /**
+     * Gives a String containing the Rules of the active board.
+     * @return String formated for .rle containing the rules
+     */
+    protected String getRulesString() {
         String born = "";
         String survive = "";
         for (int i = 0; i < bornAr.length; i++) {
@@ -76,7 +85,10 @@ public abstract class ParseToRLE {
 
     }
 
-
+    /**
+     * Runs through the Board and gives a String containing the active pattern
+     * @return String containing the board as rle pattern
+     */
     protected String convertBoardToRlePattern() {
         String rlePatternRow = "";
         String rlePattern = "";
@@ -86,7 +98,7 @@ public abstract class ParseToRLE {
                 rlePattern += "\n";
                 rlePatternRow = "";
             }
-            rlePatternRow += convertArrayRowToRleString(i);
+            rlePatternRow += convertBoardRowToRLEString(i);
         }
         rlePattern += rlePatternRow;
 
@@ -94,14 +106,11 @@ public abstract class ParseToRLE {
         return rlePattern;
     }
 
-
-    //Help function that find how many repetition there is of a given byte value in the array-row.
     protected abstract int getRunCount (int row, int col, int type);
 
     protected abstract void findHighLowValues();
 
-    //Help function that take one row from the array and converts it to a string in the RLE format.
-    protected abstract String convertArrayRowToRleString(int row);
+    protected abstract String convertBoardRowToRLEString(int row);
 
 
 }

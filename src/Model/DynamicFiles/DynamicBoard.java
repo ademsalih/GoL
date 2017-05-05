@@ -191,7 +191,6 @@ public class DynamicBoard extends Board {
             setCellState(rowy, colx, (byte) 1);
         }
 
-
         drawBoard();
     }
 

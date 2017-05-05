@@ -18,7 +18,11 @@ public class StaticRLEParser extends RLEParser {
 
     private byte[][] arr;
 
-
+    /**
+     *
+     * @param runCount
+     * @param cellType
+     */
     @Override
     public void initiateBoardUpdate(int runCount, char cellType) {
         if (cellType == 'b') {

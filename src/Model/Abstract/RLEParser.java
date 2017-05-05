@@ -41,7 +41,7 @@ public abstract class RLEParser {
     /**
      * Returns the X value (Number of Columns) of the Board
      *
-     * @return - Number of columns
+     * @return Number of columns
      */
     public int getX() {
         return x;
@@ -50,7 +50,7 @@ public abstract class RLEParser {
     /**
      * Returns the Y value (Number of rows) of the Board from the RLE-file loaded into the given RLEParser_Static-object
      *
-     * @return - Number of rows
+     * @return Number of rows
      */
     public int getY() {
         return y;
@@ -59,7 +59,7 @@ public abstract class RLEParser {
     /**
      * Returns the name of the pattern if it was found in the metadata
      *
-     * @return - String containing the name of the pattern
+     * @return String containing the name of the pattern
      */
     public String getPatternName() {
         return patternName;
@@ -68,7 +68,7 @@ public abstract class RLEParser {
     /**
      * Returns the name of the author if it was found in the metadata
      *
-     * @return - String containing the name of the author
+     * @return String containing the name of the author
      */
     public String getAuthor() {
         return author;
@@ -77,7 +77,7 @@ public abstract class RLEParser {
     /**
      * Returns the a comment if it was found in the metadata
      *
-     * @return - String containing comment extracted from the metadata
+     * @return String containing comment extracted from the metadata
      */
     public String getComment() {
         return comment;
@@ -98,7 +98,7 @@ public abstract class RLEParser {
      * Imports the board from a URL
      * Uses the importBoard method to create a object that holds the board
      *
-     * @param url - String that contains the url.
+     * @param url  String that contains the url.
      * @throws IOException
      */
     public void importFromURL(String url) throws IOException {
@@ -116,7 +116,7 @@ public abstract class RLEParser {
      * Imports a RLE-board from a given sources.
      * Subclasses defines what kind of container the board is held as.
      *
-     * @param br - BufferedReader holding the RLE-File
+     * @param br  BufferedReader holding the RLE-File
      */
     public void importBoard(BufferedReader br) {
         try {
@@ -154,8 +154,8 @@ public abstract class RLEParser {
 
     /**
      * Reads the Meta data from the RLE file an stores them in various variables
-     * that can be accessed through get-methods.
-     * @param br - BufferedReader that contains the RLE-file
+     * that can be accessed through getmethods.
+     * @param br  BufferedReader that contains the RLE-file
      */
     private void findMetaData(BufferedReader br) {
         this.patternName = metaDataFinder(br, "#n");
@@ -165,9 +165,9 @@ public abstract class RLEParser {
 
     /**
      * General method to be used to find different types of metadata
-     * @param br - BufferedReader that hold the RLE-file
-     * @param lineStart - String thats used to find the start of the line of a given segment of metadata
-     * @return - String that holds the given metadata
+     * @param br  BufferedReader that hold the RLE-file
+     * @param lineStart  String thats used to find the start of the line of a given segment of metadata
+     * @return  String that holds the given metadata
      */
     private String metaDataFinder(BufferedReader br, String lineStart) {
         try {
@@ -194,8 +194,8 @@ public abstract class RLEParser {
 
     /**
      *
-     * @param br - BufferedReader that holds the rle string.
-     * @return - String containing the x & y (dimentions) and the rules.
+     * @param br  BufferedReader that holds the rle string.
+     * @return  String containing the x & y (dimentions) and the rules.
      * @throws IOException
      * @throws PatternFormatException
      */
@@ -211,7 +211,7 @@ public abstract class RLEParser {
 
     /**
      * Finds the X & Y (Dimentions) of the board and stores them as the x and y variables
-     * @param line - String that holds X & Y
+     * @param line  String that holds X & Y
      * @throws IOException
      * @throws PatternFormatException
      */
@@ -229,7 +229,7 @@ public abstract class RLEParser {
 
     /**
      * Finds the rules and converts them into array that is stored in the survive and born variables
-     * @param line - String that holds the rules
+     * @param line  String that holds the rules
      * @throws PatternFormatException
      */
     private void findRules(String line) throws PatternFormatException {
@@ -352,8 +352,8 @@ public abstract class RLEParser {
 
     /**
      * Converts the input 2D byte array to a 2D ArrayList of Byte objects.
-     * @param b - The 2D byte array that needs to be converted
-     * @return - ArrayList of byte objects used for further processing
+     * @param b  The 2D byte array that needs to be converted
+     * @return  ArrayList of byte objects used for further processing
      */
     private ArrayList<List<Byte>> convertToArrayList(byte[][] b) {
         ArrayList<List<Byte>> byteArrayList = new ArrayList<List<Byte>>();
@@ -372,7 +372,7 @@ public abstract class RLEParser {
     /**
      * Gives the number of neighbors needed for a cell to be born
      *
-     * @return - Number of needed neighbors for cell to be born
+     * @return  Number of needed neighbors for cell to be born
      */
     public int[] getBorn() {
         return born;
@@ -381,7 +381,7 @@ public abstract class RLEParser {
     /**
      * Gives the number of neighbors needed for a cell to survive
      *
-     * @return - Number of needed neighbors to survive
+     * @return  Number of needed neighbors to survive
      */
     public int[] getSurvive() {
         return survive;
@@ -391,8 +391,8 @@ public abstract class RLEParser {
     /**
      * Abstract method were the different methods for updating array or list is implementet.
      *
-     * @param r - int that holds the runcount. This is the number of placements the byte should have.
-     * @param b - byte that holds the value of the cells that is placed on the board.
+     * @param r  int that holds the runcount. This is the number of placements the byte should have.
+     * @param b  byte that holds the value of the cells that is placed on the board.
      */
     public abstract void updateBoard(int r, byte b);
 

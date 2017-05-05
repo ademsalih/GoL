@@ -10,6 +10,12 @@ public class StaticParseToRLE extends ParseToRLE {
         super(name, author, c);
     }
 
+    /**
+     * Setup that takes paramteres to give the parser essential information for creating a rle String
+     * @param b Array holding the born conditions
+     * @param s Array holding the survive conditions
+     * @param board The board that is used to create the rle pattern
+     */
     public void setup(int[] b, int[] s, byte[][] board) {
         setRules(b, s);
         setBoard(board);
@@ -19,6 +25,10 @@ public class StaticParseToRLE extends ParseToRLE {
         this.board = board;
     }
 
+    /**
+     * Finds the highest, lowest, leftmost and rightmost placement of an active cell.
+     * This is to make sure that only the most relevant is stored in the rle String.
+     */
     protected void findHighLowValues() {
         lowestX = board[0].length;
         lowestY = board.length;
@@ -45,6 +55,13 @@ public class StaticParseToRLE extends ParseToRLE {
         }
     }
 
+    /**
+     * Gets the run count of a given cell in the board
+     * @param row Current row to start from
+     * @param col Current col to start from
+     * @param type Cell type
+     * @return Run count
+     */
     protected int getRunCount (int row, int col, int type) {
         int runCount = 0;
         while(col < biggestX + 1 && board[row][col] == type ){
@@ -54,7 +71,12 @@ public class StaticParseToRLE extends ParseToRLE {
         return runCount;
     }
 
-    protected String convertArrayRowToRleString(int row) {
+    /**
+     * Converts a single row from the board to a rle-compatible String
+     * @param row The number of the row the operation should be done on
+     * @return String containing the rle pattern for the given row
+     */
+    protected String convertBoardRowToRLEString(int row) {
         String rlePartialString = "";
         int runCount;
         int col = lowestX;
