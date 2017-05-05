@@ -24,6 +24,12 @@ public class DynamicBoard extends Board {
 
     private boolean grid;
 
+    /**
+     * Constructs a gameboard with a canvas and the dimensions x,y
+     * @param canvas
+     * @param x the x dimension
+     * @param y the y dimension
+     */
     public DynamicBoard (Canvas canvas, int x, int y) {
         this.canvasWidth = canvas.getWidth();
         this.canvasHeight = canvas.getHeight();
@@ -34,6 +40,11 @@ public class DynamicBoard extends Board {
         this.grid = false;
     }
 
+    /**
+     * Constructs a gameboard with the dimensions x,y
+     * @param x the x dimension
+     * @param y the y dimension
+     */
     public DynamicBoard(int x, int y){
         this.rowcount = y;
         this.columcount = x;
@@ -63,6 +74,7 @@ public class DynamicBoard extends Board {
         return this.grid;
     }
 
+
     private List<List<Byte>> centerBoard(List<List<Byte>> board) {
 
         int bigMargin = margin * 4;
@@ -86,6 +98,12 @@ public class DynamicBoard extends Board {
         return centeredBoard;
     }
 
+    /**
+     * Constructs a 2D list with the dimensions x,y filled with byte 0
+     * @param x the x dimension
+     * @param y the y dimension
+     * @return 2D list with the dimensions x,y
+     */
     private List<List<Byte>> initBoard(int x, int y) {
         List<List<Byte>> tempBoard = new ArrayList<>();
         for (int row = 0; row < x; row++) {
@@ -98,6 +116,12 @@ public class DynamicBoard extends Board {
         return tempBoard;
     }
 
+    /**
+     * Adds columns to the specified 2D list
+     * @param numberOfCols  number of columns to add on the 2D list (board)
+     * @param board  The 2D list that is going be added with columns
+     * @return  A 2D list with added columns
+     */
     private List<List<Byte>> addCols(int numberOfCols, List<List<Byte>> board) {
         for (int i = 0; i < numberOfCols; i++) {
             for (List<Byte> byteLists : board) {
@@ -108,10 +132,10 @@ public class DynamicBoard extends Board {
     }
 
     /**
-     * Counts the number of neighbors surrounding the given cell
-     * @param numberOfRows - number of rows to add on the 2D list (board)
-     * @param board - The 2D list (the board) that is going be added with rows
-     * @return - A 2D list (board) with added rows
+     * Adds rows to the specified 2D list
+     * @param numberOfRows  number of rows to add on the 2D list (board)
+     * @param board  The 2D list that is going be added with rows
+     * @return A 2D list with added rows
      */
     private List<List<Byte>> addRows(int numberOfRows, List<List<Byte>> board) {
         for (int i = 0; i < numberOfRows; i++) {
@@ -124,6 +148,13 @@ public class DynamicBoard extends Board {
         return board;
     }
 
+    /**
+     * Expands the orginal gameboard/2D List
+     * @param rowy The number of rows
+     * @param colx The number of columns
+     * @param y y position of the cell placed out of the gameboard
+     * @param x x position of the cell placed out of the gameboard
+     */
     private void expandBoard(int rowy, int colx, int y, int x) {
 
         if (x < (colx + margin) && y > (rowy + margin)) {
@@ -194,7 +225,9 @@ public class DynamicBoard extends Board {
         drawBoard();
     }
 
-
+    /**
+     * Draws the cells on the gameboard
+     */
     public void drawBoard() {
         gc.setFill(backgroundColor);
         gc.fillRect(0,0,canvasWidth,canvasHeight);
@@ -229,6 +262,9 @@ public class DynamicBoard extends Board {
         yCounter = 0;
     }
 
+    /**
+     * Draws the grid on the gameboard
+     */
     private void drawGrid() {
 
         double gridSize = cellSize * 0.05;
@@ -249,6 +285,9 @@ public class DynamicBoard extends Board {
         }
     }
 
+    /**
+     * Clears the cells on the gameboard
+     */
     public void clearBoard() {
 
         board = new ArrayList<>();
@@ -264,6 +303,9 @@ public class DynamicBoard extends Board {
         drawBoard();
     }
 
+    /**
+     * Clears the loaded patterns on the gameboard
+     */
     public void clearInitialBoard() {
 
         initialBoard = new ArrayList<>();

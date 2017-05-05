@@ -33,12 +33,12 @@ public abstract class Board {
     public abstract void setCellState(int x, int y, byte value);
 
     /**
-     * Draws the cells in the gameboard
+     * Draws the cells on the gameboard
      */
     public abstract void drawBoard();
 
     /**
-     * Clears the cells in the gameboard
+     * Clears the cells on the gameboard
      */
     public abstract void clearBoard();
 
