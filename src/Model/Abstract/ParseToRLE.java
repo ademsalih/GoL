@@ -23,7 +23,6 @@ public abstract class ParseToRLE {
         this.name = name;
         this.author = author;
         this.comment = parseComment(c);
-        System.out.println(comment);
 
         head = "#N " + name + "\n" + "#A " + author + "\n" + comment + "\n";
 

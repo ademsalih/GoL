@@ -43,13 +43,13 @@ public class DynamicParseToRLE extends ParseToRLE {
                     if (y < lowestY) {
                         lowestY = y;
                     }
-                    else if (y > biggestY) {
+                    if (y > biggestY) {
                         biggestY = y;
                     }
                     if (x < lowestX) {
                         lowestX = x;
                     }
-                    else if (x > biggestX) {
+                    if (x > biggestX) {
                         biggestX = x;
                     }
                 }

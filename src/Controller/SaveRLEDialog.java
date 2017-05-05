@@ -17,6 +17,7 @@ public class SaveRLEDialog {
     private String name;
     private String author;
     private String comment;
+    private boolean isClosed;
 
 
     /**
@@ -60,9 +61,13 @@ public class SaveRLEDialog {
             name = nameField.getText();
             author = authorField.getText();
             comment = commentArea.getText();
+            isClosed = false;
             stage.close();
         });
 
+        stage.setOnCloseRequest(e -> {
+            isClosed = true;
+        });
 
         stage.showAndWait();
     }
@@ -77,5 +82,9 @@ public class SaveRLEDialog {
 
     public String getComment() {
         return comment;
+    }
+
+    public boolean isClosed() {
+        return isClosed;
     }
 }

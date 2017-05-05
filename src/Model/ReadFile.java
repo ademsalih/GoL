@@ -42,6 +42,7 @@ public class ReadFile extends FileHandling{
             }
         }
         catch (IOException e) {
+            System.err.println("Unable to read file");
             e.printStackTrace();
         }
         return null;

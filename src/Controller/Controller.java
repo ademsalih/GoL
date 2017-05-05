@@ -323,6 +323,31 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * Saves the current board as a .rle file
+     */
+    public void saveRLE() {
+        save = new SaveRLEDialog();
+        save.showStage();
+
+        // Checks if the stage was closed
+        if (!save.isClosed()) {
+            String name = save.getName();
+            String author = save.getAuthor();
+            String comment = save.getComment();
+
+            // Setting up the object that parses the pattern to RLE
+            DynamicParseToRLE drp = new DynamicParseToRLE(name, author, comment);
+            // Feeds in the rules
+            drp.setup(rule.getBorn(), rule.getSurvivor(), boardObj.getBoard());
+            String rleTxt = drp.extractingRLE();
+
+            SaveFile sf = new SaveFile();
+            sf.saveFile(rleTxt);
+            FileHandling.info("Save successful");
+        }
+    }
+
     @FXML private CheckMenuItem conwaysLife;
     @FXML private CheckMenuItem seeds;
     @FXML private CheckMenuItem flock;
@@ -350,25 +375,8 @@ public class Controller implements Initializable {
     }
 
 
-    // Opens the save rle dialog and saves it as
-    public void saveRLE() {
-        save = new SaveRLEDialog();
-        save.showStage();
-        String name = save.getName();
-        String author = save.getAuthor();
-        String comment = save.getComment();
-
-        // Setting up the object that parses the pattern to RLE
-        DynamicParseToRLE drp = new DynamicParseToRLE(name, author, comment);
-        // Feeds in the rules
-        drp.setup(rule.getBorn(), rule.getSurvivor(), boardObj.getBoard());
-        String rleTxt = drp.extractingRLE();
-
-        SaveFile sf = new SaveFile();
-        sf.saveFile(rleTxt);
 
 
-    }
 
     public void selectConwaysLife() {
         unCheckAll();

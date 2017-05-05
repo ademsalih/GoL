@@ -8,40 +8,33 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * Created by patrikkvarmehansen on 22/03/17.
+ * Does the actual writing and saving of a file.
+ * Uses a single String to write to the fiel.
  */
 
 public class SaveFile extends FileHandling {
 
-    BufferedWriter toFile = null;
-    String name;
-    String author;
-    String comment;
+    private BufferedWriter toFile = null;
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-
-    public File createFilePath() {
+    /**
+     * Prompts the user were to store and what to name it using the systems dialog window
+     * @return File That represents the filepath to the file
+     */
+    private File createFilePath() {
         FileChooser fc = new FileChooser();
         fc.setTitle("Save pattern as RLE");
         fc.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("RLE file", "*.rle")
         );
-        File file = fc.showSaveDialog(null);
-        return file;
+        return fc.showSaveDialog(null);
     }
 
-    public void createFile(File file, String txt) {
+    /**
+     * Creates a file with BufferedWriter at the filepath specified and adds a single String it.
+     * @param file The filepath where the file should be stored.
+     * @param txt The String that the BufferedWriter adds to the file.
+     */
+    private void createFile(File file, String txt) {
         try {
             toFile = new BufferedWriter(new FileWriter(file));
             toFile.write(txt);
@@ -59,6 +52,10 @@ public class SaveFile extends FileHandling {
         }
     }
 
+    /**
+     * Method that starts the save process
+     * @param txt String holding the text that should be added to the file.
+     */
     public void saveFile(String txt) {
         createFile(createFilePath(), txt);
     }

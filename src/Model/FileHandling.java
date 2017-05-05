@@ -16,10 +16,20 @@ public class FileHandling {
     }
 
     public static void alert (String text) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("An error occured");
+        alert("An error occured", text);
+    }
+
+    public static void info (String title, String text) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(text);
         alert.showAndWait();
+
     }
+
+    public static void info (String text) {
+        info("Info", text);
+    }
+
 }
