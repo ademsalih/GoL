@@ -358,14 +358,15 @@ public class Controller implements Initializable {
 
     public void unCheckAll() {
         ArrayList<CheckMenuItem> menuItems = new ArrayList<CheckMenuItem>(12);
-        menuItems.addAll(Arrays.asList(conwaysLife,seeds,flock,twoByTwo,maze,move,highLife,
-                mazectric,fredkin,replicator,dayAndNight,lifeWithoutDeath));
+        menuItems.addAll(Arrays.asList(conwaysLife, seeds, flock, twoByTwo, maze, move, highLife,
+                mazectric, fredkin, replicator, dayAndNight, lifeWithoutDeath));
 
         int i = 0;
         while (i < 12) {
             menuItems.get(i).setSelected(false);
             i++;
         }
+    }
 
 
     // Opens the save rle dialog and saves it as
