@@ -10,7 +10,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import Controller.Controller;
-import org.hibernate.annotations.SourceType;
 
 /**
  * Created by ademsalih on 01.05.2017.
@@ -70,7 +69,7 @@ public class DynamicGIF {
 
     }
 
-/*    public boolean boardIsTooBig(List<List<Byte>> list) {
+    /*public boolean boardIsTooBig(List<List<Byte>> list) {
 
         System.out.println("Board size: " + list.get(0).size());
 

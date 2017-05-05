@@ -42,24 +42,24 @@
           <Menu mnemonicParsing="false" text="Options">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#colorStage" text="Change colors..." />
-                  <CheckMenuItem mnemonicParsing="false" onAction="#toggleGrid" selected="true" text="Show grid" />
+                  <CheckMenuItem mnemonicParsing="false" onAction="#toggleGrid" text="Show grid" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Rules">
               <items>
-                  <CheckMenuItem fx:id="conwaysLife" onAction="#selectConwaysLife" mnemonicParsing="false"  selected="true" text="Conway's Life (B3S23)" />
+                  <CheckMenuItem fx:id="conwaysLife" mnemonicParsing="false" onAction="#selectConwaysLife" selected="true" text="Conway's Life (B3S23)" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <CheckMenuItem fx:id="seeds" onAction="#selectSeeds" mnemonicParsing="false" text="Seeds (B2/S0)" />
-                  <CheckMenuItem fx:id="flock" onAction="#selectFlock" mnemonicParsing="false" text="Flock (B3/S12)" />
-                  <CheckMenuItem fx:id="twoByTwo" onAction="#selectTwoBytwo" mnemonicParsing="false" text="2x2 (B36/S125)" />
-                  <CheckMenuItem fx:id="maze" onAction="#selectMaze" mnemonicParsing="false" text="Maze (B3/S12345)" />
-                  <CheckMenuItem fx:id="move" onAction="#selectMove" mnemonicParsing="false" text="Move (B368/S245)" />
-                  <CheckMenuItem fx:id="highLife" onAction="#selectHighLife" mnemonicParsing="false" text="HighLife (B36/S23)" />
-                  <CheckMenuItem fx:id="mazectric" onAction="#selectMazctric" mnemonicParsing="false" text="Mazectric (B3/S1234)" />
-                  <CheckMenuItem fx:id="fredkin" onAction="#selectFredkin" mnemonicParsing="false" text="Franklin (B1357/S02468)" />
-                  <CheckMenuItem fx:id="replicator" onAction="#selectReplicator" mnemonicParsing="false" text="Replicator (B1357/S1357)" />
-                  <CheckMenuItem fx:id="dayAndNight" onAction="#selectDayAndNight" mnemonicParsing="false" text="Day &amp; Night (B3678/S34678)" />
-                  <CheckMenuItem fx:id="lifeWithoutDeath" onAction="#selectLifeWithoutDeath" mnemonicParsing="false" text="Life without death (B3/S012345678)" />
+                  <CheckMenuItem fx:id="seeds" mnemonicParsing="false" onAction="#selectSeeds" text="Seeds (B2/S0)" />
+                  <CheckMenuItem fx:id="flock" mnemonicParsing="false" onAction="#selectFlock" text="Flock (B3/S12)" />
+                  <CheckMenuItem fx:id="twoByTwo" mnemonicParsing="false" onAction="#selectTwoBytwo" text="2x2 (B36/S125)" />
+                  <CheckMenuItem fx:id="maze" mnemonicParsing="false" onAction="#selectMaze" text="Maze (B3/S12345)" />
+                  <CheckMenuItem fx:id="move" mnemonicParsing="false" onAction="#selectMove" text="Move (B368/S245)" />
+                  <CheckMenuItem fx:id="highLife" mnemonicParsing="false" onAction="#selectHighLife" text="HighLife (B36/S23)" />
+                  <CheckMenuItem fx:id="mazectric" mnemonicParsing="false" onAction="#selectMazctric" text="Mazectric (B3/S1234)" />
+                  <CheckMenuItem fx:id="fredkin" mnemonicParsing="false" onAction="#selectFredkin" text="Franklin (B1357/S02468)" />
+                  <CheckMenuItem fx:id="replicator" mnemonicParsing="false" onAction="#selectReplicator" text="Replicator (B1357/S1357)" />
+                  <CheckMenuItem fx:id="dayAndNight" mnemonicParsing="false" onAction="#selectDayAndNight" text="Day &amp; Night (B3678/S34678)" />
+                  <CheckMenuItem fx:id="lifeWithoutDeath" mnemonicParsing="false" onAction="#selectLifeWithoutDeath" text="Life without death (B3/S012345678)" />
               </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Help">

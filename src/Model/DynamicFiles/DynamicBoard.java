@@ -24,6 +24,8 @@ public class DynamicBoard extends Board {
     int rowy;
     int colx;
 
+    public boolean grid;
+
     int generationCounter;
 
     public DynamicBoard (Canvas canvas, int x, int y) {
@@ -33,6 +35,7 @@ public class DynamicBoard extends Board {
         this.margin  = 20;
         this.board = initBoard(x, y);
         this.initialBoard = initBoard(x, y);
+        this.grid = false;
     }
 
     public DynamicBoard(int x, int y){
@@ -40,7 +43,7 @@ public class DynamicBoard extends Board {
         this.columcount = x;
         this.margin  = 20;
         this.board = initBoard(x, y);
-
+        this.grid = false;
     }
 
     /**
@@ -53,6 +56,14 @@ public class DynamicBoard extends Board {
         this.initialBoard = newBoard;
         this.board = centerBoard(this.board);
         this.initialBoard = centerBoard(this.initialBoard);
+    }
+
+    public void setGrid(boolean gridInput) {
+        this.grid = gridInput;
+    }
+
+    public boolean getGrid() {
+        return this.grid;
     }
 
     private List<List<Byte>> centerBoard(List<List<Byte>> board) {
@@ -207,6 +218,32 @@ public class DynamicBoard extends Board {
         }
 
         yCounter = 0;
+
+        if (grid) {
+            drawGrid();
+        }
+
+        yCounter = 0;
+    }
+
+    public void drawGrid() {
+
+        double gridSize = cellSize * 0.05;
+        gc.setStroke(gridColor);
+        gc.setLineWidth(gridSize);
+
+        int i = 0;
+
+        while (i <= canvasHeight) {
+            gc.strokeLine(0, i, canvasWidth, i);
+            i += cellSize;
+        }
+        i = 0;
+
+        while (i <= canvasWidth) {
+            gc.strokeLine(i, 0, i, canvasHeight);
+            i += cellSize;
+        }
     }
 
     public void clearBoard() {

@@ -272,7 +272,7 @@ public class Controller implements Initializable {
 
     // Toggles the grid using boolean value in StaticBoard class.
     public void toggleGrid() {
-        /*
+
         if (boardObj.getGrid()) {
             boardObj.setGrid(false);
 
@@ -282,7 +282,7 @@ public class Controller implements Initializable {
         }
 
         boardObj.drawBoard();
-        */
+
     }
 
     // Creates the "GIF Export" Stage and shows the Stage.
