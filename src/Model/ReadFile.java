@@ -1,27 +1,34 @@
 package Model;
 
-/**
- * Created by patrikkvarmehansen on 03/03/17.
- */
+
 import java.io.*;
 import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 
 import javafx.stage.FileChooser;
 
+/**
+ * Small help class that reads files into the project
+ */
 public class ReadFile extends FileHandling{
 
-    //TODO URL-file-opener
-
-    public static BufferedReader readFileFromUrl(String filePath) throws IOException {
-        URL url = new URL(filePath);
+    /**
+     * Method for reading file from URL
+     *
+     * @param urlString URL to the file
+     * @return A BufferedReader containing the RLE file
+     * @throws IOException
+     */
+    public static BufferedReader readFileFromUrl(String urlString) throws IOException {
+        URL url = new URL(urlString);
         BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
         return br;
-
     }
 
-    //Support method for reading files
+    /**
+     * Reads a file from disk
+     * @return BufferedReader containing the RLE file
+     */
     public static BufferedReader readFileFromDisk() {
         try {
             File file = openFile();
@@ -40,7 +47,10 @@ public class ReadFile extends FileHandling{
         return null;
     }
 
-
+    /**
+     * Opens the select file dialog window and returns the chosen file as a File object.
+     * @return File containing the filepath to the chosen file.
+     */
     public static File openFile () {
         try {
             FileChooser fileChooser = new FileChooser();
@@ -57,8 +67,5 @@ public class ReadFile extends FileHandling{
             return null;
         }
     }
-
-
-
 
 }

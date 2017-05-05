@@ -214,7 +214,7 @@ public class StaticRule extends Rule {
     }
 
     @Override
-    public void expandBoardIfNeeded(int y, int x) {
+    public void checkIfExpansionIsNedded(int y, int x) {
 
     }
 

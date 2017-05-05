@@ -17,7 +17,7 @@ public class DynamicRule extends Rule {
     private int expandNum;
     private int shiftNum;
 
-    private boolean expandedDown, expandedRight, expandedLeft, expandedUp, needsRightShift, needsDownShift;
+    private boolean expandDown, expandRight, needsRightShift, needsDownShift;
     //private boolean boardHasBeenInit;
     //private boolean init;
 
@@ -26,11 +26,6 @@ public class DynamicRule extends Rule {
         expandNum = 50;
         shiftNum = 10;
 
-        expandedDown = false;
-        expandedUp = false;
-
-
-        //boolean notInit = true;
     }
 
     public List<List<Byte>> getCurrentBoard() {
@@ -58,7 +53,7 @@ public class DynamicRule extends Rule {
     ////CONWAYS GAME OF LIFE RULES
 
     private boolean isExpandedAllWays() {
-        return expandedDown && expandedRight && expandedLeft && expandedUp;
+        return expandDown && expandRight && needsRightShift && needsDownShift;
     }
 
     private List<List<Byte>> initBoard() {
@@ -82,27 +77,34 @@ public class DynamicRule extends Rule {
 
 
     public List<List<Byte>> applyBoardRules() {
-        expandedDown = false;
-        expandedRight = false;
-        expandedLeft = false;
-        expandedUp = false;
+
 
         conwaysBoard = initBoard();
 
         if (needsDownShift && needsRightShift) {
             shiftAllRight();
             shiftAllDown();
-            needsRightShift = false;
-            needsDownShift = false;
         }
         else if (needsDownShift) {
             shiftAllDown();
-            needsDownShift = false;
         }
         else if (needsRightShift) {
             shiftAllRight();
-            needsRightShift = false;
         }
+
+        if (expandRight && expandDown) {
+            addColsToAllBoards();
+            addRowsToAllBoards();
+        }
+        else if (expandDown) {
+            addRowsToAllBoards();
+        }
+        else if(expandRight) {
+            addColsToAllBoards();
+        }
+
+        setBooleansFalse();
+
 
         start = 0;
         length = conwaysBoard.size();
@@ -134,6 +136,14 @@ public class DynamicRule extends Rule {
         return conwaysBoard;
     }
 
+    private void setBooleansFalse() {
+        expandDown = false;
+        expandRight = false;
+        needsDownShift = false;
+        needsRightShift = false;
+
+    }
+
 
     private void sector1() {
         for (int y = start; y < sector2; y++) {
@@ -141,8 +151,9 @@ public class DynamicRule extends Rule {
 
                 if (boardOfActiveCells.get(y).get(x) == 1) {
                     int cellState = currentBoard.get(y).get(x);
-                    if (cellState == 1) {
+                    if (cellState == 1 && !isExpandedAllWays()) {
                         checkIfShiftIsNeeded(y, x);
+                        checkIfExpansionIsNedded(y, x);
                     }
                     conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
                 }
@@ -158,7 +169,9 @@ public class DynamicRule extends Rule {
                 if (boardOfActiveCells.get(y).get(x) == 1) {
                     int cellState = currentBoard.get(y).get(x);
                     if (cellState == 1 && !isExpandedAllWays()) {
-                        expandBoardIfNeeded(y, x);
+                        checkIfShiftIsNeeded(y, x);
+                        checkIfExpansionIsNedded(y, x);
+
                     }
                     conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
                 }
@@ -174,8 +187,9 @@ public class DynamicRule extends Rule {
 
                 if (boardOfActiveCells.get(y).get(x) == 1) {
                     int cellState = currentBoard.get(y).get(x);
-                    if (cellState == 1) {
+                    if (cellState == 1 && !isExpandedAllWays()) {
                         checkIfShiftIsNeeded(y, x);
+                        checkIfExpansionIsNedded(y, x);
                     }
                     conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
                 }
@@ -191,8 +205,9 @@ public class DynamicRule extends Rule {
 
                 if (boardOfActiveCells.get(y).get(x) == 1) {
                     int cellState = currentBoard.get(y).get(x);
-                    if (cellState == 1) {
+                    if (cellState == 1 && !isExpandedAllWays()) {
                         checkIfShiftIsNeeded(y, x);
+                        checkIfExpansionIsNedded(y, x);
                     }
                     conwaysBoard.get(y).set(x,checkIfOnOrOff(countNeighbor( y, x), cellState));
                 }
@@ -414,36 +429,17 @@ public class DynamicRule extends Rule {
     }
 
 
-    protected void expandBoardIfNeeded(int y, int x) {
+    protected void checkIfExpansionIsNedded(int y, int x) {
 
-        // Checks if a cell is close to the edge
-         {
-
-            // All if conditions checks if cell is at the edge
-            // and if an expansion of the board has allready been triggered this gen
-
-            if (y >= (rowCount - 1) || x >= (colCount - 1)) {
-                if ((y == (rowCount)) && (x != (colCount)) && !expandedDown) {
-                    expandedDown = true;
-                } else if ((x == (colCount)) && (y != (rowCount)) && !expandedRight) {
-                    addColsToAllBoards();
-                    expandedRight = true;
-                } else if ((x == (colCount)) && (y == (rowCount)) && !expandedDown && !expandedRight) {
-                    addColsToAllBoards();
-                    addRowsToAllBoards();
-                    expandedRight = true;
-                    expandedDown = true;
-                }
-            }
-            if ((y <= 1) || (x <= 1)) {
-                if ((x == 0) && (y != 0) && !expandedLeft) {
-                    shiftAllRight();
-                } else if ((y == 0) && (x != 0) && !expandedUp) {
-                    shiftAllDown();
-                } else if ((y == 0) && (x == 0) && !expandedUp && !expandedLeft) {
-                    shiftAllRight();
-                    shiftAllDown();
-                }
+    // Checks if a cell is close to the edge
+        if (y >= (rowCount - 1) || x >= (colCount - 1)) {
+            if ((y == (rowCount)) && (x != (colCount))) {
+                expandDown = true;
+            } else if ((x == (colCount)) && (y != (rowCount))) {
+                expandRight = true;
+            } else if ((x == (colCount)) && (y == (rowCount))) {
+                expandRight = true;
+                expandDown = true;
             }
         }
     }
@@ -453,7 +449,6 @@ public class DynamicRule extends Rule {
         currentBoard = shiftBoardRight(currentBoard, shiftNum);
         conwaysBoard = shiftBoardRight(conwaysBoard, shiftNum);
         boardOfActiveCells = shiftBoardRight(boardOfActiveCells, shiftNum);
-        expandedLeft = true;
     }
 
     private void shiftAllDown() {
@@ -461,8 +456,6 @@ public class DynamicRule extends Rule {
         currentBoard = shifBoardDown(currentBoard, shiftNum);
         conwaysBoard = shifBoardDown(conwaysBoard, shiftNum);
         boardOfActiveCells = shifBoardDown(boardOfActiveCells, shiftNum);
-        expandedUp = true;
-
     }
 
     private void addColsToAllBoards() {

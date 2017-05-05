@@ -15,10 +15,8 @@ import java.util.regex.Pattern;
 import Model.ReadFile;
 
 /**
- * A class that parses a .rle file and returns it as a 2D byte array through the importBoard method.
- * It can also return the X and Y value if needed later on.
+ * Handels the parsing of the .rle file
  */
-
 public abstract class RLEParser {
 
     //TODO Add function that checks all new lines for zeroes and has a runcount for empty lines.

@@ -120,7 +120,7 @@ public abstract class Rule {
      * @param y - y coordinate of cell
      * @param x - x coordinate of cell
      */
-    protected abstract void expandBoardIfNeeded(int y, int x);
+    protected abstract void checkIfExpansionIsNedded(int y, int x);
 
     /**
      * Adds a given number of rows to the board

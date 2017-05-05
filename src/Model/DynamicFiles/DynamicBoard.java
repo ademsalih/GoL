@@ -37,7 +37,7 @@ public class DynamicBoard extends Board {
     public DynamicBoard(int x, int y){
         this.rowcount = y;
         this.columcount = x;
-        this.margin  = 20;
+        this.margin  = 10;
         this.board = initBoard(x, y);
         this.grid = false;
     }
