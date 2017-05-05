@@ -175,8 +175,8 @@ public class DynamicBoard extends Board {
 
     /**
      * Draws/undraws a cell depending on its state when we click/drag on the board
-     * @param y - y coordinate
-     * @param x - x coordinate
+     * @param y  y coordinate
+     * @param x  x coordinate
      */
     public void mouseClickedOrDraggedOnBoard(double x, double y){
         int colx = (int) ((x / cellSize));
