@@ -8,6 +8,10 @@ package Model.Abstract;
  * the neighbor count and check if anything mathces. It makes it easy to do a dynamic
  * implementation of the rules since the arrays can be switch out with any number of
  * different ints</p>
+ *
+ *  <p>To optimize we have a extra list (boardOfActiveCells) which holds information of which
+ * cells that were affected or near an affected cell of the last generation. We use this to determine
+ * which cells that we need to check for neighbors.</p>
  */
 
 public abstract class Rule {

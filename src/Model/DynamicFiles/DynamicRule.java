@@ -13,10 +13,6 @@ import Model.Abstract.Rule;
  * <p>We have implementet 4 threads to help with the processing in this case so that we can handle
  * bigger patterns.</p>
  *
- * <p>To further optimize we have a extra list (boardOfActiveCells) which holds information of which
- * cells that were affected or near an affected cell of the last generation. We use this to determine
- * which cells that we need to check for neighbors.</p>
- *
  * <p>We chose to have dynamic rule be the one to expand the board while its running.
  * The reason for this is that it is allready going through the ArrayList and it would therefore
  * be easy to have it update booleans along the way if it encountered cells that were on the edge
