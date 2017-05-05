@@ -61,13 +61,6 @@ public class Controller implements Initializable {
     DynamicRule rule;
     DynamicRLEParser rleParser;
 
-    /*
-    public StaticBoard boardObj;
-    public StaticRule rule;
-    public StaticRLEParser rleParser;*/
-
-    //public Timeline timeline;
-    //public GraphicsContext gc;
     public static Controller instance;
     Stage stage;
     Stage gifStage;
@@ -79,8 +72,6 @@ public class Controller implements Initializable {
     private URLDialog url;
     private SaveRLEDialog save;
 
-    //public Stage urlStage;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -89,7 +80,7 @@ public class Controller implements Initializable {
 
         List<Point> plist = new ArrayList<Point>();
 
-        draw();
+        drawBlankBoard();
         setID();
         initializeSliders();
         KeyFrame keyFrame = new KeyFrame(Duration.millis(1000), actionEvent -> nextGeneration());
@@ -101,7 +92,9 @@ public class Controller implements Initializable {
 
     }
 
-    // Sets the ID of the objects in this class for CSS styling.
+    /**
+     * Sets the ID of the objects in this class for CSS styling.
+     */
     private void setID() {
         nextGenButton.setId("nextGenButton");
         gridPane.setId("gridPane");
@@ -112,7 +105,9 @@ public class Controller implements Initializable {
         resetButton.setId("resetButton");
     }
 
-    // Instatiats the slider with minimum, maximum and start values.
+    /**
+     * Initiates the sliders with min, max and start values
+     */
     private void initializeSliders() {
         speedSlider.setMin(1);
         speedSlider.setMax(30);
@@ -130,7 +125,9 @@ public class Controller implements Initializable {
         });
     }
 
-    // Creates the "Change color" Stage and sends the board colors to the Stage.
+    /**
+     * Creates a "Change color" stage and sends the board colors to the Stage.
+     */
     public void colorStage() {
 
         try {
@@ -152,17 +149,18 @@ public class Controller implements Initializable {
         ColorStageController.instance.setBackgroundColorPicker(boardObj.getBackgroundColor());
     }
 
-    // Method that uses the draw method of StaticBoard class for drawing the game to canvas.
-    private void draw() {
+    /**
+     * Method that set game board blank and draws it
+     */
+    private void drawBlankBoard() {
         boardObj = new DynamicBoard(canvas, 350, 250);
-        //boardObj = new StaticBoard(canvas);
         boardObj.drawBoard();
     }
 
-    // Uses the StaticRule class to iterate to next generation and draws the game.
+    /**
+     * Applies the current rules on the game board and redraws it
+     */
     public void nextGeneration() {
-
-        double time = System.currentTimeMillis();
 
         rule.setCurrentBoard(boardObj.getBoard());
 
@@ -172,11 +170,8 @@ public class Controller implements Initializable {
 
         boardObj.setBoard(tempArr);
 
-
         boardObj.drawBoard();
 
-        double timeTaken = System.currentTimeMillis() - time;
-        System.out.println("applyBoardRules: " + timeTaken);
 
         counter++;
         Main.getStage().setTitle(titleName + " (" + counter + ")");
@@ -184,12 +179,18 @@ public class Controller implements Initializable {
 
     }
 
+    /**
+     * Updates the title of the game window
+     * @param newName
+     */
     private void updateTitle(String newName) {
         Main.getStage().setTitle(newName);
         titleName = newName;
     }
 
-    // Resets the game to the first state and stops the animation.
+    /**
+     * Resets the game to its initial state and stops the animation
+     */
     public void reset() {
         boardObj.setBoard(boardObj.initialBoard);
         boardObj.drawBoard();
@@ -204,7 +205,10 @@ public class Controller implements Initializable {
         startStopButton.setId("startButton");
     }
 
-    // Loads an RLE files and draws the file to the canvas.
+    /**
+     * Loads an RLE file from disk, adds the board to the boardobject and draws it
+     * @throws IOException
+     */
     public void loadFileFromDisk() throws IOException {
         stopAnimationIfRunning();
         rleParser = new DynamicRLEParser();
@@ -220,8 +224,9 @@ public class Controller implements Initializable {
         }
     }
 
-
-    // Creates a new black board.
+    /**
+     * Creates a new blank board
+     */
     public void newBlankAction() {
         boardObj.clearBoard();
         boardObj.clearInitialBoard();
@@ -229,7 +234,10 @@ public class Controller implements Initializable {
         updateTitle("Game of Life");
     }
 
-    // Draws cell on canvas when clicked.
+    /**
+     * Adds or removes cell where the mouse is clicked depending on its previous state
+     * @param event
+     */
     public void mouseClicked(MouseEvent event) {
         Point p = new Point();
         p.x = event.getX();
@@ -237,6 +245,10 @@ public class Controller implements Initializable {
         boardObj.mouseClickedOrDraggedOnBoard(p.x, p.y);
     }
 
+    /**
+     * Handles event if mouse is dragged and draws cells in its way
+     * @param event
+     */
     public void mouseDragged(MouseEvent event) {
         Point p = new Point();
         p.x = event.getX();
@@ -244,25 +256,32 @@ public class Controller implements Initializable {
         boardObj.mouseClickedOrDraggedOnBoard(p.x, p.y);
     }
 
-    // Exits the application.
+    /**
+     * Exits the application
+     */
     public void exitEvent() {
         System.exit(0);
     }
 
-
+    /**
+     * Changes the cell color
+     * @param c Color of the cell
+     */
     void changeCellColor(Color c) {
         boardObj.setCellColor(c);
     }
 
+    /**
+     * Changes the background color of the canvas
+     * @param c Background color
+     */
     void changeBackgroundColor(Color c) {
         boardObj.setBackgroundColor(c);
     }
 
-    public Button getStartStopButton() {
-        return this.startStopButton;
-    }
-
-    // Toggles the "Start/Stop" button.
+    /**
+     * Toggles the "Start/Stop" text of the Start/Stop button
+     */
     public void startStopButton() {
         animate.startStopButtonAction();
         if (!animate.getAnimationStatus()) {
@@ -276,8 +295,9 @@ public class Controller implements Initializable {
         }
     }
 
-
-    // Toggles the grid using boolean value in StaticBoard class.
+    /**
+     * Toggles the grid using boolean value in the board class
+     */
     public void toggleGrid() {
 
         if (boardObj.getGrid()) {
@@ -289,7 +309,9 @@ public class Controller implements Initializable {
         boardObj.drawBoard();
     }
 
-    // Creates the "GIF Export" Stage and shows the Stage.
+    /**
+     * Creates the "GIF Export" stage and shows the Stage.
+     */
     public void openExportMenu() {
         stopAnimationIfRunning();
         try {
