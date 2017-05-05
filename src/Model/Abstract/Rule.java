@@ -8,9 +8,9 @@ public abstract class Rule {
 
     /**
      * Checks if a given cellState combined with number of neighbors means the cell will survive
-     * @param neighbors - number of neighbors
-     * @param cellState - current cellState (dead or alive)
-     * @return - a byte of 1 or 0 where 1 is alive and 0 is dead.
+     * @param neighbors  number of neighbors
+     * @param cellState  current cellState (dead or alive)
+     * @return  a byte of 1 or 0 where 1 is alive and 0 is dead.
      */
     protected byte checkIfOnOrOff(int neighbors, int cellState) {
 
@@ -33,7 +33,7 @@ public abstract class Rule {
 
     /**
      * Returns an array containing the conditions for survival
-     * @return - 2D int array with the survive part of the rule set
+     * @return  Int array with the survive part of the rule set
      */
     public int[] getSurvivor() {
         return survivor;
@@ -41,7 +41,7 @@ public abstract class Rule {
 
     /**
      * Returns an array containing the conditions for being born
-     * @return - 2D int array with the born part of the rule set
+     * @return  Int array with the born part of the rule set
      */
     public int[] getBorn() {
         return born;
@@ -49,8 +49,8 @@ public abstract class Rule {
 
     /**
      * Sets the rules of the given board
-     * @param s - 2D int array containing the survive part of the ruleset
-     * @param b - 2D int array containing the born part of the ruleset
+     * @param s  Int array containing the survive part of the ruleset
+     * @param b  Int array containing the born part of the ruleset
      */
     public static void setRules(int[] s, int[] b) {
         survivor = s;
@@ -59,9 +59,9 @@ public abstract class Rule {
 
     /**
      * Counts the number of neighbors surrounding the given cell
-     * @param y - y coordinate
-     * @param x - x coordinate
-     * @return - the number of neighbors
+     * @param y  y coordinate
+     * @param x  x coordinate
+     * @return  the number of neighbors
      */
     protected int countNeighbor( int y, int x){
 
@@ -115,25 +115,6 @@ public abstract class Rule {
     protected abstract void markBottomRight(int y, int x);
     protected abstract void markBottom(int y, int x);
 
-    /**
-     * Checks if a cell is close or at the edge of the board and expands the board if needed
-     * @param y - y coordinate of cell
-     * @param x - x coordinate of cell
-     */
     protected abstract void checkIfExpansionIsNedded(int y, int x);
 
-    /**
-     * Adds a given number of rows to the board
-     * @param i - number of rows to be added
-     */
-    /*
-    protected abstract Object addRows(int i);
-
-    /**
-     * Adds a given number of columns to the board
-     * @param i - number of columns to be added
-     */
-    /*
-    protected abstract Object addCols(int i);
-    */
 }

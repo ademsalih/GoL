@@ -6,7 +6,7 @@ import java.util.List;
 import Model.Abstract.Rule;
 
 /**
- * DynamicRule performs rules (default:Conway's rules) on the dynamic gameboard
+ * DynamicRule performs rules (default:Conway's rules) on the dynamic gameboard.
  */
 
 public class DynamicRule extends Rule {
@@ -27,16 +27,15 @@ public class DynamicRule extends Rule {
 
     private int length;
 
+    // Booleans to help check if the boards needs shifting or expanding
     private boolean expandDown, expandRight, needsRightShift, needsDownShift;
-    //private boolean boardHasBeenInit;
-    //private boolean init;
 
     /**
      * Constructs a rule object
      */
     public DynamicRule () {
         this.currentBoard = new ArrayList<>();
-        expandNum = 50;
+        expandNum = 20;
         shiftNum = 10;
 
     }
@@ -102,9 +101,10 @@ public class DynamicRule extends Rule {
      */
     public List<List<Byte>> applyBoardRules() {
 
-
+        // Gives conway board the currentBoards size
         conwaysBoard = initBoard();
 
+        // Does a shift if needed to all the boards in play
         if (needsDownShift && needsRightShift) {
             shiftAllRight();
             shiftAllDown();
@@ -116,6 +116,7 @@ public class DynamicRule extends Rule {
             shiftAllRight();
         }
 
+        // Expands all boards in play if needed
         if (expandRight && expandDown) {
             addColsToAllBoards();
             addRowsToAllBoards();
@@ -555,17 +556,26 @@ public class DynamicRule extends Rule {
         return board;
     }
 
-    // PATRICK SKAL JAVADOCCCEE DETTE
+    /**
+     * Checks if a cell is close to the edge of the board on either the left or top site.
+     * @param y Y coordinate of the cell
+     * @param x X coordinate of the cell
+     */
     private void checkIfShiftIsNeeded(int y, int x) {
-        if ((y <= 2)) {
+        if ((y <= 1)) {
             needsDownShift = true;
         }
-        if ((x <= 2)) {
+        if ((x <= 1)) {
             needsRightShift = true;
         }
     }
 
-    // PATRICK SKAL JAVADOCCCEE DETTE
+    /**
+     * Checks if the board needs more room to the right or down.
+     *
+     * @param y - y coordinate of cell
+     * @param x - x coordinate of cell
+     */
     protected void checkIfExpansionIsNedded(int y, int x) {
 
     // Checks if a cell is close to the edge
@@ -581,7 +591,9 @@ public class DynamicRule extends Rule {
         }
     }
 
-    // PATRICK SKAL JAVADOCCCEE DETTE
+    /**
+     * Method that shift all Lists in play to the right
+     */
     private void shiftAllRight() {
         addColsToAllBoards();
         currentBoard = shiftBoardRight(currentBoard, shiftNum);
@@ -589,7 +601,9 @@ public class DynamicRule extends Rule {
         boardOfActiveCells = shiftBoardRight(boardOfActiveCells, shiftNum);
     }
 
-    // PATRICK SKAL JAVADOCCCEE DETTE
+    /**
+     * Method that shift all Lists in play downwards
+     */
     private void shiftAllDown() {
         addRowsToAllBoards();
         currentBoard = shifBoardDown(currentBoard, shiftNum);
@@ -597,14 +611,18 @@ public class DynamicRule extends Rule {
         boardOfActiveCells = shifBoardDown(boardOfActiveCells, shiftNum);
     }
 
-    // PATRICK SKAL JAVADOCCCEE DETTE
+    /**
+     * Adds columns to all the Lists in play
+     */
     private void addColsToAllBoards() {
         currentBoard = addCols(currentBoard, expandNum);
         conwaysBoard = addCols(conwaysBoard, expandNum);
         boardOfActiveCells = addCols(boardOfActiveCells, expandNum);
     }
 
-    // PATRICK SKAL JAVADOCCCEE DETTE
+    /**
+     * Adds rows to all the Litst in play
+     */
     private void addRowsToAllBoards() {
         currentBoard = addRows(currentBoard, expandNum);
         conwaysBoard = addRows(conwaysBoard, expandNum);
@@ -612,7 +630,12 @@ public class DynamicRule extends Rule {
     }
 
 
-    // PATRICK SKAL JAVADOCCCEE DETTE
+    /**
+     * Shifts a given List (board) to the right and returns the shifted board
+     * @param board List that has been shifted to the right
+     * @param shiftNum Number of shifts
+     * @return
+     */
     private List<List<Byte>> shiftBoardRight(List<List<Byte>> board, int shiftNum) {
         List<List<Byte>> newBoard = new ArrayList<>();
 
@@ -623,10 +646,6 @@ public class DynamicRule extends Rule {
 
         newBoard = addCols(newBoard, shiftNum + board.get(0).size());
 
-        System.out.println("shiftNum = " + shiftNum);
-        System.out.println("newBoard size: y = " + newBoard.size() + " x = " + newBoard.get(0).size());
-        System.out.println("board size: y = " + board.size() + " x = " + board.get(0).size());
-
         for (int y = 0; y < board.size(); y++) {
             for (int x = 0; x < board.get(y).size(); x++) {
                 newBoard.get(y).set(x + shiftNum, (board.get(y).get(x)));
@@ -636,7 +655,12 @@ public class DynamicRule extends Rule {
         return newBoard;
     }
 
-    // PATRICK SKAL JAVADOCCCEE DETTE
+    /**
+     * Shifts a given List (board) down and returns the shifted board
+     * @param board List that has been shifted down
+     * @param shiftNum Number of shifts
+     * @return
+     */
     private List<List<Byte>> shifBoardDown(List<List<Byte>> board, int shiftNum) {
         List<List<Byte>> newBoard = new ArrayList<>();
 
@@ -655,7 +679,5 @@ public class DynamicRule extends Rule {
 
         return newBoard;
     }
-
-
 
 }
