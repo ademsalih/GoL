@@ -19,9 +19,9 @@ public class StaticRLEParser extends RLEParser {
     private byte[][] arr;
 
     /**
-     *
-     * @param runCount
-     * @param cellType
+     * Initiates the update of the array (board) with a given run count and cell type
+     * @param runCount Number of implementations of the given cell type
+     * @param cellType What kind of cell that should be added to the board
      */
     @Override
     public void initiateBoardUpdate(int runCount, char cellType) {
@@ -47,6 +47,12 @@ public class StaticRLEParser extends RLEParser {
         }
     }
 
+    /**
+     * Does the actual updating of the array (board) values
+     *
+     * @param r  int that holds the runcount. This is the number of placements the byte should have.
+     * @param b  byte that holds the value of the cells that is placed on the board.
+     */
     @Override
     public void updateBoard(int r, byte b) {
         for (int i = 0; i < r; i++) {
@@ -63,22 +69,23 @@ public class StaticRLEParser extends RLEParser {
         }
     }
 
+    /**
+     * Creates the array (board) that the rle pattern is added to
+     */
     @Override
     public void initBoard() {
         arr = new byte[y][x];
     }
 
     /**
-     * Returns the board
+     * Returns the array (board)
      *
-     * @return - byte[][] containing the gameboard.
+     * @return byte[][] containing the gameboard.
      */
     public byte[][] getBoard() {
         return arr;
     }
-
-
-
+    
     /**
      * Prints the board to console
      *

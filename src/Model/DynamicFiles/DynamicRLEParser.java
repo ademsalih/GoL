@@ -13,6 +13,11 @@ public class DynamicRLEParser extends RLEParser{
     private static ArrayList<List<Byte>> arrLi;
     private List<Byte> line;
 
+    /**
+     * Initiates the update of the ArrayList (board) with a given run count and cell type
+     * @param runCount Number of implementations of the given cell type
+     * @param cellType What kind of cell that should be added to the board
+     */
     @Override
     public void initiateBoardUpdate(int runCount, char cellType) {
         if (cellType == 'b') {
@@ -46,6 +51,12 @@ public class DynamicRLEParser extends RLEParser{
         }
     }
 
+    /**
+     * Does the actual updating of the ArrayList (board) values
+     *
+     * @param r  int that holds the runcount. This is the number of placements the byte should have.
+     * @param b  byte that holds the value of the cells that is placed on the board.
+     */
     @Override
     public void updateBoard(int r, byte b) {
         for (int i = 0; i < r; i++) {
@@ -64,6 +75,9 @@ public class DynamicRLEParser extends RLEParser{
 
     }
 
+    /**
+     * Creates the ArrayList items that the rle pattern is added to
+     */
     @Override
     public void initBoard() {
         arrLi = new ArrayList<>();
@@ -72,7 +86,7 @@ public class DynamicRLEParser extends RLEParser{
 
 
     /**
-     * Returns the board
+     * Returns the ArrayList (board)
      *
      * @return - ArrayList containing the gameboard.
      */
