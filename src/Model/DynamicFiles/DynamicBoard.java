@@ -2,6 +2,8 @@ package Model.DynamicFiles;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import Model.Abstract.Board;
@@ -179,13 +181,22 @@ public class DynamicBoard extends Board {
      * @param value State of the cell
      */
     public void setCellState(int rowy, int colx, byte value) {
-        // Checks if cell is outside the margin of the board. Updates the board if needed.
         rowcount = board.size();
         columcount = board.get(0).size();
+
+        // Checks if cell is outside the margin of the board. Updates the board if needed.
         if ((colx + margin) > columcount || (rowy + margin) > rowcount) {
             expandBoard(rowy, colx, rowcount, columcount);
         }
-        this.board.get(rowy).set(colx, value);
+
+        if ((getCellState(rowy, colx) != 3)) {
+            try {
+                this.board.get(rowy).set(colx, value);
+            }
+            catch (ArrayIndexOutOfBoundsException ae) {
+                System.err.println("Unable to draw to cell x = " + colx + " y = " + rowy);
+            }
+        }
     }
 
     /**
