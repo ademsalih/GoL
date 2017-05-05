@@ -8,22 +8,19 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Narmatha on 05.05.2017.
- */
-public class DynamicRLEParserTest {
+class DynamicRLEParserTest {
 
     @Test
-    public void testSimplePattern() throws Exception {
+    void testSimplePattern() throws Exception {
         byte[][] testArr = {{0, 0, 1, 1}, {0, 0, 1, 1}, {0, 0, 0, 0}, {1, 1, 1, 1}, {1, 0, 0, 1}};
         String rle1 = "x = 4, y = 5, rule = B3/S23\n2b2o$2b2o2$4o$o2bo!";
         StringReader sr = new StringReader(rle1);
         BufferedReader br = new BufferedReader(sr);
-        List<List<Byte>> testArrDyn = new ArrayList<List<Byte>>();
+        List<List<Byte>> testArrDyn = new ArrayList<>();
 
-        for (int y = 0; y < testArr.length; y++) {
-            List<Byte> temp = new ArrayList<Byte>();
-            for (byte b : testArr[y]) {
+        for (byte[] aTestArr : testArr) {
+            List<Byte> temp = new ArrayList<>();
+            for (byte b : aTestArr) {
                 temp.add(b);
             }
             testArrDyn.add(temp);
@@ -42,7 +39,7 @@ public class DynamicRLEParserTest {
     }
 
     @Test
-    public void testMediumPattern() throws Exception {
+    void testMediumPattern() throws Exception {
         byte[][] testArr = {{0,0,0,0,0,0,1,0,0,0,0,0,0},
                 {0,0,0,0,0,1,0,1,0,0,0,0,0},
                 {0,0,0,0,0,1,0,1,0,0,0,0,0},
@@ -61,11 +58,11 @@ public class DynamicRLEParserTest {
 
         StringReader sr = new StringReader(rle1);
         BufferedReader br = new BufferedReader(sr);
-        List<List<Byte>> testArrDyn = new ArrayList<List<Byte>>();
+        List<List<Byte>> testArrDyn = new ArrayList<>();
 
-        for (int y = 0; y < testArr.length; y++) {
-            List<Byte> temp = new ArrayList<Byte>();
-            for (byte b : testArr[y]) {
+        for (byte[] aTestArr : testArr) {
+            List<Byte> temp = new ArrayList<>();
+            for (byte b : aTestArr) {
                 temp.add(b);
             }
             testArrDyn.add(temp);

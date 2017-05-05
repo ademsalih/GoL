@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Test;
  */
 
 
-public class TestingStaticRule {
+class TestingStaticRule {
 
     @Test
-    public void testToString(){
+    void testToString(){
         byte[][] board = {
                 {1, 0, 0},
                 {0, 1, 0},
@@ -25,7 +25,7 @@ public class TestingStaticRule {
     }
 
     @Test
-    public void testToString1(){
+    void testToString1(){
 
         byte[][] board1 = {
                 {0,1,0},
@@ -38,7 +38,7 @@ public class TestingStaticRule {
     }
 
     @Test
-    public void testToString2() {
+    void testToString2() {
 
         byte[][] board2 = {
                 {0,0,1,0,0},
@@ -53,7 +53,7 @@ public class TestingStaticRule {
     }
 
     @Test
-    public void testNextGeneration(){
+    void testNextGeneration(){
         byte[][] board = {
                 { 0, 0, 0, 0 },
                 { 0, 0, 1, 0 },
@@ -69,7 +69,7 @@ public class TestingStaticRule {
     }
 
     @Test
-    public void testNextGeneration1(){
+    void testNextGeneration1(){
 
         byte[][] board1 = {
                 {0,1,0},
@@ -84,7 +84,7 @@ public class TestingStaticRule {
     }
 
     @Test
-    public void testNextGeneration2(){
+    void testNextGeneration2(){
 
         byte[][] board2 = {
                 {0,0,1,0,0},
@@ -103,7 +103,7 @@ public class TestingStaticRule {
 
 
     @Test
-    public void testCountNeighbor(){
+    void testCountNeighbor(){
         byte[][] board = {
                 {1, 0, 0},
                 {0, 1, 0},
@@ -117,7 +117,7 @@ public class TestingStaticRule {
     }
 
     @Test
-    public void testCountNeighbor1(){
+    void testCountNeighbor1(){
 
         byte[][] board1 = {
                 {0,1,0},
@@ -132,7 +132,7 @@ public class TestingStaticRule {
     }
 
     @Test
-    public void testCountNeighbor2() {
+    void testCountNeighbor2() {
 
         byte[][] board2 = {
                 {0,0,1,0,0},

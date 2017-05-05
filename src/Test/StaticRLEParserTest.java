@@ -8,13 +8,8 @@ import java.io.StringReader;
 
 class StaticRLEParserTest {
 
-    /**
-     * SIMPLE TEST
-     */
-
-
     @Test
-    public void testSimplePattern() throws Exception {
+    void testSimplePattern() throws Exception {
         byte[][] testArr = {{0, 0, 1, 1}, {0, 0, 1, 1}, {0, 0, 0, 0}, {1, 1, 1, 1}, {1, 0, 0, 1}};
         String rle1 = "x = 4, y = 5, rule = B3/S23\n2b2o$2b2o2$4o$o2bo!";
         StringReader sr = new StringReader(rle1);
@@ -30,7 +25,7 @@ class StaticRLEParserTest {
     }
 
     @Test
-    public void testMediumPattern() throws Exception {
+    void testMediumPattern() throws Exception {
         byte[][] testArr = {{0,0,0,0,0,0,1,0,0,0,0,0,0},
                 {0,0,0,0,0,1,0,1,0,0,0,0,0},
                 {0,0,0,0,0,1,0,1,0,0,0,0,0},

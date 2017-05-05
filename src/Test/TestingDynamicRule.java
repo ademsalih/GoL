@@ -7,14 +7,12 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Narmatha on 04.05.2017.
- */
-public class TestingDynamicRule {
+
+class TestingDynamicRule {
 
     @Test
-    public void testToString(){
-        List<List<Byte>> board = new ArrayList<List<Byte>>();
+    void testToString(){
+        List<List<Byte>> board = new ArrayList<>();
         for (int row = 0; row < 5; row++) {
             List<Byte> rowList = new ArrayList<>();
             for (int col = 0; col < 5; col++) {
@@ -40,8 +38,8 @@ public class TestingDynamicRule {
     }
 
     @Test
-    public void testToString1() {
-        List<List<Byte>> board1 = new ArrayList<List<Byte>>();
+    void testToString1() {
+        List<List<Byte>> board1 = new ArrayList<>();
         for (int row = 0; row < 5; row++) {
             List<Byte> rowList = new ArrayList<>();
             for (int col = 0; col < 5; col++) {
@@ -63,8 +61,8 @@ public class TestingDynamicRule {
     }
 
     @Test
-    public void testToString2() {
-        List<List<Byte>> board2 = new ArrayList<List<Byte>>();
+    void testToString2() {
+        List<List<Byte>> board2 = new ArrayList<>();
         for (int row = 0; row < 3; row++) {
             List<Byte> rowList = new ArrayList<>();
             for (int col = 0; col < 3; col++) {

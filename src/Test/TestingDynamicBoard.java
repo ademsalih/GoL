@@ -3,13 +3,10 @@ package Test;
 import Model.DynamicFiles.DynamicBoard;
 import org.junit.jupiter.api.Test;
 
-/**
- * Created by Narmatha on 27.04.2017.
- */
-public class TestingDynamicBoard {
+class TestingDynamicBoard {
 
     @Test
-    public void testsetCellState(){
+    void testsetCellState(){
         DynamicBoard board = new DynamicBoard(10, 10);
         board.setCellState(5, 5, (byte) 1);
         org.junit.Assert.assertEquals(board.getCellState(5, 5), 1);
