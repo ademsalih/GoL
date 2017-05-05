@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import Model.Abstract.Rule;
 import Model.DynamicFiles.DynamicParseToRLE;
 import Model.DynamicFiles.DynamicRLEParser;
 import Model.StaticFiles.StaticRule;
@@ -45,33 +46,30 @@ public class Controller implements Initializable {
     @FXML private Slider speedSlider;
     @FXML private MenuBar menuBar;
     @FXML private Button resetButton;
-    @FXML private Label speedLabel;
-    @FXML private Label scaleLabel;
 
     public DynamicBoard boardObj;
-    public DynamicRule rule;
-    public DynamicRLEParser rleParser;
+    DynamicRule rule;
+    DynamicRLEParser rleParser;
 
     /*
     public StaticBoard boardObj;
     public StaticRule rule;
     public StaticRLEParser rleParser;*/
 
-    private List<Point> plist;
     //public Timeline timeline;
-    public GraphicsContext gc;
+    //public GraphicsContext gc;
     public static Controller instance;
-    public Stage stage;
-    public Stage gifStage;
+    Stage stage;
+    Stage gifStage;
 
-    public int counter;
-    public String titleName;
+    private int counter;
+    private String titleName;
 
-    public Animate animate;
-    public URLDialog url;
-    public SaveRLEDialog save;
+    private Animate animate;
+    private URLDialog url;
+    private SaveRLEDialog save;
 
-    public Stage urlStage;
+    //public Stage urlStage;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -79,7 +77,7 @@ public class Controller implements Initializable {
         instance = this;
         titleName = "Game of Life";
 
-        plist = new ArrayList<Point>();
+        List<Point> plist = new ArrayList<Point>();
 
         draw();
         setID();
@@ -94,7 +92,7 @@ public class Controller implements Initializable {
     }
 
     // Sets the ID of the objects in this class for CSS styling.
-    public void setID() {
+    private void setID() {
         nextGenButton.setId("nextGenButton");
         gridPane.setId("gridPane");
         scaleSlider.setId("scaleSlider");
@@ -105,13 +103,11 @@ public class Controller implements Initializable {
     }
 
     // Instatiats the slider with minimum, maximum and start values.
-    public void initializeSliders() {
+    private void initializeSliders() {
         speedSlider.setMin(1);
         speedSlider.setMax(30);
 
-        speedSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
-            animate.setAnimationRate(newValue.intValue());
-        });
+        speedSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> animate.setAnimationRate(newValue.intValue()));
 
         scaleSlider.setValue(2);
         scaleSlider.setMin(0.3);
@@ -147,7 +143,7 @@ public class Controller implements Initializable {
     }
 
     // Method that uses the draw method of StaticBoard class for drawing the game to canvas.
-    public void draw() {
+    private void draw() {
         boardObj = new DynamicBoard(canvas, 350, 250);
         //boardObj = new StaticBoard(canvas);
         boardObj.drawBoard();
@@ -178,7 +174,7 @@ public class Controller implements Initializable {
 
     }
 
-    public void updateTitle(String newName) {
+    private void updateTitle(String newName) {
         Main.getStage().setTitle(newName);
         titleName = newName;
     }
@@ -192,7 +188,7 @@ public class Controller implements Initializable {
         updateTitle(titleName);
     }
 
-    public void stopAnimationIfRunning() {
+    private void stopAnimationIfRunning() {
         animate.stopAnimation();
         startStopButton.setText("Start");
         startStopButton.setId("startButton");
@@ -245,11 +241,11 @@ public class Controller implements Initializable {
     }
 
 
-    public void changeCellColor(Color c) {
+    void changeCellColor(Color c) {
         boardObj.setCellColor(c);
     }
 
-    public void changeBackgroundColor(Color c) {
+    void changeBackgroundColor(Color c) {
         boardObj.setBackgroundColor(c);
     }
 
@@ -260,12 +256,12 @@ public class Controller implements Initializable {
     // Toggles the "Start/Stop" button.
     public void startStopButton() {
         animate.startStopButtonAction();
-        if ( animate.getAnimationStatus() == false ) {
+        if (!animate.getAnimationStatus()) {
             startStopButton.setText("Stop");
             startStopButton.setId("stopButton");
 
 
-        } else if ( animate.getAnimationStatus() == true) {
+        } else if (animate.getAnimationStatus()) {
             startStopButton.setText("Start");
             startStopButton.setId("startButton");
         }
@@ -340,24 +336,9 @@ public class Controller implements Initializable {
     @FXML private CheckMenuItem dayAndNight;
     @FXML private CheckMenuItem lifeWithoutDeath;
 
-    // Manuell metode som skrur av alle "CheckMenuItems"
-    /*public void unCheckAll() {
-        conwaysLife.setSelected(false);
-        seeds.setSelected(false);
-        flock.setSelected(false);
-        twoByTwo.setSelected(false);
-        maze.setSelected(false);
-        move.setSelected(false);
-        highLife.setSelected(false);
-        mazectric.setSelected(false);
-        fredkin.setSelected(false);
-        replicator.setSelected(false);
-        dayAndNight.setSelected(false);
-        lifeWithoutDeath.setSelected(false);
-    }*/
 
-    public void unCheckAll() {
-        ArrayList<CheckMenuItem> menuItems = new ArrayList<CheckMenuItem>(12);
+    private void unCheckAll() {
+        ArrayList<CheckMenuItem> menuItems = new ArrayList<>(12);
         menuItems.addAll(Arrays.asList(conwaysLife, seeds, flock, twoByTwo, maze, move, highLife,
                 mazectric, fredkin, replicator, dayAndNight, lifeWithoutDeath));
 
@@ -396,12 +377,7 @@ public class Controller implements Initializable {
         int[] b = {3};
         int[] s = {2,3};
 
-        rule.setRules(s,b);
-    }
-
-    public void test() {
-        unCheckAll();
-
+        Rule.setRules(s,b);
     }
 
     public void selectSeeds() {
@@ -411,7 +387,7 @@ public class Controller implements Initializable {
         int[] b = {2};
         int[] s = {};
 
-        rule.setRules(s,b);
+        Rule.setRules(s,b);
     }
 
     public void selectFlock() {
@@ -421,7 +397,7 @@ public class Controller implements Initializable {
         int[] b = {3};
         int[] s = {1,2};
 
-        rule.setRules(s,b);
+        Rule.setRules(s,b);
     }
 
     public void selectTwoBytwo() {
@@ -431,7 +407,7 @@ public class Controller implements Initializable {
         int[] b = {3,6};
         int[] s = {1,2,5};
 
-        rule.setRules(s,b);
+        Rule.setRules(s,b);
     }
 
     public void selectMaze() {
@@ -441,7 +417,7 @@ public class Controller implements Initializable {
         int[] b = {3};
         int[] s = {1,2,3,4,5};
 
-        rule.setRules(s,b);
+        Rule.setRules(s,b);
     }
 
     public void selectMove() {
@@ -451,7 +427,7 @@ public class Controller implements Initializable {
         int[] b = {3,6,8};
         int[] s = {2,4,5};
 
-        rule.setRules(s,b);
+        Rule.setRules(s,b);
     }
 
     public void selectHighLife() {
@@ -461,7 +437,7 @@ public class Controller implements Initializable {
         int[] b = {3,6};
         int[] s = {2,3};
 
-        rule.setRules(s,b);
+        Rule.setRules(s,b);
     }
 
     public void selectMazctric() {
@@ -471,7 +447,7 @@ public class Controller implements Initializable {
         int[] b = {3};
         int[] s = {1,2,3,4};
 
-        rule.setRules(s,b);
+        Rule.setRules(s,b);
     }
 
     public void selectFredkin() {
@@ -481,7 +457,7 @@ public class Controller implements Initializable {
         int[] b = {1,3,5,7};
         int[] s = {0,2,4,6,8};
 
-        rule.setRules(s,b);
+        Rule.setRules(s,b);
     }
 
     public void selectReplicator() {
@@ -491,7 +467,7 @@ public class Controller implements Initializable {
         int[] b = {1,3,5,7};
         int[] s = {1,3,5,7};
 
-        rule.setRules(s,b);
+        Rule.setRules(s,b);
     }
 
     public void selectDayAndNight() {
@@ -501,7 +477,7 @@ public class Controller implements Initializable {
         int[] b = {3,6,7,8};
         int[] s = {3,4,6,7,8};
 
-        rule.setRules(s,b);
+        Rule.setRules(s,b);
     }
 
     public void selectLifeWithoutDeath() {
@@ -511,7 +487,7 @@ public class Controller implements Initializable {
         int[] b = {3};
         int[] s = {0,1,2,3,4,5,6,7,8};
 
-        rule.setRules(s,b);
+        Rule.setRules(s,b);
     }
 
 }

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import Model.Abstract.RLEParser;
 
-/**
- * Created by patrikkvarmehansen on 29/04/17.
- */
+
+
+
 public class DynamicRLEParser extends RLEParser{
 
     int count = 0;

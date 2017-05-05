@@ -12,17 +12,13 @@ import Model.Point;
 
 public class StaticBoard extends Board {
 
-    // Testing implementation of X and Y offset
-    private int xOffset = 0;
-    private int yOffset = 0;
-
-    public static byte[][] initialBoard = new byte[250][350];
+    private static byte[][] initialBoard = new byte[250][350];
     public static byte[][] board = new byte[250][350];
 
-    double canvasWidth;
-    double canvasHeight;
-    GraphicsContext gc;
-    boolean grid = false;
+    private double canvasWidth;
+    private double canvasHeight;
+    private GraphicsContext gc;
+    private boolean grid = false;
 
     public StaticBoard(Canvas canvas) {
         this.canvasWidth = canvas.getWidth();
@@ -71,8 +67,8 @@ public class StaticBoard extends Board {
     public void setCellSize(int a) {
 
         this.cellSize = a;
-        this.xOffset  = a;
-        this.yOffset = a;
+        int xOffset = a;
+        int yOffset = a;
     }
 
     public byte[][] getBoard() {
