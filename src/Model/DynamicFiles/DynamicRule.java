@@ -8,7 +8,7 @@ import Model.Abstract.Rule;
 /**
  * <h1>Dynamic Rule</h1>
  *
- * <h3>DynamicRule performs rules (default:Conway's rules) on the dynamic gameboard.<h3>
+ * <p>DynamicRule performs rules (default:Conway's rules) on the dynamic gameboard.</p>
  *
  * <p>We have implementet 4 threads to help with the processing in this case so that we can handle
  * bigger patterns.</p>
