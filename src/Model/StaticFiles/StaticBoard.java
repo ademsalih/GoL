@@ -20,6 +20,10 @@ public class StaticBoard extends Board {
     private GraphicsContext gc;
     private boolean grid = false;
 
+    /**
+     * Constructs a gameboard with a canvas
+     * @param canvas
+     */
     public StaticBoard(Canvas canvas) {
         this.canvasWidth = canvas.getWidth();
         this.canvasHeight = canvas.getHeight();
@@ -34,6 +38,10 @@ public class StaticBoard extends Board {
         return this.grid;
     }
 
+    /**
+     * Sets a given board as both the main board ("board") and also the initial board ("initialBoard")
+     * @param newBoard - 2D ArrayList that should be used by the DynamicBoard class
+     */
     public void addBoard(byte[][] newBoard) {
         if ((newBoard[0].length > board[0].length) || (newBoard.length > board.length)) {
             this.board = new byte[(newBoard.length + 20)][(newBoard[0].length + 20)];
@@ -76,7 +84,11 @@ public class StaticBoard extends Board {
     }
 
 
-    // Draw/undraw a cell depending on its state when we click on the board
+    /**
+     * Draws/undraws a cell depending on its state when we click/drag on the board
+     * @param y  y coordinate
+     * @param x  x coordinate
+     */
     public void mouseClickedOrDraggedOnBoard(double x, double y){
 
         int colx = (int)(x/cellSize);
@@ -95,10 +107,9 @@ public class StaticBoard extends Board {
         System.out.println(colx + "   " + rowy);
     }
 
-    public void keyClicked(){
-
-    }
-
+    /**
+     * Draws the cells on the gameboard
+     */
     public void drawBoard() {
 
         gc.setFill(backgroundColor);
@@ -137,7 +148,9 @@ public class StaticBoard extends Board {
     }
 
 
-
+    /**
+     * Draws the grid on the gameboard
+     */
     public void drawGrid() {
 
         double gridSize = cellSize * 0.05;
@@ -159,7 +172,9 @@ public class StaticBoard extends Board {
     }
 
 
-
+    /**
+     * Clears the cells on the gameboard
+     */
     public void clearBoard(){
         this.board = new byte[250][350];
         this.initialBoard = new byte[250][350];
