@@ -54,6 +54,9 @@ public class Animate {
         return this.status;
     }
 
+    /**
+     * ADEM SKAL SKRIVE HER
+     */
     public void startStopButtonAction() {
 
         if ( timeline.getStatus() == Animation.Status.STOPPED ) {
@@ -67,10 +70,16 @@ public class Animate {
 
     }
 
+    /**
+     * HEI ADEEEM, SKRIV NOE HER
+     */
     public void startAnimation() {
         timeline.play();
     }
 
+    /**
+     * HER OGSÅ ADEM
+     */
     public void stopAnimation() {
         timeline.stop();
     }
